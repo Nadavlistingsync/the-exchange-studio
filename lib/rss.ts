@@ -94,7 +94,7 @@ function getPlaceholderEpisodes(): Episode[] {
         "A conversation on deal flow, market cycles, and what separates the operators who move New York commercial real estate.",
       pubDate: "2026-01-15T00:00:00.000Z",
       audioUrl: "",
-      imageUrl: "/guests/bob-knakal.svg",
+      imageUrl: "/guests/bob-knakal.png",
     },
     {
       title: "Eric Brody on Adams & Company",
@@ -103,7 +103,7 @@ function getPlaceholderEpisodes(): Episode[] {
         "How one of New York's most respected brokerage firms thinks about talent, culture, and closing in a shifting market.",
       pubDate: "2026-02-01T00:00:00.000Z",
       audioUrl: "",
-      imageUrl: "/guests/eric-brody.svg",
+      imageUrl: "/guests/eric-brody.jpg",
     },
     {
       title: "Eric Benaim on Modern Spaces",
@@ -112,7 +112,7 @@ function getPlaceholderEpisodes(): Episode[] {
         "Building a development and brokerage platform in Queens and Brooklyn, and what operators get right when they scale.",
       pubDate: "2026-02-20T00:00:00.000Z",
       audioUrl: "",
-      imageUrl: "/guests/eric-benaim.svg",
+      imageUrl: "/guests/eric-benaim.jpg",
     },
     {
       title: "Michael Shah on DelShah Capital",
@@ -121,7 +121,7 @@ function getPlaceholderEpisodes(): Episode[] {
         "From acquisitions to operations, how DelShah approaches multifamily and hospitality across New York.",
       pubDate: "2026-03-05T00:00:00.000Z",
       audioUrl: "",
-      imageUrl: "/guests/michael-shah.svg",
+      imageUrl: "/guests/michael-shah.jpg",
     },
   ];
 }

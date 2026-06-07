@@ -13,7 +13,7 @@ export const CONFIRMED_GUESTS: Guest[] = [
     slug: "bob-knakal",
     shortLabel: "BOB",
     title: "Chairman, JLL Capital Markets",
-    imagePath: "/guests/bob-knakal.svg",
+    imagePath: "/guests/bob-knakal.png",
     accentColor: "#1a2332",
   },
   {
@@ -21,7 +21,7 @@ export const CONFIRMED_GUESTS: Guest[] = [
     slug: "jeff-gural",
     shortLabel: "JEFF",
     title: "Chairman, GFP Real Estate",
-    imagePath: "/guests/jeff-gural.svg",
+    imagePath: "/guests/jeff-gural.jpg",
     accentColor: "#222222",
   },
   {
@@ -29,7 +29,7 @@ export const CONFIRMED_GUESTS: Guest[] = [
     slug: "stephen-siegel",
     shortLabel: "STEPHEN",
     title: "Chairman, Global Holdings",
-    imagePath: "/guests/stephen-siegel.svg",
+    imagePath: "/guests/stephen-siegel.jpg",
     accentColor: "#1f2d2d",
   },
   {
@@ -37,7 +37,7 @@ export const CONFIRMED_GUESTS: Guest[] = [
     slug: "bess-freedman",
     shortLabel: "BESS",
     title: "CEO, Brown Harris Stevens",
-    imagePath: "/guests/bess-freedman.svg",
+    imagePath: "/guests/bess-freedman.jpg",
     accentColor: "#2d2424",
   },
   {
@@ -45,7 +45,7 @@ export const CONFIRMED_GUESTS: Guest[] = [
     slug: "eric-benaim",
     shortLabel: "ERIC B",
     title: "Founder, Modern Spaces",
-    imagePath: "/guests/eric-benaim.svg",
+    imagePath: "/guests/eric-benaim.jpg",
     accentColor: "#242430",
   },
   {
@@ -53,7 +53,7 @@ export const CONFIRMED_GUESTS: Guest[] = [
     slug: "michael-shah",
     shortLabel: "MICHAEL",
     title: "CEO, DelShah Capital",
-    imagePath: "/guests/michael-shah.svg",
+    imagePath: "/guests/michael-shah.jpg",
     accentColor: "#1e2a1e",
   },
   {
@@ -61,7 +61,7 @@ export const CONFIRMED_GUESTS: Guest[] = [
     slug: "jay-neveloff",
     shortLabel: "JAY",
     title: "Partner, Kramer Levin",
-    imagePath: "/guests/jay-neveloff.svg",
+    imagePath: "/guests/jay-neveloff.jpg",
     accentColor: "#2a2420",
   },
   {
@@ -69,7 +69,7 @@ export const CONFIRMED_GUESTS: Guest[] = [
     slug: "eric-brody",
     shortLabel: "ERIC",
     title: "Founder, Adams & Company",
-    imagePath: "/guests/eric-brody.svg",
+    imagePath: "/guests/eric-brody.jpg",
     accentColor: "#282828",
   },
 ];
