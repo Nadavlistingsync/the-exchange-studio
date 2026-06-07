@@ -6,7 +6,6 @@ import { useState } from "react";
 const menuLinks = [
   { href: "/network", label: "Network" },
   { href: "/episodes", label: "Episodes" },
-  { href: "/#events", label: "Events" },
   { href: "/#request-access", label: "Request Access" },
 ];
 

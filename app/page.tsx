@@ -1,6 +1,5 @@
 import { GuestMosaic } from "@/components/GuestMosaic";
 import { NetworkIntro } from "@/components/NetworkIntro";
-import { Events } from "@/components/Events";
 import { EpisodeCarousel } from "@/components/EpisodeCarousel";
 import { Press } from "@/components/Press";
 import { RequestAccessForm } from "@/components/RequestAccessForm";
@@ -21,7 +20,6 @@ export default async function HomePage() {
     <>
       <GuestMosaic episodeTitles={episodeTitles} />
       <NetworkIntro />
-      <Events />
       <EpisodeCarousel episodes={episodes} />
       <Press />
       <RequestAccessForm />

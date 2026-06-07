@@ -30,8 +30,8 @@ export default function NetworkPage() {
               reviewed individually. If there is a fit, you will hear from us.
             </p>
             <p>
-              The podcast and Off Market events are proof of who is already in
-              the room. They are not the product. The network is.
+              The podcast is proof of who is already in the room. It is not the
+              product. The network is.
             </p>
           </div>
         </div>

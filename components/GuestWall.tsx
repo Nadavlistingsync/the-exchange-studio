@@ -24,7 +24,7 @@ export function GuestWall({ episodes = [] }: GuestWallProps) {
             The people already at the table.
           </h2>
           <p className="mt-4 text-sm font-extralight leading-relaxed text-white/50">
-            Confirmed guests from The Exchange podcast and network events.
+            Confirmed guests from The Exchange podcast.
           </p>
         </div>
 
