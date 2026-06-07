@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { AudioPlayer } from "@/components/AudioPlayer";
+import { EpisodePlayer } from "@/components/EpisodePlayer";
 import { SubpageNav } from "@/components/SubpageNav";
 import { formatEpisodeDate } from "@/lib/episodes";
 import { getEpisodeBySlug, getEpisodes } from "@/lib/rss";
@@ -69,10 +69,23 @@ export default async function EpisodePage({ params }: PageProps) {
           </div>
         )}
 
-        {episode.audioUrl && (
+        {(episode.youtubeId || episode.audioUrl) && (
           <div className="mt-10">
-            <AudioPlayer src={episode.audioUrl} title={episode.title} />
+            <EpisodePlayer episode={episode} />
           </div>
+        )}
+
+        {episode.videoUrl && (
+          <p className="mt-6">
+            <a
+              href={episode.videoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-extralight tracking-[0.15em] uppercase text-white/50 transition-colors hover:text-white"
+            >
+              Watch on YouTube
+            </a>
+          </p>
         )}
 
         <div className="mt-10 border-t border-white/10 pt-10">

@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { formatEpisodeDate } from "@/lib/episodes";
 import type { Episode } from "@/lib/episodes";
-import { AudioPlayer } from "./AudioPlayer";
+import { EpisodePlayer } from "./EpisodePlayer";
 
 type FeaturedEpisodeProps = {
   episode: Episode;
@@ -41,11 +41,11 @@ export function FeaturedEpisode({ episode }: FeaturedEpisodeProps) {
           <p className="mt-4 line-clamp-3 text-sm font-extralight leading-relaxed text-white/50">
             {episode.description}
           </p>
-          {episode.audioUrl && (
+          {episode.youtubeId || episode.audioUrl ? (
             <div className="mt-6">
-              <AudioPlayer src={episode.audioUrl} title={episode.title} />
+              <EpisodePlayer episode={episode} />
             </div>
-          )}
+          ) : null}
         </div>
       </div>
     </div>

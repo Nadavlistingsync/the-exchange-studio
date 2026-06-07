@@ -1,5 +1,10 @@
 import Parser from "rss-parser";
 import { Episode, slugify, stripHtml } from "./episodes";
+import {
+  extractYouTubeId,
+  getYouTubeFeedUrl,
+  isFullYouTubeVideo,
+} from "./youtube";
 
 const parser = new Parser({
   customFields: {
@@ -7,15 +12,24 @@ const parser = new Parser({
       ["itunes:duration", "duration"],
       ["itunes:image", "itunesImage", { keepArray: false }],
       ["enclosure", "enclosure", { keepArray: false }],
+      ["yt:videoId", "videoId"],
+      ["media:group", "mediaGroup"],
     ],
   },
 });
+
+type MediaThumbnail = { $?: { url?: string } };
+type MediaGroup = {
+  "media:thumbnail"?: MediaThumbnail[];
+  "media:description"?: string[];
+};
 
 type RssItem = {
   title?: string;
   link?: string;
   guid?: string;
   pubDate?: string;
+  isoDate?: string;
   content?: string;
   contentSnippet?: string;
   description?: string;
@@ -23,52 +37,89 @@ type RssItem = {
   itunes?: { duration?: string; image?: string };
   duration?: string;
   itunesImage?: { $?: { href?: string } } | string;
+  videoId?: string;
+  mediaGroup?: MediaGroup;
 };
 
 function getImageUrl(item: RssItem): string | undefined {
+  const youtubeThumb = item.mediaGroup?.["media:thumbnail"]?.[0]?.$?.url;
+  if (youtubeThumb) return youtubeThumb;
+
   if (typeof item.itunesImage === "string") return item.itunesImage;
   if (item.itunesImage?.$?.href) return item.itunesImage.$.href;
   if (item.itunes?.image) return item.itunes.image;
+
+  const youtubeId = extractYouTubeId(item.link, item.videoId);
+  if (youtubeId) {
+    return `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`;
+  }
+
   return undefined;
 }
 
-function getAudioUrl(item: RssItem): string {
-  if (item.enclosure?.url) return item.enclosure.url;
-  return "";
+function getDescription(item: RssItem): string {
+  const youtubeDescription = item.mediaGroup?.["media:description"]?.[0];
+  const raw =
+    youtubeDescription ||
+    item.contentSnippet ||
+    item.description ||
+    item.content ||
+    "";
+
+  return stripHtml(raw).replace(/#\w+/g, "").trim();
+}
+
+function getAudioUrl(item: RssItem): string | undefined {
+  if (item.enclosure?.url && item.enclosure.type?.startsWith("audio")) {
+    return item.enclosure.url;
+  }
+  return undefined;
+}
+
+function buildSlug(title: string, youtubeId?: string, index?: number): string {
+  const base = slugify(title) || `episode-${index ?? 0}`;
+  if (youtubeId) {
+    return `${base}-${youtubeId.toLowerCase()}`;
+  }
+  return base;
 }
 
 function mapItemToEpisode(item: RssItem, index: number): Episode | null {
   const title = item.title?.trim();
   if (!title) return null;
 
-  const slug = slugify(title) || `episode-${index}`;
-  const description = stripHtml(
-    item.contentSnippet || item.description || item.content || ""
-  );
+  const youtubeId = extractYouTubeId(item.link, item.videoId);
+  const videoUrl = item.link || (youtubeId ? `https://www.youtube.com/watch?v=${youtubeId}` : undefined);
+  const slug = buildSlug(title, youtubeId, index);
+  const description = getDescription(item);
+  const isShort = Boolean(videoUrl && !isFullYouTubeVideo(videoUrl));
 
   return {
     title,
     slug,
     description,
-    pubDate: item.pubDate || new Date().toISOString(),
+    pubDate: item.isoDate || item.pubDate || new Date().toISOString(),
     audioUrl: getAudioUrl(item),
+    videoUrl,
+    youtubeId,
     imageUrl: getImageUrl(item),
     duration: item.duration || item.itunes?.duration,
+    isShort,
   };
 }
 
-export async function getEpisodes(): Promise<Episode[]> {
-  const feedUrl = process.env.RSS_FEED_URL;
+function hasPlayableMedia(episode: Episode): boolean {
+  return Boolean(episode.youtubeId || episode.audioUrl);
+}
 
-  if (!feedUrl) {
-    return getPlaceholderEpisodes();
-  }
+export async function getEpisodes(): Promise<Episode[]> {
+  const feedUrl = getYouTubeFeedUrl();
 
   try {
     const feed = await parser.parseURL(feedUrl);
     const episodes = (feed.items as RssItem[])
       .map((item, index) => mapItemToEpisode(item, index))
-      .filter((ep): ep is Episode => ep !== null && ep.audioUrl !== "");
+      .filter((ep): ep is Episode => ep !== null && hasPlayableMedia(ep));
 
     if (episodes.length === 0) {
       return getPlaceholderEpisodes();
@@ -85,43 +136,10 @@ export async function getEpisodeBySlug(slug: string): Promise<Episode | null> {
   return episodes.find((ep) => ep.slug === slug) ?? null;
 }
 
+export function getFeaturedEpisode(episodes: Episode[]): Episode | undefined {
+  return episodes.find((ep) => !ep.isShort) ?? episodes[0];
+}
+
 function getPlaceholderEpisodes(): Episode[] {
-  return [
-    {
-      title: "Bob Knakal on Building JLL Capital Markets",
-      slug: "bob-knakal-on-building-jll-capital-markets",
-      description:
-        "A conversation on deal flow, market cycles, and what separates the operators who move New York commercial real estate.",
-      pubDate: "2026-01-15T00:00:00.000Z",
-      audioUrl: "",
-      imageUrl: "/guests/bob-knakal.jpg",
-    },
-    {
-      title: "Eric Brody on Adams & Company",
-      slug: "eric-brody-on-adams-and-company",
-      description:
-        "How one of New York's most respected brokerage firms thinks about talent, culture, and closing in a shifting market.",
-      pubDate: "2026-02-01T00:00:00.000Z",
-      audioUrl: "",
-      imageUrl: "/guests/eric-brody.jpg",
-    },
-    {
-      title: "Eric Benaim on Modern Spaces",
-      slug: "eric-benaim-on-modern-spaces",
-      description:
-        "Building a development and brokerage platform in Queens and Brooklyn, and what operators get right when they scale.",
-      pubDate: "2026-02-20T00:00:00.000Z",
-      audioUrl: "",
-      imageUrl: "/guests/eric-benaim.jpg",
-    },
-    {
-      title: "Michael Shah on DelShah Capital",
-      slug: "michael-shah-on-delshah-capital",
-      description:
-        "From acquisitions to operations, how DelShah approaches multifamily and hospitality across New York.",
-      pubDate: "2026-03-05T00:00:00.000Z",
-      audioUrl: "",
-      imageUrl: "/guests/michael-shah.jpg",
-    },
-  ];
+  return [];
 }

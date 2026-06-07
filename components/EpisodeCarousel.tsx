@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Episode } from "@/lib/episodes";
+import { getFeaturedEpisode } from "@/lib/rss";
 import { EpisodeCard } from "./EpisodeCard";
 import { FeaturedEpisode } from "./FeaturedEpisode";
 
@@ -10,7 +11,8 @@ type EpisodeCarouselProps = {
 export function EpisodeCarousel({ episodes }: EpisodeCarouselProps) {
   if (episodes.length === 0) return null;
 
-  const [featured, ...recent] = episodes;
+  const featured = getFeaturedEpisode(episodes)!;
+  const recent = episodes.filter((ep) => ep.slug !== featured.slug);
 
   return (
     <section className="border-t border-white/10">

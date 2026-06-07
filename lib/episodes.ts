@@ -3,9 +3,12 @@ export type Episode = {
   slug: string;
   description: string;
   pubDate: string;
-  audioUrl: string;
+  audioUrl?: string;
+  videoUrl?: string;
+  youtubeId?: string;
   imageUrl?: string;
   duration?: string;
+  isShort?: boolean;
 };
 
 export function slugify(text: string): string {
