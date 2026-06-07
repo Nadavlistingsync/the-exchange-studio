@@ -94,7 +94,7 @@ function getPlaceholderEpisodes(): Episode[] {
         "A conversation on deal flow, market cycles, and what separates the operators who move New York commercial real estate.",
       pubDate: "2026-01-15T00:00:00.000Z",
       audioUrl: "",
-      imageUrl: "/guests/bob-knakal.png",
+      imageUrl: "/guests/bob-knakal.jpg",
     },
     {
       title: "Eric Brody on Adams & Company",

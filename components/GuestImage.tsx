@@ -29,7 +29,7 @@ export function GuestImage({ src, alt, initials }: GuestImageProps) {
         src={src}
         alt={alt}
         fill
-        className="object-cover opacity-80 transition-opacity duration-500 group-hover:opacity-100"
+        className="object-cover object-top opacity-80 transition-opacity duration-500 group-hover:opacity-100"
         sizes="(max-width: 768px) 50vw, 25vw"
         onError={() => setFailed(true)}
       />

@@ -13,7 +13,7 @@ export const CONFIRMED_GUESTS: Guest[] = [
     slug: "bob-knakal",
     shortLabel: "BOB",
     title: "Chairman, JLL Capital Markets",
-    imagePath: "/guests/bob-knakal.png",
+    imagePath: "/guests/bob-knakal.jpg",
     accentColor: "#1a2332",
   },
   {
