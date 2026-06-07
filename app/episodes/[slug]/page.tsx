@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { AudioPlayer } from "@/components/AudioPlayer";
+import { SubpageNav } from "@/components/SubpageNav";
 import { formatEpisodeDate } from "@/lib/episodes";
 import { getEpisodeBySlug, getEpisodes } from "@/lib/rss";
 
@@ -41,7 +42,9 @@ export default async function EpisodePage({ params }: PageProps) {
   }
 
   return (
-    <article className="mx-auto max-w-3xl px-6 pb-24 pt-40 md:pt-48">
+    <>
+      <SubpageNav />
+      <article className="mx-auto max-w-3xl px-6 pb-24 pt-40 md:pt-48">
       <div className="fade-in">
         <p className="mb-4 text-xs font-extralight tracking-[0.25em] uppercase text-white/50">
           Episode
@@ -79,5 +82,6 @@ export default async function EpisodePage({ params }: PageProps) {
         </div>
       </div>
     </article>
+    </>
   );
 }

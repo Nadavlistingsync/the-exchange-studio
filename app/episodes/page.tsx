@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { EpisodeCard } from "@/components/EpisodeCard";
+import { SubpageNav } from "@/components/SubpageNav";
 import { getEpisodes } from "@/lib/rss";
 
 export const metadata: Metadata = {
@@ -14,7 +15,9 @@ export default async function EpisodesPage() {
   const episodes = await getEpisodes();
 
   return (
-    <section className="mx-auto max-w-6xl px-6 pb-24 pt-40 md:pt-48">
+    <>
+      <SubpageNav />
+      <section className="mx-auto max-w-6xl px-6 pb-24 pt-40 md:pt-48">
       <div className="fade-in mb-16 max-w-2xl">
         <p className="mb-4 text-xs font-extralight tracking-[0.25em] uppercase text-white/50">
           Episodes
@@ -34,5 +37,6 @@ export default async function EpisodesPage() {
         ))}
       </div>
     </section>
+    </>
   );
 }

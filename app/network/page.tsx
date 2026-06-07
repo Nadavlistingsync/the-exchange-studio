@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { RequestAccessForm } from "@/components/RequestAccessForm";
+import { SubpageNav } from "@/components/SubpageNav";
 
 export const metadata: Metadata = {
   title: "Network",
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
 export default function NetworkPage() {
   return (
     <>
+      <SubpageNav />
       <section className="mx-auto max-w-6xl px-6 pb-16 pt-40 md:pt-48">
         <div className="fade-in max-w-3xl">
           <p className="mb-6 text-xs font-extralight tracking-[0.25em] uppercase text-white/50">

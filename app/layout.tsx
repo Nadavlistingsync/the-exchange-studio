@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
-import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { SITE } from "@/lib/site";
 import "./globals.css";
@@ -28,7 +27,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={geistSans.variable}>
       <body className="min-h-screen font-sans antialiased">
-        <Nav />
         <main>{children}</main>
         <Footer />
       </body>

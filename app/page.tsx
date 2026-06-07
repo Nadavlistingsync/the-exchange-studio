@@ -1,5 +1,5 @@
-import { Hero } from "@/components/Hero";
-import { GuestWall } from "@/components/GuestWall";
+import { GuestMosaic } from "@/components/GuestMosaic";
+import { NetworkIntro } from "@/components/NetworkIntro";
 import { Events } from "@/components/Events";
 import { EpisodeCarousel } from "@/components/EpisodeCarousel";
 import { Press } from "@/components/Press";
@@ -12,11 +12,15 @@ export const revalidate = 3600;
 
 export default async function HomePage() {
   const episodes = await getEpisodes();
+  const episodeTitles = episodes.map((ep) => ({
+    title: ep.title,
+    slug: ep.slug,
+  }));
 
   return (
     <>
-      <Hero />
-      <GuestWall episodes={episodes} />
+      <GuestMosaic episodeTitles={episodeTitles} />
+      <NetworkIntro />
       <Events />
       <EpisodeCarousel episodes={episodes} />
       <Press />
