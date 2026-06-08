@@ -13,11 +13,30 @@ type GuestImageProps = {
   variant?: GuestImageVariant;
 };
 
-const variantInsets: Record<GuestImageVariant, string> = {
-  mosaic: "inset-x-[16%] top-[14%] bottom-0",
-  row: "inset-x-[12%] top-[10%] bottom-0",
-  featured: "inset-x-[18%] top-[14%] bottom-[2%]",
-  hero: "inset-x-[16%] top-[10%] bottom-[4%] md:inset-x-[22%] md:top-[12%]",
+const variantClasses: Record<
+  GuestImageVariant,
+  { frame: string; image: string }
+> = {
+  mosaic: {
+    frame: "absolute inset-0 overflow-hidden rounded-xl",
+    image:
+      "object-cover object-top opacity-100 transition-transform duration-500 group-hover:scale-[1.04] group-focus-visible:scale-[1.04]",
+  },
+  row: {
+    frame: "absolute inset-x-[12%] top-[10%] bottom-0",
+    image:
+      "object-contain object-bottom opacity-95 transition-all duration-500 group-hover:scale-[1.03] group-hover:opacity-100 group-focus-visible:scale-[1.03] group-focus-visible:opacity-100",
+  },
+  featured: {
+    frame: "absolute inset-x-[18%] top-[14%] bottom-[2%]",
+    image:
+      "object-contain object-bottom opacity-95 transition-all duration-500 group-hover:scale-[1.03] group-hover:opacity-100 group-focus-visible:scale-[1.03] group-focus-visible:opacity-100",
+  },
+  hero: {
+    frame: "absolute inset-x-[16%] top-[10%] bottom-[4%] md:inset-x-[22%] md:top-[12%]",
+    image:
+      "object-contain object-bottom opacity-95 transition-all duration-500 group-hover:scale-[1.03] group-hover:opacity-100 group-focus-visible:scale-[1.03] group-focus-visible:opacity-100",
+  },
 };
 
 export function GuestImage({
@@ -31,11 +50,15 @@ export function GuestImage({
   const [activeSrc, setActiveSrc] = useState(src);
 
   const isRemote = activeSrc.startsWith("http");
-  const inset = variantInsets[variant];
+  const { frame, image } = variantClasses[variant];
 
   if (failed) {
     return (
-      <div className="absolute inset-0 flex items-center justify-center bg-black">
+      <div
+        className={`flex items-center justify-center bg-black ${
+          variant === "mosaic" ? "absolute inset-0 rounded-xl" : "absolute inset-0"
+        }`}
+      >
         <span className="text-4xl font-extralight text-white/20">{initials}</span>
       </div>
     );
@@ -44,14 +67,14 @@ export function GuestImage({
   return (
     <>
       <div className="absolute inset-0 bg-black" />
-      <div className={`absolute ${inset}`}>
+      <div className={frame}>
         <Image
           src={activeSrc}
           alt={alt}
           fill
           unoptimized={isRemote}
           priority={priority}
-          className="object-contain object-bottom opacity-95 transition-all duration-500 group-hover:scale-[1.03] group-hover:opacity-100 group-focus-visible:scale-[1.03] group-focus-visible:opacity-100"
+          className={image}
           sizes={
             variant === "hero"
               ? "(max-width: 1024px) 100vw, 50vw"

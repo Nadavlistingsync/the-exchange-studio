@@ -41,42 +41,44 @@ function MosaicTile({
 
   const sizeClass =
     layout === "rolling"
-      ? "h-full w-[calc((100vw-1.25rem)/3)] min-w-[100px] sm:w-[calc((100vw-2rem)/4)] md:w-[calc((100vw-2.5rem)/5)] lg:w-[calc((100vw-3rem)/6)]"
+      ? "aspect-[3/4] w-[calc((100vw-1.25rem)/3)] min-w-[108px] shrink-0 sm:w-[calc((100vw-2rem)/4)] md:w-[calc((100vw-2.5rem)/5)] lg:w-[calc((100vw-3rem)/6)]"
       : "aspect-[3/4] w-full";
 
   return (
     <Link
       href={`/guests/${guest.slug}`}
-      className={`group relative block shrink-0 overflow-hidden bg-black transition-transform duration-300 hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 ${sizeClass}`}
+      className={`group relative block bg-black p-1 transition-transform duration-300 hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 sm:p-1.5 ${sizeClass}`}
       aria-label={`${guest.name}, ${guest.role} at ${guest.company}`}
     >
-      <GuestImage
-        src={guest.displayImage}
-        alt={guest.name}
-        initials={initials}
-        variant="mosaic"
-      />
+      <div className="relative h-full w-full overflow-hidden rounded-xl bg-black">
+        <GuestImage
+          src={guest.displayImage}
+          alt={guest.name}
+          initials={initials}
+          variant="mosaic"
+        />
 
-      <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/30" />
+        <div className="pointer-events-none absolute inset-0 rounded-xl bg-black/0 transition-colors duration-300 group-hover:bg-black/20" />
 
-      <span className="pointer-events-none absolute right-1.5 top-1.5 text-[9px] font-extralight tracking-[0.12em] text-white/70 transition-opacity duration-300 group-hover:opacity-0 sm:right-2 sm:top-2 sm:text-[10px] md:text-xs">
-        {guest.shortLabel}
-      </span>
+        <span className="pointer-events-none absolute right-2 top-2 z-10 rounded-md bg-[#e8e4dc] px-2 py-1 text-[9px] font-normal tracking-[0.18em] text-black sm:text-[10px]">
+          {guest.shortLabel}
+        </span>
 
-      <div className="pointer-events-none absolute inset-x-2 bottom-2 z-10 translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 sm:inset-x-3 sm:bottom-3">
-        <div className="rounded-sm border border-white/15 bg-black/90 px-3 py-2 shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-sm sm:px-4 sm:py-3">
-          <p className="text-xs font-light leading-snug text-white sm:text-sm">
-            {guest.name}
-          </p>
-          <p className="mt-0.5 text-[10px] font-extralight text-white/55 sm:mt-1 sm:text-xs">
-            {guest.company}
-          </p>
-          {hasEpisode && (
-            <div className="mt-2 flex items-center justify-between gap-2 border-t border-white/10 pt-2 text-[10px] font-extralight tracking-[0.12em] text-white/70 sm:mt-3 sm:pt-3 sm:text-xs">
-              <span>Episode</span>
-              <span aria-hidden>→</span>
-            </div>
-          )}
+        <div className="pointer-events-none absolute inset-x-2 bottom-2 z-10 translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 sm:inset-x-3 sm:bottom-3">
+          <div className="rounded-sm border border-white/15 bg-black/90 px-3 py-2 shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-sm sm:px-4 sm:py-3">
+            <p className="text-xs font-light leading-snug text-white sm:text-sm">
+              {guest.name}
+            </p>
+            <p className="mt-0.5 text-[10px] font-extralight text-white/55 sm:mt-1 sm:text-xs">
+              {guest.company}
+            </p>
+            {hasEpisode && (
+              <div className="mt-2 flex items-center justify-between gap-2 border-t border-white/10 pt-2 text-[10px] font-extralight tracking-[0.12em] text-white/70 sm:mt-3 sm:pt-3 sm:text-xs">
+                <span>Episode</span>
+                <span aria-hidden>→</span>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </Link>
@@ -87,7 +89,7 @@ function RollingRows({ guests }: { guests: GuestWithEpisode[] }) {
   const rows = useMemo(() => splitIntoRows(guests, ROW_COUNT), [guests]);
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col gap-1 p-1 md:gap-1.5 md:p-1.5">
+    <div className="flex min-h-0 flex-1 flex-col justify-center gap-2 overflow-hidden px-1 py-3 md:gap-2.5 md:px-1.5">
       {rows.map((rowGuests, rowIndex) => {
         const loopGuests = [...rowGuests, ...rowGuests];
         const direction =
@@ -96,10 +98,10 @@ function RollingRows({ guests }: { guests: GuestWithEpisode[] }) {
         return (
           <div
             key={rowIndex}
-            className="marquee-row min-h-0 flex-1 overflow-hidden"
+            className="marquee-row shrink-0 overflow-hidden"
           >
             <div
-              className={`marquee-track flex h-full gap-1 md:gap-1.5 ${direction}`}
+              className={`marquee-track flex w-max items-center gap-1 md:gap-1.5 ${direction}`}
               style={{ animationDuration: ROW_DURATIONS[rowIndex] }}
             >
               {loopGuests.map((guest, index) => (
@@ -159,7 +161,7 @@ export function GuestMosaic({ episodes }: GuestMosaicProps) {
         <RollingRows guests={guests} />
       )}
 
-      <div className="flex flex-col items-center gap-4 px-6 py-8">
+      <div className="shrink-0 flex flex-col items-center gap-4 px-6 py-8">
         <GuestSearch
           value={query}
           onChange={setQuery}
