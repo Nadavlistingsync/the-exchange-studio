@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { SiteBanner } from "./SiteBanner";
 
 const menuLinks = [
   { href: "/network", label: "Network" },
@@ -18,15 +19,30 @@ export function MosaicNav({ query, onQueryChange }: MosaicNavProps) {
 
   return (
     <header className="relative z-10 shrink-0 border-b border-white/10 bg-[#0a0a0a]">
-      <div className="flex items-center gap-3 px-4 py-4 md:gap-6 md:px-6 md:py-5">
-        <Link
-          href="/"
-          className="shrink-0 text-xs font-extralight tracking-[0.25em] text-white md:text-sm"
-        >
-          THE EXCHANGE
-        </Link>
+      <div className="relative flex items-center justify-end px-4 py-4 md:px-6 md:py-5">
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <SiteBanner priority className="pointer-events-auto" />
+        </div>
 
-        <div className="relative mx-auto hidden max-w-md flex-1 md:block">
+        <div className="relative z-10 flex shrink-0 items-center gap-2 md:gap-3">
+          <button
+            type="button"
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="rounded-full border border-white/30 px-4 py-2 text-[10px] font-extralight tracking-[0.15em] text-white transition-colors hover:bg-white hover:text-black md:px-5 md:text-xs"
+          >
+            MENU
+          </button>
+          <Link
+            href="/#listen"
+            className="rounded-full border border-white/30 px-4 py-2 text-[10px] font-extralight tracking-[0.15em] text-white transition-colors hover:bg-white hover:text-black md:px-5 md:text-xs"
+          >
+            LISTEN
+          </Link>
+        </div>
+      </div>
+
+      <div className="px-4 pb-4 md:px-6">
+        <div className="relative mx-auto max-w-md">
           <input
             type="search"
             value={query}
@@ -49,32 +65,6 @@ export function MosaicNav({ query, onQueryChange }: MosaicNavProps) {
             />
           </svg>
         </div>
-
-        <div className="ml-auto flex shrink-0 items-center gap-2 md:gap-3">
-          <button
-            type="button"
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="rounded-full border border-white/30 px-4 py-2 text-[10px] font-extralight tracking-[0.15em] text-white transition-colors hover:bg-white hover:text-black md:px-5 md:text-xs"
-          >
-            MENU
-          </button>
-          <Link
-            href="/#listen"
-            className="rounded-full border border-white/30 px-4 py-2 text-[10px] font-extralight tracking-[0.15em] text-white transition-colors hover:bg-white hover:text-black md:px-5 md:text-xs"
-          >
-            LISTEN
-          </Link>
-        </div>
-      </div>
-
-      <div className="px-4 pb-4 md:hidden">
-        <input
-          type="search"
-          value={query}
-          onChange={(e) => onQueryChange(e.target.value)}
-          placeholder="Search guests"
-          className="w-full rounded-full border border-white/20 bg-white/5 py-2.5 pl-4 pr-10 text-sm font-extralight text-white placeholder:text-white/30 outline-none"
-        />
       </div>
 
       {menuOpen && (

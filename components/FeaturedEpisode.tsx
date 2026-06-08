@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { formatEpisodeDate } from "@/lib/episodes";
 import type { Episode } from "@/lib/episodes";
-import { EpisodePlayer } from "./EpisodePlayer";
 
 type FeaturedEpisodeProps = {
   episode: Episode;
@@ -41,11 +40,12 @@ export function FeaturedEpisode({ episode }: FeaturedEpisodeProps) {
           <p className="mt-4 line-clamp-3 text-sm font-extralight leading-relaxed text-white/50">
             {episode.description}
           </p>
-          {episode.youtubeId || episode.audioUrl ? (
-            <div className="mt-6">
-              <EpisodePlayer episode={episode} />
-            </div>
-          ) : null}
+          <Link
+            href={`/episodes/${episode.slug}`}
+            className="mt-6 inline-block border border-white px-6 py-2.5 text-xs font-light tracking-[0.2em] uppercase transition-colors hover:bg-white hover:text-black"
+          >
+            Watch Episode
+          </Link>
         </div>
       </div>
     </div>

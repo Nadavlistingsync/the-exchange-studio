@@ -119,7 +119,10 @@ export async function getEpisodes(): Promise<Episode[]> {
     const feed = await parser.parseURL(feedUrl);
     const episodes = (feed.items as RssItem[])
       .map((item, index) => mapItemToEpisode(item, index))
-      .filter((ep): ep is Episode => ep !== null && hasPlayableMedia(ep));
+      .filter(
+        (ep): ep is Episode =>
+          ep !== null && hasPlayableMedia(ep) && !ep.isShort
+      );
 
     if (episodes.length === 0) {
       return getPlaceholderEpisodes();
@@ -137,7 +140,7 @@ export async function getEpisodeBySlug(slug: string): Promise<Episode | null> {
 }
 
 export function getFeaturedEpisode(episodes: Episode[]): Episode | undefined {
-  return episodes.find((ep) => !ep.isShort) ?? episodes[0];
+  return episodes[0];
 }
 
 function getPlaceholderEpisodes(): Episode[] {

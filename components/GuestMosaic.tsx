@@ -1,81 +1,85 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { Episode } from "@/lib/episodes";
 import { getGuestsWithEpisodes, type GuestWithEpisode } from "@/lib/guests";
 import { GuestImage } from "./GuestImage";
-import { GuestPreviewModal } from "./GuestPreviewModal";
 import { MosaicNav } from "./MosaicNav";
 
 type GuestMosaicProps = {
   episodes: Episode[];
 };
 
-function MosaicTile({
-  guest,
-  isActive,
-  onSelect,
-}: {
-  guest: GuestWithEpisode;
-  isActive: boolean;
-  onSelect: () => void;
-}) {
+function MosaicTile({ guest }: { guest: GuestWithEpisode }) {
   const initials = guest.name
     .split(" ")
     .map((n) => n[0])
     .join("");
   const hasEpisode = Boolean(guest.episode);
 
-  return (
-    <button
-      type="button"
-      onClick={onSelect}
-      className={`group relative h-full w-full overflow-hidden text-left transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50 ${
-        isActive ? "ring-2 ring-white/60" : ""
-      } ${hasEpisode ? "cursor-pointer" : "cursor-default"}`}
-      style={{ backgroundColor: guest.accentColor }}
-      aria-label={
-        hasEpisode
-          ? `Watch ${guest.name}: ${guest.episode?.title}`
-          : `${guest.name}, episode coming soon`
-      }
-    >
+  const tileContent = (
+    <>
       <GuestImage
-        key={guest.displayImage}
         src={guest.displayImage}
         alt={guest.name}
         initials={initials}
       />
 
-      <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/25" />
+      <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/30" />
 
-      <span className="absolute right-2 top-2 text-[10px] font-extralight tracking-[0.15em] text-white/80 md:right-3 md:top-3 md:text-xs">
+      <span className="pointer-events-none absolute right-2 top-2 text-[10px] font-extralight tracking-[0.15em] text-white/80 transition-opacity duration-300 group-hover:opacity-0 md:right-3 md:top-3 md:text-xs">
         {guest.shortLabel}
       </span>
 
-      <div className="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-black via-black/90 to-transparent p-4 transition-transform duration-300 group-hover:translate-y-0 group-focus-visible:translate-y-0">
-        <p className="text-sm font-light text-white">{guest.name}</p>
-        {guest.title && (
-          <p className="mt-0.5 text-xs font-extralight text-white/60">
-            {guest.title}
+      <div className="pointer-events-none absolute inset-x-3 bottom-3 z-10 translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
+        <div className="rounded-sm border border-white/15 bg-black/90 px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-sm">
+          <p className="text-sm font-light leading-snug text-white">
+            {guest.name}
           </p>
-        )}
-        {hasEpisode && (
-          <p className="mt-2 text-[10px] font-extralight tracking-[0.2em] uppercase text-white/80">
-            Watch →
+          <p className="mt-1 text-xs font-extralight text-white/55">
+            {guest.company}
           </p>
-        )}
+          <p className="text-xs font-extralight text-white/40">{guest.role}</p>
+
+          {hasEpisode && (
+            <div className="mt-3 flex items-center justify-between gap-3 border-t border-white/10 pt-3 text-xs font-extralight tracking-[0.12em] text-white/70">
+              <span>Episode</span>
+              <span aria-hidden className="text-base leading-none">
+                →
+              </span>
+            </div>
+          )}
+        </div>
       </div>
-    </button>
+    </>
+  );
+
+  if (hasEpisode && guest.episode) {
+    return (
+      <Link
+        href={`/episodes/${guest.episode.slug}`}
+        className="group relative block h-full w-full overflow-hidden transition-transform duration-300 hover:scale-[1.01] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+        style={{ backgroundColor: guest.accentColor }}
+        aria-label={`${guest.name}, ${guest.role} at ${guest.company}`}
+      >
+        {tileContent}
+      </Link>
+    );
+  }
+
+  return (
+    <div
+      className="group relative h-full w-full overflow-hidden"
+      style={{ backgroundColor: guest.accentColor }}
+    >
+      {tileContent}
+    </div>
   );
 }
 
 export function GuestMosaic({ episodes }: GuestMosaicProps) {
   const [query, setQuery] = useState("");
-  const [previewGuest, setPreviewGuest] = useState<GuestWithEpisode | null>(
-    null
-  );
-  const [activeSlug, setActiveSlug] = useState<string | null>(null);
 
   const guests = useMemo(
     () => getGuestsWithEpisodes(episodes),
@@ -89,58 +93,35 @@ export function GuestMosaic({ episodes }: GuestMosaicProps) {
       (g) =>
         g.name.toLowerCase().includes(q) ||
         g.shortLabel.toLowerCase().includes(q) ||
-        g.title?.toLowerCase().includes(q) ||
+        g.company.toLowerCase().includes(q) ||
+        g.role.toLowerCase().includes(q) ||
         g.episode?.title.toLowerCase().includes(q)
     );
   }, [guests, query]);
 
-  function handleSelect(guest: GuestWithEpisode) {
-    setActiveSlug(guest.slug);
-    if (guest.episode) {
-      setPreviewGuest(guest);
-    }
-  }
-
   return (
-    <>
-      <section className="flex min-h-screen flex-col bg-[#0a0a0a]">
-        <MosaicNav query={query} onQueryChange={setQuery} />
+    <section className="flex min-h-screen flex-col bg-[#0a0a0a]">
+      <MosaicNav query={query} onQueryChange={setQuery} />
 
-        <div className="grid flex-1 grid-cols-2 grid-rows-4 gap-1 p-1 md:grid-cols-4 md:grid-rows-2 md:gap-1.5 md:p-1.5">
-          {filteredGuests.map((guest) => (
-            <MosaicTile
-              key={guest.slug}
-              guest={guest}
-              isActive={activeSlug === guest.slug}
-              onSelect={() => handleSelect(guest)}
-            />
-          ))}
-          {filteredGuests.length === 0 && (
-            <div className="col-span-full flex items-center justify-center text-sm font-extralight text-white/40">
-              No guests match your search.
-            </div>
-          )}
-        </div>
+      <div className="grid flex-1 grid-cols-2 grid-rows-4 gap-1 p-1 md:grid-cols-4 md:grid-rows-2 md:gap-1.5 md:p-1.5">
+        {filteredGuests.map((guest) => (
+          <MosaicTile key={guest.slug} guest={guest} />
+        ))}
+        {filteredGuests.length === 0 && (
+          <div className="col-span-full flex items-center justify-center text-sm font-extralight text-white/40">
+            No guests match your search.
+          </div>
+        )}
+      </div>
 
-        <div className="flex justify-center px-6 py-8">
-          <a
-            href="#explore"
-            className="rounded-full border border-white/30 px-6 py-2.5 text-xs font-extralight tracking-[0.2em] text-white transition-colors hover:bg-white hover:text-black"
-          >
-            EXPLORE THE EXCHANGE ↓
-          </a>
-        </div>
-      </section>
-
-      {previewGuest && (
-        <GuestPreviewModal
-          guest={previewGuest}
-          onClose={() => {
-            setPreviewGuest(null);
-            setActiveSlug(null);
-          }}
-        />
-      )}
-    </>
+      <div className="flex justify-center px-6 py-8">
+        <a
+          href="#explore"
+          className="rounded-full border border-white/30 px-6 py-2.5 text-xs font-extralight tracking-[0.2em] text-white transition-colors hover:bg-white hover:text-black"
+        >
+          EXPLORE THE EXCHANGE ↓
+        </a>
+      </div>
+    </section>
   );
 }

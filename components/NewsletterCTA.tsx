@@ -14,12 +14,12 @@ export function NewsletterCTA() {
             </p>
           </div>
           <a
-            href={SITE.beehiiv}
+            href={SITE.newsletter}
             target="_blank"
             rel="noopener noreferrer"
             className="text-xs font-extralight tracking-[0.15em] uppercase text-white/50 transition-colors hover:text-white"
           >
-            Subscribe on Beehiiv
+            Subscribe on Substack
           </a>
         </div>
       </div>

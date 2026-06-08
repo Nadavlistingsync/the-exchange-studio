@@ -40,7 +40,7 @@ export function GuestImage({
         fill
         unoptimized={isRemote}
         priority={priority}
-        className="object-cover object-top opacity-90 transition-all duration-500 group-hover:scale-105 group-hover:opacity-100"
+        className="object-cover object-top opacity-90 transition-all duration-500 group-hover:scale-105 group-hover:opacity-100 group-focus-visible:scale-105 group-focus-visible:opacity-100"
         sizes="(max-width: 768px) 50vw, 25vw"
         onError={() => {
           if (isRemote && activeSrc.includes("maxresdefault")) {

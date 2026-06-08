@@ -5,11 +5,17 @@ export const SITE = {
   description:
     "An invitation-only network for principals and operators who move New York commercial real estate.",
   email: "nadav@theexchange.studio",
-  linkedin:
-    process.env.LINKEDIN_URL ||
-    "https://www.linkedin.com/company/theexchangenpod",
-  beehiiv: "https://the-exchange-studio.beehiiv.com/",
-  youtube: YOUTUBE_CHANNEL_URL,
+  newsletter: "https://substack.com/@theexchangestudio",
+  social: {
+    youtube: process.env.YOUTUBE_URL || YOUTUBE_CHANNEL_URL,
+    instagram:
+      process.env.INSTAGRAM_URL || "https://www.instagram.com/theexchange.studio/",
+    tiktok:
+      process.env.TIKTOK_URL || "https://www.tiktok.com/@theexchange.studio",
+    linkedin:
+      process.env.LINKEDIN_URL ||
+      "https://www.linkedin.com/company/theexchangenpod",
+  },
   listen: {
     apple: process.env.APPLE_PODCASTS_URL || "#",
     spotify: process.env.SPOTIFY_URL || "#",

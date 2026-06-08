@@ -4,7 +4,8 @@ export type Guest = {
   name: string;
   slug: string;
   shortLabel: string;
-  title?: string;
+  role: string;
+  company: string;
   imagePath: string;
   accentColor: string;
   matchTerms: string[];
@@ -20,7 +21,8 @@ export const CONFIRMED_GUESTS: Guest[] = [
     name: "Bob Knakal",
     slug: "bob-knakal",
     shortLabel: "BOB",
-    title: "Chairman, JLL Capital Markets",
+    role: "Chairman",
+    company: "JLL Capital Markets",
     imagePath: "/guests/bob-knakal.jpg",
     accentColor: "#1a2332",
     matchTerms: ["bob knakal", "knakal"],
@@ -29,8 +31,9 @@ export const CONFIRMED_GUESTS: Guest[] = [
     name: "Jeff Gural",
     slug: "jeff-gural",
     shortLabel: "JEFF",
-    title: "Chairman, GFP Real Estate",
-    imagePath: "/guests/jeff-gural.jpg",
+    role: "Chairman",
+    company: "GFP Real Estate",
+    imagePath: "/guests/jeff-gural.png",
     accentColor: "#222222",
     matchTerms: ["jeff gural", "gural"],
   },
@@ -38,7 +41,8 @@ export const CONFIRMED_GUESTS: Guest[] = [
     name: "Stephen Siegel",
     slug: "stephen-siegel",
     shortLabel: "STEPHEN",
-    title: "Chairman, Global Holdings",
+    role: "Chairman",
+    company: "Global Holdings",
     imagePath: "/guests/stephen-siegel.jpg",
     accentColor: "#1f2d2d",
     matchTerms: ["stephen siegel", "siegel"],
@@ -47,8 +51,9 @@ export const CONFIRMED_GUESTS: Guest[] = [
     name: "Bess Freedman",
     slug: "bess-freedman",
     shortLabel: "BESS",
-    title: "CEO, Brown Harris Stevens",
-    imagePath: "/guests/bess-freedman.jpg",
+    role: "CEO",
+    company: "Brown Harris Stevens",
+    imagePath: "/guests/bess-freedman.png",
     accentColor: "#2d2424",
     matchTerms: ["bess freedman", "freedman"],
   },
@@ -56,8 +61,9 @@ export const CONFIRMED_GUESTS: Guest[] = [
     name: "Eric Benaim",
     slug: "eric-benaim",
     shortLabel: "ERIC B",
-    title: "Founder, Modern Spaces",
-    imagePath: "/guests/eric-benaim.jpg",
+    role: "Founder",
+    company: "Modern Spaces",
+    imagePath: "/guests/eric-benaim.png",
     accentColor: "#242430",
     matchTerms: ["eric benaim", "benaim", "modern spaces"],
   },
@@ -65,8 +71,9 @@ export const CONFIRMED_GUESTS: Guest[] = [
     name: "Michael Shah",
     slug: "michael-shah",
     shortLabel: "MICHAEL",
-    title: "CEO, DelShah Capital",
-    imagePath: "/guests/michael-shah.jpg",
+    role: "CEO",
+    company: "DelShah Capital",
+    imagePath: "/guests/michael-shah.png",
     accentColor: "#1e2a1e",
     matchTerms: ["michael shah", "delshah", "shah"],
   },
@@ -74,8 +81,9 @@ export const CONFIRMED_GUESTS: Guest[] = [
     name: "Jay Neveloff",
     slug: "jay-neveloff",
     shortLabel: "JAY",
-    title: "Partner, Kramer Levin",
-    imagePath: "/guests/jay-neveloff.jpg",
+    role: "Partner",
+    company: "Kramer Levin",
+    imagePath: "/guests/jay-neveloff.png",
     accentColor: "#2a2420",
     matchTerms: ["jay neveloff", "neveloff"],
   },
@@ -83,8 +91,9 @@ export const CONFIRMED_GUESTS: Guest[] = [
     name: "Eric Brody",
     slug: "eric-brody",
     shortLabel: "ERIC",
-    title: "Founder, Adams & Company",
-    imagePath: "/guests/eric-brody.jpg",
+    role: "Founder",
+    company: "Adams & Company",
+    imagePath: "/guests/eric-brody.png",
     accentColor: "#282828",
     matchTerms: ["eric brody", "brody"],
   },
@@ -102,30 +111,20 @@ export function findBestEpisodeForGuest(
   const matches = episodes.filter((ep) => episodeMatchesGuest(ep, guest));
   if (matches.length === 0) return undefined;
 
-  return (
-    matches.find((ep) => !ep.isShort) ??
-    matches.sort(
-      (a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime()
-    )[0]
-  );
+  return matches.sort(
+    (a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime()
+  )[0];
 }
 
-export function getYouTubeThumbnail(youtubeId: string): string {
-  return `https://i.ytimg.com/vi/${youtubeId}/maxresdefault.jpg`;
-}
 
 export function getGuestsWithEpisodes(episodes: Episode[]): GuestWithEpisode[] {
   return CONFIRMED_GUESTS.map((guest) => {
     const episode = findBestEpisodeForGuest(guest, episodes);
-    const displayImage =
-      episode?.youtubeId
-        ? getYouTubeThumbnail(episode.youtubeId)
-        : episode?.imageUrl || guest.imagePath;
 
     return {
       ...guest,
       episode,
-      displayImage,
+      displayImage: guest.imagePath,
     };
   });
 }

@@ -54,11 +54,9 @@ export function GuestWall({ episodes = [] }: GuestWallProps) {
                 />
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent p-4">
                   <p className="text-sm font-light text-white">{guest.name}</p>
-                  {guest.title && (
-                    <p className="mt-1 text-xs font-extralight text-white/50">
-                      {guest.title}
-                    </p>
-                  )}
+                  <p className="mt-1 text-xs font-extralight text-white/50">
+                    {guest.role}, {guest.company}
+                  </p>
                 </div>
               </div>
             );

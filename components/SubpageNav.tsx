@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { SiteBanner } from "./SiteBanner";
 
 const links = [
   { href: "/network", label: "Network" },
@@ -14,15 +15,14 @@ export function SubpageNav() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-[#0a0a0a]/90 backdrop-blur-md">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-        <Link
-          href="/"
-          className="text-sm font-extralight tracking-[0.2em] uppercase text-white transition-opacity hover:opacity-70"
-        >
-          The Exchange
-        </Link>
+      <nav className="relative mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+        <div className="hidden w-32 md:block" aria-hidden />
 
-        <div className="hidden items-center gap-10 md:flex">
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <SiteBanner className="pointer-events-auto" />
+        </div>
+
+        <div className="relative z-10 hidden items-center gap-10 md:flex md:ml-auto">
           {links.map((link) => (
             <Link
               key={link.href}
@@ -36,7 +36,7 @@ export function SubpageNav() {
 
         <button
           type="button"
-          className="flex flex-col gap-1.5 md:hidden"
+          className="relative z-10 flex flex-col gap-1.5 md:hidden"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
