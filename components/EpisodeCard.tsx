@@ -11,24 +11,24 @@ export function EpisodeCard({ episode }: EpisodeCardProps) {
   return (
     <Link
       href={`/episodes/${episode.slug}`}
-      className="group block border border-white/10 transition-colors hover:border-white/25"
+      className="group block border-t border-white/10 pt-4 transition-colors hover:border-white/20"
     >
       {episode.imageUrl && (
-        <div className="relative aspect-square overflow-hidden border-b border-white/10">
+        <div className="relative aspect-[4/3] overflow-hidden">
           <Image
             src={episode.imageUrl}
             alt={episode.title}
             fill
-            className="object-cover opacity-80 transition-opacity group-hover:opacity-100"
+            className="object-cover opacity-90 transition-opacity group-hover:opacity-100"
             sizes="(max-width: 768px) 50vw, 33vw"
           />
         </div>
       )}
-      <div className="p-5">
-        <time className="text-xs font-extralight text-white/40">
+      <div className="pt-4">
+        <time className="text-[11px] font-extralight text-white/40">
           {formatEpisodeDate(episode.pubDate)}
         </time>
-        <h3 className="mt-2 text-base font-extralight leading-snug text-white">
+        <h3 className="mt-1.5 text-sm font-extralight leading-snug text-white/80 transition-colors group-hover:text-white">
           {episode.title}
         </h3>
       </div>

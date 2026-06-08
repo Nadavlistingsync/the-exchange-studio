@@ -4,8 +4,12 @@ import { GuestEpisodeView } from "@/components/GuestEpisodeView";
 import { SubpageNav } from "@/components/SubpageNav";
 import { CONFIRMED_GUESTS, findBestEpisodeForGuest } from "@/lib/guests";
 import { getEpisodes } from "@/lib/rss";
+import { SITE } from "@/lib/site";
 
 export const revalidate = 3600;
+
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://theexchange.studio";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -25,9 +29,25 @@ export async function generateMetadata({
     return { title: "Guest Not Found" };
   }
 
+  const imageUrl = guest.imagePath.startsWith("http")
+    ? guest.imagePath
+    : `${siteUrl}${guest.imagePath}`;
+
   return {
     title: guest.name,
     description: guest.bio,
+    openGraph: {
+      title: `${guest.name} | ${SITE.name}`,
+      description: guest.bio,
+      type: "profile",
+      images: [{ url: imageUrl, alt: guest.name }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${guest.name} | ${SITE.name}`,
+      description: guest.bio,
+      images: [imageUrl],
+    },
   };
 }
 

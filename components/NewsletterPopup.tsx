@@ -11,15 +11,37 @@ function subscribeUrl(email: string) {
 }
 
 export function NewsletterPopup() {
+  const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
     if (sessionStorage.getItem(STORAGE_KEY)) return;
 
-    const timer = window.setTimeout(() => setOpen(true), 2500);
-    return () => window.clearTimeout(timer);
-  }, []);
+    const scrollTarget =
+      document.getElementById("explore") ??
+      document.querySelector<HTMLElement>("[data-mosaic-section]");
+
+    if (!scrollTarget) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setOpen(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(scrollTarget);
+    return () => observer.disconnect();
+  }, [mounted]);
 
   function dismiss() {
     sessionStorage.setItem(STORAGE_KEY, "1");
@@ -35,37 +57,36 @@ export function NewsletterPopup() {
     dismiss();
   }
 
-  if (!open) return null;
+  if (!mounted || !open) return null;
 
   return (
     <div
-      className="fixed bottom-4 left-4 right-4 z-50 sm:bottom-6 sm:left-6 sm:right-auto sm:max-w-md"
+      className="fixed bottom-4 left-4 right-4 z-50 sm:bottom-6 sm:left-auto sm:right-6 sm:max-w-sm"
       role="dialog"
       aria-modal="false"
       aria-labelledby="newsletter-popup-title"
     >
-      <div className="relative rounded-2xl border border-white/10 bg-[#0a0a0a] px-5 py-6 shadow-[0_20px_60px_rgba(0,0,0,0.55)] sm:px-6 sm:py-7">
+      <div className="relative rounded-xl border border-white/10 bg-[#0a0a0a] px-5 py-5">
         <button
           type="button"
           onClick={dismiss}
           aria-label="Close"
-          className="absolute right-4 top-4 flex h-6 w-6 items-center justify-center text-white/35 transition-colors hover:text-white/70"
+          className="absolute right-4 top-4 text-white/30 transition-colors hover:text-white/60"
         >
-          <span className="block h-px w-3.5 bg-current" aria-hidden />
+          <span className="block h-px w-3 bg-current" aria-hidden />
         </button>
 
-        <p className="text-[10px] font-extralight tracking-[0.22em] uppercase text-white/40">
-          Never miss an episode
+        <p className="text-[11px] font-extralight tracking-[0.15em] uppercase text-white/40">
+          Newsletter
         </p>
         <h2
           id="newsletter-popup-title"
-          className="font-serif mt-3 pr-8 text-xl font-normal leading-snug tracking-tight text-white sm:text-[1.35rem]"
+          className="mt-2 pr-6 text-base font-extralight leading-snug tracking-tight text-white"
         >
-          Get episode updates, operator insights, and interviews from The
-          Exchange.
+          Episode updates from The Exchange.
         </h2>
 
-        <form onSubmit={handleSubmit} className="mt-5 flex gap-2">
+        <form onSubmit={handleSubmit} className="mt-4 flex gap-2">
           <input
             type="email"
             value={email}
@@ -73,27 +94,14 @@ export function NewsletterPopup() {
             placeholder="Email address"
             required
             autoComplete="email"
-            className="min-w-0 flex-1 rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm font-extralight text-white placeholder:text-white/30 outline-none transition-colors focus:border-white/25"
+            className="min-w-0 flex-1 rounded-full border border-white/10 bg-transparent px-4 py-2 text-sm font-extralight text-white placeholder:text-white/30 outline-none transition-colors focus:border-white/20"
           />
           <button
             type="submit"
             aria-label="Subscribe on Substack"
-            className="flex shrink-0 items-center justify-center rounded-xl bg-[#1a3a34] px-4 py-3 text-white transition-opacity hover:opacity-90"
+            className="flex shrink-0 items-center justify-center rounded-full border border-white/10 px-4 py-2 text-sm font-extralight tracking-wide text-white/50 transition-colors hover:border-white hover:bg-white hover:text-black focus-visible:border-white/30 focus-visible:text-white/80"
           >
-            <svg
-              className="h-4 w-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={1.75}
-              aria-hidden
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-              />
-            </svg>
+            <span aria-hidden>→</span>
           </button>
         </form>
       </div>

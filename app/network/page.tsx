@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SubpageNav } from "@/components/SubpageNav";
+import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Network",
@@ -9,6 +10,8 @@ export const metadata: Metadata = {
 };
 
 export default function NetworkPage() {
+  const waitlistHref = `mailto:${SITE.email}?subject=${encodeURIComponent("Network waitlist")}&body=${encodeURIComponent("I'd like to join The Exchange network waitlist.")}`;
+
   return (
     <>
       <SubpageNav />
@@ -24,9 +27,15 @@ export default function NetworkPage() {
             A private room for the people who move New York commercial real
             estate. We will share more when the network opens.
           </p>
+          <a
+            href={waitlistHref}
+            className="mt-10 inline-block rounded-full border border-white/30 px-8 py-3 text-xs font-extralight tracking-[0.15em] text-white transition-colors hover:bg-white hover:text-black"
+          >
+            Join the waitlist
+          </a>
           <Link
             href="/"
-            className="mt-12 inline-block text-xs font-extralight tracking-[0.15em] uppercase text-white/50 transition-colors hover:text-white"
+            className="mt-8 block text-xs font-extralight tracking-[0.15em] text-white/50 transition-colors hover:text-white"
           >
             Back to home
           </Link>

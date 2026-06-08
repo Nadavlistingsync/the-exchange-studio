@@ -1,6 +1,12 @@
 import Parser from "rss-parser";
 import { Episode, slugify, stripHtml } from "./episodes";
 import {
+  enrichEpisodesWithSpotify,
+  episodeTitlesMatch,
+  extractSpotifyEpisodeUrl,
+  getSupplementalEpisodes,
+} from "./spotify";
+import {
   extractYouTubeId,
   getYouTubeFeedUrl,
   isFullYouTubeVideo,
@@ -84,6 +90,22 @@ function buildSlug(title: string, youtubeId?: string, index?: number): string {
   return base;
 }
 
+function getSpotifyUrl(item: RssItem): string | undefined {
+  const candidates = [
+    item.link,
+    item.content,
+    item.contentSnippet,
+    item.description,
+  ];
+
+  for (const text of candidates) {
+    const url = text ? extractSpotifyEpisodeUrl(text) : undefined;
+    if (url) return url;
+  }
+
+  return undefined;
+}
+
 function mapItemToEpisode(item: RssItem, index: number): Episode | null {
   const title = item.title?.trim();
   if (!title) return null;
@@ -102,6 +124,7 @@ function mapItemToEpisode(item: RssItem, index: number): Episode | null {
     audioUrl: getAudioUrl(item),
     videoUrl,
     youtubeId,
+    spotifyUrl: getSpotifyUrl(item),
     imageUrl: getImageUrl(item),
     duration: item.duration || item.itunes?.duration,
     isShort,
@@ -128,10 +151,28 @@ export async function getEpisodes(): Promise<Episode[]> {
       return getPlaceholderEpisodes();
     }
 
-    return episodes;
+    return mergeSupplementalEpisodes(
+      await enrichEpisodesWithSpotify(episodes)
+    );
   } catch {
     return getPlaceholderEpisodes();
   }
+}
+
+function mergeSupplementalEpisodes(episodes: Episode[]): Episode[] {
+  const supplemental = getSupplementalEpisodes();
+  const merged = [...episodes];
+
+  for (const candidate of supplemental) {
+    const exists = merged.some((ep) =>
+      episodeTitlesMatch(ep.title, candidate.title)
+    );
+    if (!exists) merged.push(candidate);
+  }
+
+  return merged.sort(
+    (a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime()
+  );
 }
 
 export async function getEpisodeBySlug(slug: string): Promise<Episode | null> {

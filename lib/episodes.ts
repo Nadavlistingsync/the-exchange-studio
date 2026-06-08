@@ -5,6 +5,7 @@ export type Episode = {
   pubDate: string;
   audioUrl?: string;
   videoUrl?: string;
+  spotifyUrl?: string;
   youtubeId?: string;
   imageUrl?: string;
   duration?: string;
@@ -25,6 +26,7 @@ export function formatEpisodeDate(dateString: string): string {
     month: "long",
     day: "numeric",
     year: "numeric",
+    timeZone: "UTC",
   });
 }
 

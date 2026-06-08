@@ -5,9 +5,9 @@ import { useState } from "react";
 import { SiteBanner } from "./SiteBanner";
 
 const links = [
-  { href: "/guests", label: "Guests" },
   { href: "/network", label: "Network" },
   { href: "/episodes", label: "Episodes" },
+  { href: "/sponsors", label: "Sponsors" },
   { href: "/#listen", label: "Listen" },
 ];
 

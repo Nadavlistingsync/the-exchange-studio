@@ -34,7 +34,7 @@ export function Nav() {
           ))}
           <Link
             href="/#request-access"
-            className="border border-white/30 px-5 py-2 text-xs font-light tracking-[0.15em] uppercase text-white transition-colors hover:bg-white hover:text-black"
+            className="border border-white/30 px-5 py-2 text-xs font-light tracking-wide text-white transition-colors hover:bg-white hover:text-black"
           >
             Request Access
           </Link>
@@ -67,7 +67,7 @@ export function Nav() {
             <Link
               href="/#request-access"
               onClick={() => setOpen(false)}
-              className="border border-white/30 px-5 py-3 text-center text-xs font-light tracking-[0.15em] uppercase"
+              className="border border-white/30 px-5 py-3 text-center text-xs font-light tracking-wide"
             >
               Request Access
             </Link>

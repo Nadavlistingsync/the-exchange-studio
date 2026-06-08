@@ -1,3 +1,4 @@
+import { SPOTIFY_SHOW_URL } from "./spotify";
 import { YOUTUBE_CHANNEL_URL, YOUTUBE_RSS_FEED_URL } from "./youtube";
 
 export const SITE = {
@@ -17,8 +18,8 @@ export const SITE = {
       "https://www.linkedin.com/company/theexchangenpod",
   },
   listen: {
-    apple: process.env.APPLE_PODCASTS_URL || "#",
-    spotify: process.env.SPOTIFY_URL || "#",
+    apple: process.env.APPLE_PODCASTS_URL || "/listen/apple",
+    spotify: process.env.SPOTIFY_URL || SPOTIFY_SHOW_URL,
     youtube: process.env.YOUTUBE_URL || YOUTUBE_CHANNEL_URL,
     rss: process.env.RSS_FEED_URL || YOUTUBE_RSS_FEED_URL,
   },

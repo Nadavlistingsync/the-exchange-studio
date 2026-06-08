@@ -1,30 +1,27 @@
-import Link from "next/link";
+import Image from "next/image";
 
 export function NetworkIntro() {
   return (
     <section
       id="explore"
-      className="border-t border-white/10 bg-[#0a0a0a]"
+      className="relative w-full border-t border-white/10 bg-[#0a0a0a]"
     >
-      <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <div className="fade-in max-w-4xl">
-          <p className="mb-6 text-xs font-extralight tracking-[0.25em] uppercase text-white/50">
-            Private Network
+      <div className="mx-auto max-w-6xl px-6 pt-10 md:px-12 md:pt-12">
+        <p className="section-eyebrow">Events</p>
+      </div>
+      <div className="relative mt-4 aspect-[16/9] w-full md:aspect-[21/9] md:max-h-[70vh]">
+        <Image
+          src="/events-coming-soon.png"
+          alt="Rooftop gathering overlooking the New York City skyline"
+          fill
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-black/5" />
+        <div className="absolute inset-0 flex items-end px-8 pb-10 md:px-12 md:pb-14 lg:px-16 lg:pb-16">
+          <p className="text-2xl font-extralight tracking-tight text-white md:text-3xl lg:text-4xl">
+            Events coming soon
           </p>
-          <h1 className="text-3xl font-extralight leading-[1.1] tracking-tight text-white md:text-5xl lg:text-6xl">
-            For the principals and operators who move New York real estate.
-          </h1>
-          <p className="mt-8 max-w-xl text-base font-extralight leading-relaxed text-white/60">
-            An invitation-only room for the people closing deals, building
-            portfolios, and setting the pace of the city&apos;s commercial
-            market.
-          </p>
-          <Link
-            href="/network"
-            className="mt-12 inline-block text-xs font-extralight tracking-[0.15em] uppercase text-white/50 transition-colors hover:text-white"
-          >
-            The network is coming soon
-          </Link>
         </div>
       </div>
     </section>

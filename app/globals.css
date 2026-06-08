@@ -17,6 +17,16 @@ body {
   background-color: var(--color-background);
   color: var(--color-foreground);
   font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.section-eyebrow {
+  font-size: 11px;
+  font-weight: 200;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
 }
 
 ::selection {

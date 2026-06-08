@@ -5,8 +5,12 @@ import { EpisodePlayer } from "@/components/EpisodePlayer";
 import { SubpageNav } from "@/components/SubpageNav";
 import { formatEpisodeDate } from "@/lib/episodes";
 import { getEpisodeBySlug, getEpisodes } from "@/lib/rss";
+import { SITE } from "@/lib/site";
 
 export const revalidate = 3600;
+
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://theexchange.studio";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -27,9 +31,27 @@ export async function generateMetadata({
     return { title: "Episode Not Found" };
   }
 
+  const imageUrl = episode.imageUrl
+    ? episode.imageUrl.startsWith("http")
+      ? episode.imageUrl
+      : `${siteUrl}${episode.imageUrl}`
+    : undefined;
+
   return {
     title: episode.title,
     description: episode.description,
+    openGraph: {
+      title: `${episode.title} | ${SITE.name}`,
+      description: episode.description,
+      type: "article",
+      ...(imageUrl ? { images: [{ url: imageUrl, alt: episode.title }] } : {}),
+    },
+    twitter: {
+      card: imageUrl ? "summary_large_image" : "summary",
+      title: `${episode.title} | ${SITE.name}`,
+      description: episode.description,
+      ...(imageUrl ? { images: [imageUrl] } : {}),
+    },
   };
 }
 
@@ -75,17 +97,29 @@ export default async function EpisodePage({ params }: PageProps) {
           </div>
         )}
 
-        {episode.videoUrl && (
-          <p className="mt-6">
-            <a
-              href={episode.videoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs font-extralight tracking-[0.15em] uppercase text-white/50 transition-colors hover:text-white"
-            >
-              Watch on YouTube
-            </a>
-          </p>
+        {(episode.spotifyUrl || episode.videoUrl) && (
+          <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
+            {episode.spotifyUrl && (
+              <a
+                href={episode.spotifyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-extralight tracking-wide text-white/50 transition-colors hover:text-white"
+              >
+                Listen on Spotify
+              </a>
+            )}
+            {episode.videoUrl && (
+              <a
+                href={episode.videoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-extralight tracking-wide text-white/50 transition-colors hover:text-white"
+              >
+                Watch on YouTube
+              </a>
+            )}
+          </div>
         )}
 
         <div className="mt-10 border-t border-white/10 pt-10">

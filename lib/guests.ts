@@ -1,4 +1,5 @@
 import type { Episode } from "./episodes";
+import { getEpisodeListenUrl, getSpotifyEpisodeUrl } from "./spotify";
 
 export type Guest = {
   name: string;
@@ -11,12 +12,105 @@ export type Guest = {
   imagePath: string;
   accentColor: string;
   matchTerms: string[];
+  /** Manual override when RSS slug differs from title matching. */
+  episodeSlug?: string;
+  /** Manual Spotify episode override when RSS title matching fails */
+  spotifyEpisodeId?: string;
 };
 
 export type GuestWithEpisode = Guest & {
   episode?: Episode;
   displayImage: string;
+  listenUrl?: string;
 };
+
+const COMPANY_ABBREVIATIONS: Record<string, string> = {
+  "Brown Harris Stevens": "BHS",
+  "The Harkov Lewis Team at Brown Harris Stevens": "BHS",
+  "The Corcoran Group": "Corcoran",
+  "ANAX Real Estate Partners": "ANAX",
+  "GFP Real Estate": "GFP",
+  "Delshah Capital": "Delshah",
+  "MJI Capital": "MJI",
+  "No Cap by CRE Daily": "CRE Daily",
+  "Pulse International Realty": "Pulse",
+  "Nimble Capital Group": "Nimble",
+  "Lusk & Associates Sotheby's International Realty": "Lusk & Associates",
+  "Teifke Real Estate": "Teifke",
+  "LIV Sotheby's International Realty": "LIV Sotheby's",
+  "Pheenyx Capital Investment": "Pheenyx",
+  "Real Estate Investor": "RE Investor",
+};
+
+function getRoleAbbreviation(role: string): string {
+  if (/\bCEO\b/i.test(role)) return "CEO";
+  if (/Vice Chairman/i.test(role)) return "Vice Chairman";
+  if (/Chairman/i.test(role)) return "Chairman";
+  if (/Managing Partner/i.test(role)) return "Managing Partner";
+  if (/General Partner/i.test(role)) return "Partner";
+  if (/Licensed Associate Broker|Associate Broker/i.test(role)) return "Broker";
+  if (/Co-Founder/i.test(role)) return "Co-Founder";
+  if (/Co-Host/i.test(role)) return "Co-Host";
+  if (/Founder/i.test(role)) return "Founder";
+  if (/Partner/i.test(role)) return "Partner";
+  if (/Former NFL/i.test(role)) return "NFL";
+  if (/Broker/i.test(role)) return "Broker";
+  return role.split(",")[0]?.split("&")[0]?.trim() || role;
+}
+
+function getCompanyAbbreviation(company: string): string {
+  if (COMPANY_ABBREVIATIONS[company]) return COMPANY_ABBREVIATIONS[company];
+  if (company.length <= 14) return company;
+  return company;
+}
+
+/** Full mosaic tile label, e.g. "Bess Freedman CEO BHS →" */
+export function getGuestBadgeLabel(
+  guest: Pick<Guest, "name" | "role" | "company">
+): string {
+  const role = getRoleAbbreviation(guest.role);
+  const company = getCompanyAbbreviation(guest.company);
+  return `${guest.name} ${role} ${company} →`;
+}
+
+/** Concise role + company for mosaic tile footer, e.g. "Founder at EM Equity" */
+export function getGuestRoleCompanyLabel(
+  guest: Pick<Guest, "role" | "company">
+): string {
+  const role = getRoleAbbreviation(guest.role);
+  const company = getCompanyAbbreviation(guest.company);
+  return `${role} at ${company}`;
+}
+
+/** Short mosaic label, e.g. "CEO · EM Equity" */
+export function getGuestMosaicLabel(
+  guest: Pick<Guest, "role" | "company">
+): string {
+  const role = getRoleAbbreviation(guest.role);
+  const company = getCompanyAbbreviation(guest.company);
+  return `${role} · ${company}`;
+}
+
+/** Short mosaic footer label, e.g. "CEO · BHS" */
+export function getGuestCompactLabel(
+  guest: Pick<Guest, "role" | "company">
+): string {
+  const role = getRoleAbbreviation(guest.role);
+  const company = getCompanyAbbreviation(guest.company);
+  return `${role} · ${company}`;
+}
+
+export function getGuestListenUrl(
+  guest: Guest,
+  episode?: Episode
+): string | undefined {
+  const episodeUrl = getEpisodeListenUrl(episode);
+  if (episodeUrl) return episodeUrl;
+  if (guest.spotifyEpisodeId) {
+    return getSpotifyEpisodeUrl(guest.spotifyEpisodeId);
+  }
+  return undefined;
+}
 
 export const CONFIRMED_GUESTS: Guest[] = [
   {
@@ -29,7 +123,14 @@ export const CONFIRMED_GUESTS: Guest[] = [
     bio: "Bob Knakal is one of the most prolific investment sales brokers in US history. Since 1984 he has personally brokered the sale of more than 2,398 properties totaling over $24 billion in value across New York City. He co-founded Massey Knakal Realty Services in 1988 and built it into the city's leading building sales brokerage before its $100 million sale to Cushman & Wakefield in 2014, later leading investment sales at Cushman & Wakefield and JLL before launching BKREA in 2024.",
     imagePath: "/guests/bob-knakal.png",
     accentColor: "#1a2332",
-    matchTerms: ["bob knakal", "knakal", "2391 buildings", "2398"],
+    matchTerms: [
+      "bob knakal",
+      "knakal",
+      "2391 buildings",
+      "2398",
+      "bkrea",
+      "massey knakal",
+    ],
   },
   {
     name: "Jeff Gural",
@@ -41,7 +142,14 @@ export const CONFIRMED_GUESTS: Guest[] = [
     bio: "Jeff Gural is one of New York's most prominent landlords and the owner of the Flatiron Building. As Chairman of GFP Real Estate, he oversees an ownership interest in more than 50 properties, most of them in New York City. A founder of what became Newmark before its 2017 split from GFP, he is known for leading some of Manhattan's highest-profile office-to-residential conversions.",
     imagePath: "/guests/jeff-gural.png",
     accentColor: "#222222",
-    matchTerms: ["jeff gural", "jeffrey gural", "gural", "flatiron"],
+    matchTerms: [
+      "jeff gural",
+      "jeffrey gural",
+      "gural",
+      "flatiron",
+      "flatiron building",
+    ],
+    spotifyEpisodeId: "7e52GydC9m9Uy6TVvYyprh",
   },
   {
     name: "Stephen Siegel",
@@ -53,7 +161,14 @@ export const CONFIRMED_GUESTS: Guest[] = [
     bio: "Stephen Siegel is among the most legendary brokers in New York commercial real estate history. As CBRE's Chairman of Global Brokerage, he advises major corporations and property owners on a broad range of real estate strategies. He first rose to prominence at Cushman & Wakefield, becoming President and CEO at age 37, and later served as Chairman and CEO of Insignia/ESG before its merger with CBRE.",
     imagePath: "/guests/stephen-siegel.png",
     accentColor: "#1f2d2d",
-    matchTerms: ["stephen siegel", "siegel", "cushman"],
+    matchTerms: [
+      "stephen siegel",
+      "siegel",
+      "cushman",
+      "ceo of cushman",
+      "cushman & wakefield at 37",
+    ],
+    spotifyEpisodeId: "5RWYTWfFyBOSBHTvHTkxKy",
   },
   {
     name: "Bess Freedman",
@@ -65,7 +180,13 @@ export const CONFIRMED_GUESTS: Guest[] = [
     bio: "Bess Freedman leads one of New York's most established luxury residential brokerages. She joined Brown Harris Stevens in 2013, was named co-president in 2017, and shortly after became the firm's first chief executive officer. She is a frequent voice in national real estate and business media, known for outspoken leadership on both market strategy and workplace values.",
     imagePath: "/guests/bess-freedman.png",
     accentColor: "#2d2424",
-    matchTerms: ["bess freedman", "freedman", "brown harris"],
+    matchTerms: [
+      "bess freedman",
+      "freedman",
+      "brown harris",
+      "inside brown harris stevens",
+    ],
+    spotifyEpisodeId: "5joLlf8YOuFtxbVRp8chhj",
   },
   {
     name: "Michael Shah",
@@ -77,7 +198,15 @@ export const CONFIRMED_GUESTS: Guest[] = [
     bio: "Michael Shah is the founder and chief executive of Delshah Capital, a vertically integrated New York real estate investment firm. Founded in 2006, Delshah specializes in acquiring, developing, and managing multifamily, retail, and hospitality properties as well as distressed CRE loans across New York City, with a portfolio of over 2 million square feet valued at more than $800 million.",
     imagePath: "/guests/michael-shah.png",
     accentColor: "#1e2a1e",
-    matchTerms: ["michael shah", "delshah", "shah", "foreclosure"],
+    matchTerms: [
+      "michael shah",
+      "delshah",
+      "shah",
+      "foreclosure",
+      "$1b in debt",
+      "zero foreclosures",
+    ],
+    spotifyEpisodeId: "1LeLDwZkXilJQUmRCOPdjn",
   },
   {
     name: "Eric Benaim",
@@ -137,7 +266,15 @@ export const CONFIRMED_GUESTS: Guest[] = [
     bio: "Beth Benalloul is a top-producing Manhattan luxury broker. A long-standing member of Corcoran's President's Council, she has worked at the firm for over 20 years, ranks consistently among its top 25 brokers companywide, and has surpassed $1 billion in career sales across cooperatives, condominiums, and townhomes.",
     imagePath: "/guests/beth-benalloul.png",
     accentColor: "#2d2a28",
-    matchTerms: ["beth benalloul", "benalloul", "personal trainer", "billion in real estate", "corcoran"],
+    matchTerms: [
+      "beth benalloul",
+      "benalloul",
+      "personal trainer",
+      "billion in real estate",
+      "sold $1 billion",
+      "corcoran",
+    ],
+    spotifyEpisodeId: "1uvun2vZyW9HeV9LZdmpHv",
   },
   {
     name: "Ari Harkov",
@@ -149,7 +286,8 @@ export const CONFIRMED_GUESTS: Guest[] = [
     bio: "Ari Harkov is one of New York's elite residential power brokers. He leads the Harkov Lewis Team, consistently ranked among the top 250 teams in the US by the Wall Street Journal and REAL Trends, and recognized as the number one large team companywide at Brown Harris Stevens for 2025. He holds an MBA with honors from Columbia.",
     imagePath: "/guests/ari-harkov.png",
     accentColor: "#2a2824",
-    matchTerms: ["ari harkov", "harkov", "harkov lewis"],
+    matchTerms: ["ari harkov", "harkov", "harkov lewis", "opera singer"],
+    spotifyEpisodeId: "4j74jlxTICaUHB65cUNV8s",
   },
   {
     name: "Michael Iuculano",
@@ -167,7 +305,10 @@ export const CONFIRMED_GUESTS: Guest[] = [
       "michael lu",
       "mji capital",
       "lending",
+      "2.2b",
+      "episode 16",
     ],
+    spotifyEpisodeId: "3BKfu0K1EPRe2CPflHBGYV",
   },
   {
     name: "Daniella Schlisser",
@@ -191,7 +332,8 @@ export const CONFIRMED_GUESTS: Guest[] = [
     bio: "Nate Wieland is a former NFL player turned real estate professional. He signed a three-year contract with the New England Patriots before transitioning into real estate, where he now works on investment and brokerage deals, the focus of his Exchange conversation on moving from the league to $40 million in transactions.",
     imagePath: "/guests/nate-weiland.png",
     accentColor: "#2a2418",
-    matchTerms: ["nate weiland", "nate wieland", "weiland", "wieland", "nfl", "patriots"],
+    matchTerms: ["nate weiland", "nate wieland", "weiland", "wieland", "nfl", "patriots", "40 million"],
+    spotifyEpisodeId: "6HEwfaoQGoDkON6w9AA55X",
   },
   {
     name: "Jeffrey Berman",
@@ -251,7 +393,15 @@ export const CONFIRMED_GUESTS: Guest[] = [
     bio: "Rena Kliot is the founder of boutique brokerage Pulse International Realty. She opened the firm nearly two decades ago and has built a team of around 30 agents and staff with offices in New York and Miami, backed by a personal track record of nearly $2 billion in career sales.",
     imagePath: "/guests/rena-kliot.png",
     accentColor: "#2d2624",
-    matchTerms: ["rena kliot", "rena kilot", "kliot", "pulse international"],
+    matchTerms: [
+      "rena kliot",
+      "rena kilot",
+      "kliot",
+      "pulse international",
+      "2 billion",
+      "from a divorce",
+    ],
+    spotifyEpisodeId: "5fEUouNLTZRQiDCu9QQrQN",
   },
   {
     name: "Michael Wagman",
@@ -325,16 +475,38 @@ function episodeMatchesGuest(episode: Episode, guest: Guest): boolean {
   return guest.matchTerms.some((term) => title.includes(term));
 }
 
+function getSyntheticEpisodeForGuest(guest: Guest): Episode | undefined {
+  if (!guest.spotifyEpisodeId) return undefined;
+
+  const entry = getCatalogEntryById(guest.spotifyEpisodeId);
+  if (!entry) return undefined;
+
+  return {
+    title: entry.title,
+    slug: slugify(entry.title),
+    description: "",
+    pubDate: new Date(0).toISOString(),
+    spotifyUrl: getSpotifyEpisodeUrl(entry.id),
+  };
+}
+
 export function findBestEpisodeForGuest(
   guest: Guest,
   episodes: Episode[]
 ): Episode | undefined {
-  const matches = episodes.filter((ep) => episodeMatchesGuest(ep, guest));
-  if (matches.length === 0) return undefined;
+  if (guest.episodeSlug) {
+    const override = episodes.find((ep) => ep.slug === guest.episodeSlug);
+    if (override) return override;
+  }
 
-  return matches.sort(
-    (a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime()
-  )[0];
+  const matches = episodes.filter((ep) => episodeMatchesGuest(ep, guest));
+  if (matches.length > 0) {
+    return matches.sort(
+      (a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime()
+    )[0];
+  }
+
+  return getSyntheticEpisodeForGuest(guest);
 }
 
 export function getGuestBySlug(slug: string): Guest | undefined {
@@ -348,11 +520,13 @@ export function getRankedGuests(): Guest[] {
 export function getGuestsWithEpisodes(episodes: Episode[]): GuestWithEpisode[] {
   return getRankedGuests().map((guest) => {
     const episode = findBestEpisodeForGuest(guest, episodes);
+    const listenUrl = getGuestListenUrl(guest, episode);
 
     return {
       ...guest,
       episode,
       displayImage: guest.imagePath,
+      listenUrl,
     };
   });
 }
