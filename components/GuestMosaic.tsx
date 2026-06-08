@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import type { Episode } from "@/lib/episodes";
 import { getGuestsWithEpisodes, type GuestWithEpisode } from "@/lib/guests";
 import { GuestImage } from "./GuestImage";
+import { GuestSearch } from "./GuestSearch";
 import { MosaicNav } from "./MosaicNav";
 
 type GuestMosaicProps = {
@@ -55,23 +56,10 @@ function MosaicTile({ guest }: { guest: GuestWithEpisode }) {
     </>
   );
 
-  if (guest.episode) {
-    return (
-      <Link
-        href={`/guests/${guest.slug}`}
-        className="group relative block h-full w-full overflow-hidden transition-transform duration-300 hover:scale-[1.01] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
-        style={{ backgroundColor: guest.accentColor }}
-        aria-label={`${guest.name}, ${guest.role} at ${guest.company}`}
-      >
-        {tileContent}
-      </Link>
-    );
-  }
-
   return (
     <Link
       href={`/guests/${guest.slug}`}
-      className="group relative block h-full w-full overflow-hidden transition-transform duration-300 hover:scale-[1.01] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+      className="group relative block min-h-[140px] overflow-hidden transition-transform duration-300 hover:scale-[1.01] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 sm:min-h-[180px] md:min-h-[220px]"
       style={{ backgroundColor: guest.accentColor }}
       aria-label={`${guest.name}, ${guest.role} at ${guest.company}`}
     >
@@ -103,9 +91,9 @@ export function GuestMosaic({ episodes }: GuestMosaicProps) {
 
   return (
     <section className="flex min-h-screen flex-col bg-[#0a0a0a]">
-      <MosaicNav query={query} onQueryChange={setQuery} />
+      <MosaicNav />
 
-      <div className="grid flex-1 grid-cols-2 grid-rows-4 gap-1 p-1 md:grid-cols-4 md:grid-rows-2 md:gap-1.5 md:p-1.5">
+      <div className="grid flex-1 grid-cols-2 gap-1 p-1 sm:grid-cols-3 md:grid-cols-4 md:gap-1.5 md:p-1.5">
         {filteredGuests.map((guest) => (
           <MosaicTile key={guest.slug} guest={guest} />
         ))}
@@ -116,7 +104,12 @@ export function GuestMosaic({ episodes }: GuestMosaicProps) {
         )}
       </div>
 
-      <div className="flex justify-center px-6 py-8">
+      <div className="flex flex-col items-center gap-4 px-6 py-8">
+        <GuestSearch
+          value={query}
+          onChange={setQuery}
+          className="w-full max-w-md"
+        />
         <a
           href="#explore"
           className="rounded-full border border-white/30 px-6 py-2.5 text-xs font-extralight tracking-[0.2em] text-white transition-colors hover:bg-white hover:text-black"

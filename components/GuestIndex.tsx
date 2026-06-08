@@ -1,12 +1,22 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useMemo, useState } from "react";
 import type { GuestWithEpisode } from "@/lib/guests";
+import { GuestSearch } from "./GuestSearch";
 
 type GuestIndexProps = {
   guests: GuestWithEpisode[];
 };
 
-function GuestRow({ guest, featured = false }: { guest: GuestWithEpisode; featured?: boolean }) {
+function GuestRow({
+  guest,
+  featured = false,
+}: {
+  guest: GuestWithEpisode;
+  featured?: boolean;
+}) {
   return (
     <Link
       href={`/guests/${guest.slug}`}
@@ -62,13 +72,28 @@ function GuestRow({ guest, featured = false }: { guest: GuestWithEpisode; featur
 }
 
 export function GuestIndex({ guests }: GuestIndexProps) {
+  const [query, setQuery] = useState("");
+
+  const filteredGuests = useMemo(() => {
+    if (!query.trim()) return guests;
+    const q = query.toLowerCase();
+    return guests.filter(
+      (g) =>
+        g.name.toLowerCase().includes(q) ||
+        g.company.toLowerCase().includes(q) ||
+        g.role.toLowerCase().includes(q) ||
+        g.bio.toLowerCase().includes(q)
+    );
+  }, [guests, query]);
+
   if (guests.length === 0) return null;
 
-  const [featured, ...rest] = guests;
+  const [featured, ...rest] = filteredGuests;
+  const hasFeatured = Boolean(featured);
 
   return (
     <section className="mx-auto max-w-6xl px-6 pb-24 pt-40 md:pt-48">
-      <div className="fade-in mb-16 max-w-2xl">
+      <div className="fade-in mb-10 max-w-2xl">
         <p className="mb-4 text-xs font-extralight tracking-[0.25em] uppercase text-white/50">
           Guests
         </p>
@@ -81,12 +106,24 @@ export function GuestIndex({ guests }: GuestIndexProps) {
         </p>
       </div>
 
-      <div className="fade-in space-y-4">
-        <GuestRow guest={featured} featured />
-        {rest.map((guest) => (
-          <GuestRow key={guest.slug} guest={guest} />
-        ))}
-      </div>
+      <GuestSearch
+        value={query}
+        onChange={setQuery}
+        className="fade-in mb-10 max-w-md"
+      />
+
+      {filteredGuests.length === 0 ? (
+        <p className="text-sm font-extralight text-white/40">
+          No guests match your search.
+        </p>
+      ) : (
+        <div className="fade-in space-y-4">
+          {hasFeatured && <GuestRow guest={featured} featured />}
+          {rest.map((guest) => (
+            <GuestRow key={guest.slug} guest={guest} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }

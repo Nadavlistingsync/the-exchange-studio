@@ -10,12 +10,7 @@ const menuLinks = [
   { href: "/episodes", label: "Episodes" },
 ];
 
-type MosaicNavProps = {
-  query: string;
-  onQueryChange: (value: string) => void;
-};
-
-export function MosaicNav({ query, onQueryChange }: MosaicNavProps) {
+export function MosaicNav() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -39,32 +34,6 @@ export function MosaicNav({ query, onQueryChange }: MosaicNavProps) {
           >
             LISTEN
           </Link>
-        </div>
-      </div>
-
-      <div className="px-4 pb-4 md:px-6">
-        <div className="relative mx-auto max-w-md">
-          <input
-            type="search"
-            value={query}
-            onChange={(e) => onQueryChange(e.target.value)}
-            placeholder="Search guests"
-            className="w-full rounded-full border border-white/20 bg-white/5 py-2.5 pl-4 pr-10 text-sm font-extralight text-white placeholder:text-white/30 outline-none transition-colors focus:border-white/40"
-          />
-          <svg
-            className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={1.5}
-            aria-hidden
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-            />
-          </svg>
         </div>
       </div>
 

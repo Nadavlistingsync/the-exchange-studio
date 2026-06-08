@@ -6,8 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "enhance-guests": "node scripts/enhance-guest-images.mjs"
+    "lint": "next lint"
   },
   "dependencies": {
     "next": "^15.3.3",
