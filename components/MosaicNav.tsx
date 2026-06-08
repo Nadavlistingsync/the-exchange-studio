@@ -20,18 +20,15 @@ export function MosaicNav() {
           <SiteBanner priority className="pointer-events-auto" />
         </div>
 
-        <div className="relative z-10 flex shrink-0 items-center gap-2">
+        <div className="relative z-10 flex shrink-0 items-center gap-5">
           <button
             type="button"
             onClick={() => setMenuOpen(!menuOpen)}
-            className="rounded-full border border-white/10 px-4 py-1.5 text-[11px] font-extralight tracking-[0.15em] text-white/70 transition-colors hover:border-white/20 hover:text-white"
+            className="link-subtle"
           >
             Menu
           </button>
-          <Link
-            href="/#listen"
-            className="rounded-full border border-white/10 px-4 py-1.5 text-[11px] font-extralight tracking-[0.15em] text-white/70 transition-colors hover:border-white/20 hover:text-white"
-          >
+          <Link href="/#listen" className="link-subtle">
             Listen
           </Link>
         </div>
@@ -45,7 +42,7 @@ export function MosaicNav() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className="text-sm font-extralight text-white/50 transition-colors hover:text-white"
+                className="link-quiet"
               >
                 {link.label}
               </Link>

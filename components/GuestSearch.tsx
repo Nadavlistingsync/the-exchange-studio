@@ -23,8 +23,8 @@ export function GuestSearch({
           type="search"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          placeholder="Search guests"
-          aria-label="Search guests"
+          placeholder="Search by name"
+          aria-label="Search by name"
           className="w-full rounded-full border border-white/10 bg-transparent py-2 pl-4 pr-9 text-sm font-extralight text-white placeholder:text-white/30 outline-none transition-colors focus:border-white/20"
         />
         {hasQuery ? (

@@ -19,9 +19,7 @@ export default async function EpisodesPage() {
       <SubpageNav />
       <section className="mx-auto max-w-6xl px-6 pb-24 pt-40 md:pt-48">
       <div className="fade-in mb-16 max-w-2xl">
-        <p className="mb-4 text-xs font-extralight tracking-[0.25em] uppercase text-white/50">
-          Episodes
-        </p>
+        <p className="section-eyebrow mb-4">Episodes</p>
         <h1 className="text-4xl font-extralight tracking-tight text-white md:text-5xl">
           Episodes
         </h1>

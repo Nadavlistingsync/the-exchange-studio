@@ -552,6 +552,17 @@ export function matchGuestToEpisodeSlug(
   return match?.slug;
 }
 
+/** First name for mosaic badges, e.g. "Michael" from "Michael Iuculano" */
+export function getGuestFirstName(guest: Pick<Guest, "name">): string {
+  return guest.name.split(" ")[0] ?? guest.name;
+}
+
+export function getGuestForEpisode(episode: Episode): Guest | undefined {
+  const slug = matchGuestSlugFromEpisode(episode);
+  if (!slug) return undefined;
+  return getGuestBySlug(slug);
+}
+
 export function matchGuestSlugFromEpisode(
   episode: Episode
 ): string | undefined {

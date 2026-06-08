@@ -61,12 +61,10 @@ export function NewsletterPopup() {
           <span className="block h-px w-3 bg-current" aria-hidden />
         </button>
 
-        <p className="text-[11px] font-extralight tracking-[0.15em] uppercase text-white/40">
-          Newsletter
-        </p>
+        <p className="section-eyebrow">Newsletter</p>
         <h2
           id="newsletter-popup-title"
-          className="mt-2 pr-6 text-base font-extralight leading-snug tracking-tight text-white"
+          className="mt-2 pr-6 text-base font-extralight leading-snug text-white"
         >
           Episode updates from The Exchange.
         </h2>
@@ -76,10 +74,9 @@ export function NewsletterPopup() {
           target="_blank"
           rel="noopener noreferrer"
           onClick={dismiss}
-          className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/10 px-5 py-2 text-sm font-extralight tracking-wide text-white/70 transition-colors hover:border-white hover:bg-white hover:text-black"
+          className="link-quiet mt-4 inline-block"
         >
-          Subscribe on Substack
-          <span aria-hidden>→</span>
+          Subscribe on Substack →
         </a>
       </div>
     </div>

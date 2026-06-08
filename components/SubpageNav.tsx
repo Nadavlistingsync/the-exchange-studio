@@ -28,7 +28,7 @@ export function SubpageNav() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-extralight tracking-wide text-white/70 transition-colors hover:text-white"
+              className="link-quiet"
             >
               {link.label}
             </Link>
@@ -54,7 +54,7 @@ export function SubpageNav() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="text-sm font-extralight tracking-wide text-white/70"
+                className="link-quiet"
               >
                 {link.label}
               </Link>

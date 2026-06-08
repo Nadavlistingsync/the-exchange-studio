@@ -45,9 +45,7 @@ export default function SponsorsPage() {
       <SubpageNav />
       <section className="mx-auto max-w-6xl px-6 pb-24 pt-40 md:pt-48">
         <div className="fade-in max-w-2xl">
-          <p className="mb-6 text-xs font-extralight tracking-[0.25em] uppercase text-white/50">
-            Sponsorship
-          </p>
+          <p className="section-eyebrow mb-4">Sponsorship</p>
           <h1 className="text-4xl font-extralight leading-[1.1] tracking-tight text-white md:text-5xl">
             Reach the people who move New York commercial real estate.
           </h1>

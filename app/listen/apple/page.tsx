@@ -28,19 +28,14 @@ export default function ApplePodcastsPage() {
       <section className="mx-auto flex min-h-[70vh] max-w-6xl flex-col justify-center px-6 pb-24 pt-40 md:pt-48">
         <div className="fade-in max-w-2xl">
           <AppleLogo className="mb-10 h-10 w-10 text-white/80" />
-          <p className="mb-6 text-xs font-extralight tracking-[0.25em] uppercase text-white/50">
-            Apple Podcasts
-          </p>
+          <p className="section-eyebrow mb-4">Apple Podcasts</p>
           <h1 className="text-4xl font-extralight leading-[1.1] tracking-tight text-white md:text-5xl">
             Coming soon.
           </h1>
-          <p className="mt-8 text-base font-extralight leading-relaxed text-white/60">
+          <p className="mt-6 text-base font-extralight leading-relaxed text-white/55">
             Apple Podcasts is on the way.
           </p>
-          <Link
-            href="/"
-            className="mt-12 inline-block text-xs font-extralight tracking-[0.15em] uppercase text-white/50 transition-colors hover:text-white"
-          >
+          <Link href="/" className="link-subtle mt-10 inline-block">
             Back to home
           </Link>
         </div>

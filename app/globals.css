@@ -22,11 +22,32 @@ body {
 }
 
 .section-eyebrow {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 200;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.link-quiet {
+  font-size: 0.875rem;
+  font-weight: 200;
+  color: rgba(255, 255, 255, 0.55);
+  transition: color 0.15s ease;
+}
+
+.link-quiet:hover {
+  color: rgba(255, 255, 255, 1);
+}
+
+.link-subtle {
+  font-size: 0.8125rem;
+  font-weight: 200;
   color: rgba(255, 255, 255, 0.4);
+  transition: color 0.15s ease;
+}
+
+.link-subtle:hover {
+  color: rgba(255, 255, 255, 0.75);
 }
 
 ::selection {
@@ -54,7 +75,7 @@ body {
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;

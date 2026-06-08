@@ -68,9 +68,7 @@ export default async function EpisodePage({ params }: PageProps) {
       <SubpageNav />
       <article className="mx-auto max-w-3xl px-6 pb-24 pt-40 md:pt-48">
       <div className="fade-in">
-        <p className="mb-4 text-xs font-extralight tracking-[0.25em] uppercase text-white/50">
-          Episode
-        </p>
+        <p className="section-eyebrow mb-4">Episode</p>
         <time className="text-xs font-extralight text-white/40">
           {formatEpisodeDate(episode.pubDate)}
         </time>

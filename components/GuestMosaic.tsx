@@ -5,11 +5,12 @@ import { useMemo, useState } from "react";
 import type { Episode } from "@/lib/episodes";
 import {
   getGuestCompactLabel,
-  getGuestRoleCompanyLabel,
+  getGuestFirstName,
   getGuestsWithEpisodes,
   type GuestWithEpisode,
 } from "@/lib/guests";
 import { GuestImage } from "./GuestImage";
+import { GuestNameBadge } from "./GuestNameBadge";
 import { GuestSearch } from "./GuestSearch";
 import { MosaicNav } from "./MosaicNav";
 
@@ -49,13 +50,10 @@ function MosaicTile({
     layout === "rolling" ? ROLLING_TILE_CLASS : "aspect-[3/4] w-full";
 
   return (
-    <div
-      className={`group relative bg-[#0a0a0a] p-0.5 ${sizeClass}`}
-    >
+    <div className={`group relative bg-[#0a0a0a] p-0.5 ${sizeClass}`}>
       <Link
         href={`/guests/${guest.slug}`}
-        title={guest.name}
-        className="relative block h-full w-full overflow-hidden rounded-xl border border-white/10 bg-[#0a0a0a] transition-colors hover:border-white/20 focus:outline-none focus-visible:border-white/20 focus-visible:ring-1 focus-visible:ring-white/40"
+        className="relative block h-full w-full overflow-hidden rounded-xl border border-white/10 bg-[#0a0a0a] transition-colors hover:border-white/20 focus:outline-none focus-visible:border-white/20"
         aria-label={`${guest.name}, ${guest.role} at ${guest.company}`}
       >
         <GuestImage
@@ -65,26 +63,20 @@ function MosaicTile({
           variant="mosaic"
         />
 
-        <div className="pointer-events-none absolute inset-0 rounded-xl bg-black/0 transition-colors duration-200 group-hover:bg-black/15 group-focus-visible:bg-black/15" />
+        <div className="pointer-events-none absolute inset-0 rounded-xl bg-black/0 transition-colors duration-200 group-hover:bg-black/10 group-has-[:focus-visible]:bg-black/10" />
 
-        <span
-          className="pointer-events-none absolute right-1.5 top-1.5 z-10 rounded-sm bg-[#e8e4dc] px-1.5 py-0.5 text-[9px] font-normal leading-none tracking-[0.08em] text-black sm:right-2 sm:top-2 sm:px-2 sm:py-1 sm:text-[10px]"
-        >
-          {guest.shortLabel}
-        </span>
-
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-1.5 bg-gradient-to-t from-black/75 via-black/40 to-transparent px-1.5 pb-1.5 pt-6 sm:gap-2 sm:px-2 sm:pb-2 sm:pt-8">
-          <span className="min-w-0 flex-1 truncate text-[10px] font-extralight leading-snug tracking-wide text-white/90 sm:text-xs">
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/70 via-black/30 to-transparent px-2 pb-2 pt-8 sm:px-2.5 sm:pb-2.5">
+          <span className="block truncate text-[10px] font-extralight leading-snug text-white/85 sm:text-xs">
             {getGuestCompactLabel(guest)}
-          </span>
-          <span
-            aria-hidden
-            className="flex shrink-0 items-center justify-center rounded-full border border-white/30 px-2 py-0.5 text-[10px] font-extralight leading-none text-white/90 sm:px-2.5 sm:py-1 sm:text-[11px]"
-          >
-            →
           </span>
         </div>
       </Link>
+
+      <GuestNameBadge
+        firstName={getGuestFirstName(guest)}
+        name={guest.name}
+        className="pointer-events-none absolute right-2 top-2 z-20 sm:right-2.5 sm:top-2.5"
+      />
     </div>
   );
 }
@@ -146,16 +138,7 @@ export function GuestMosaic({ episodes }: GuestMosaicProps) {
   const filteredGuests = useMemo(() => {
     if (!query.trim()) return guests;
     const q = query.toLowerCase();
-    return guests.filter(
-      (g) =>
-        g.name.toLowerCase().includes(q) ||
-        g.shortLabel.toLowerCase().includes(q) ||
-        getGuestRoleCompanyLabel(g).toLowerCase().includes(q) ||
-        getGuestCompactLabel(g).toLowerCase().includes(q) ||
-        g.company.toLowerCase().includes(q) ||
-        g.role.toLowerCase().includes(q) ||
-        g.episode?.title.toLowerCase().includes(q)
-    );
+    return guests.filter((g) => g.name.toLowerCase().includes(q));
   }, [guests, query]);
 
   const isSearching = query.trim().length > 0;
@@ -186,10 +169,7 @@ export function GuestMosaic({ episodes }: GuestMosaicProps) {
       </div>
 
       <div className="flex shrink-0 justify-center pb-6 pt-0">
-        <a
-          href="#explore"
-          className="text-[11px] font-extralight tracking-[0.15em] text-white/40 transition-colors hover:text-white"
-        >
+        <a href="#explore" className="link-subtle">
           Explore the exchange ↓
         </a>
       </div>

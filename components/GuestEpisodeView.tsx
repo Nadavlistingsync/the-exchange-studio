@@ -44,17 +44,14 @@ export function GuestEpisodeView({ guest, episode }: GuestEpisodeViewProps) {
     <div className="bg-[#0a0a0a]">
       <section className="grid min-h-[calc(100vh-5rem)] lg:grid-cols-2">
         <div className="flex flex-col justify-center px-6 py-16 md:px-12 lg:px-16 lg:py-24">
-          <Link
-            href="/"
-            className="mb-10 inline-flex w-fit rounded-full border border-white/30 px-5 py-2 text-[10px] font-extralight tracking-[0.2em] text-white transition-colors hover:bg-white hover:text-black md:mb-14"
-          >
+          <Link href="/" className="link-subtle mb-10 inline-block md:mb-14">
             ← Back
           </Link>
 
-          <p className="text-xs font-extralight tracking-[0.25em] uppercase text-white/45">
+          <p className="text-sm font-extralight text-white/45">
             {guest.role}, {guest.company}
           </p>
-          <h1 className="font-serif mt-4 text-5xl font-light leading-[1.05] tracking-tight text-white md:text-6xl lg:text-7xl">
+          <h1 className="font-serif mt-3 text-5xl font-light leading-[1.05] tracking-tight text-white md:text-6xl lg:text-7xl">
             {guest.name}
           </h1>
 
@@ -62,45 +59,44 @@ export function GuestEpisodeView({ guest, episode }: GuestEpisodeViewProps) {
             {guest.bio}
           </p>
 
-          <div className="mt-10 flex flex-wrap items-center gap-4">
+          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
             {listenHref && (
               <a
                 href={listenHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full bg-white px-8 py-3 text-xs font-light tracking-[0.2em] text-black transition-opacity hover:opacity-90"
+                className="link-quiet"
               >
-                Listen
+                Listen on Spotify →
               </a>
             )}
             {canPlay && (
               <button
                 type="button"
                 onClick={handlePlay}
-                className="rounded-full border border-white/40 px-8 py-3 text-xs font-extralight tracking-[0.2em] text-white transition-colors hover:bg-white hover:text-black"
+                className="link-quiet"
               >
-                Play
+                Play here →
               </button>
             )}
             {episode && (
               <Link
                 href={`/episodes/${episode.slug}`}
-                className="rounded-full border border-white/40 px-8 py-3 text-xs font-extralight tracking-[0.2em] text-white transition-colors hover:bg-white hover:text-black"
+                className="link-quiet"
               >
-                Episode →
+                Episode page →
               </Link>
             )}
           </div>
 
           {!episode && (
             <div className="mt-10 border-t border-white/10 pt-8">
-              <p className="text-xs font-extralight tracking-[0.2em] uppercase text-white/45">
-                Episode coming soon
+              <p className="section-eyebrow mb-2">Episode coming soon</p>
+              <p className="max-w-md text-sm font-extralight leading-relaxed text-white/50">
+                This conversation is on the way. Listen to the show in the
+                meantime.
               </p>
-              <p className="mt-3 max-w-md text-sm font-extralight leading-relaxed text-white/50">
-                This conversation is on the way. Listen to the show in the meantime.
-              </p>
-              <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2">
+              <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
                 {showLinks.map((link) => (
                   <a
                     key={link.label}
@@ -111,7 +107,7 @@ export function GuestEpisodeView({ guest, episode }: GuestEpisodeViewProps) {
                         ? "noopener noreferrer"
                         : undefined
                     }
-                    className="text-xs font-extralight tracking-[0.15em] text-white/50 transition-colors hover:text-white"
+                    className="link-subtle"
                   >
                     {link.label}
                   </a>
@@ -121,7 +117,7 @@ export function GuestEpisodeView({ guest, episode }: GuestEpisodeViewProps) {
           )}
 
           {episode && (
-            <p className="mt-8 text-xs font-extralight leading-relaxed text-white/35">
+            <p className="mt-8 text-sm font-extralight leading-relaxed text-white/40">
               {episode.title}
             </p>
           )}
@@ -144,9 +140,7 @@ export function GuestEpisodeView({ guest, episode }: GuestEpisodeViewProps) {
           className="border-t border-white/10 px-6 py-16 md:px-12 lg:px-16"
         >
           <div className="mx-auto max-w-5xl">
-            <p className="mb-6 text-xs font-extralight tracking-[0.25em] uppercase text-white/45">
-              Now playing
-            </p>
+            <p className="section-eyebrow mb-6">Now playing</p>
             <EpisodePlayer episode={episode} />
           </div>
         </section>
