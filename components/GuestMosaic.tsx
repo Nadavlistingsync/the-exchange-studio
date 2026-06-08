@@ -12,8 +12,11 @@ type GuestMosaicProps = {
   episodes: Episode[];
 };
 
-const ROW_COUNT = 4;
-const ROW_DURATIONS = ["38s", "44s", "50s", "56s"];
+const ROW_COUNT = 3;
+const ROW_DURATIONS = ["40s", "48s", "56s"];
+
+const TILE_CLASS =
+  "aspect-[3/4] w-[72px] shrink-0 sm:w-[84px] md:w-[96px]";
 
 function splitIntoRows(
   guests: GuestWithEpisode[],
@@ -39,18 +42,15 @@ function MosaicTile({
     .join("");
   const hasEpisode = Boolean(guest.episode);
 
-  const sizeClass =
-    layout === "rolling"
-      ? "aspect-[3/4] w-[calc((100vw-1.25rem)/3)] min-w-[108px] shrink-0 sm:w-[calc((100vw-2rem)/4)] md:w-[calc((100vw-2.5rem)/5)] lg:w-[calc((100vw-3rem)/6)]"
-      : "aspect-[3/4] w-full";
+  const sizeClass = layout === "rolling" ? TILE_CLASS : "aspect-[3/4] w-full";
 
   return (
     <Link
       href={`/guests/${guest.slug}`}
-      className={`group relative block bg-black p-1 transition-transform duration-300 hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 sm:p-1.5 ${sizeClass}`}
+      className={`group relative block bg-black p-0.5 transition-transform duration-300 hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 sm:p-1 ${sizeClass}`}
       aria-label={`${guest.name}, ${guest.role} at ${guest.company}`}
     >
-      <div className="relative h-full w-full overflow-hidden rounded-xl bg-black">
+      <div className="relative h-full w-full overflow-hidden rounded-lg bg-black sm:rounded-xl">
         <GuestImage
           src={guest.displayImage}
           alt={guest.name}
@@ -58,25 +58,21 @@ function MosaicTile({
           variant="mosaic"
         />
 
-        <div className="pointer-events-none absolute inset-0 rounded-xl bg-black/0 transition-colors duration-300 group-hover:bg-black/20" />
+        <div className="pointer-events-none absolute inset-0 rounded-lg bg-black/0 transition-colors duration-300 group-hover:bg-black/20 sm:rounded-xl" />
 
-        <span className="pointer-events-none absolute right-2 top-2 z-10 rounded-md bg-[#e8e4dc] px-2 py-1 text-[9px] font-normal tracking-[0.18em] text-black sm:text-[10px]">
+        <span className="pointer-events-none absolute right-1 top-1 z-10 rounded bg-[#e8e4dc] px-1.5 py-0.5 text-[8px] font-normal tracking-[0.14em] text-black sm:right-1.5 sm:top-1.5 sm:px-2 sm:py-1 sm:text-[9px]">
           {guest.shortLabel}
         </span>
 
-        <div className="pointer-events-none absolute inset-x-2 bottom-2 z-10 translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 sm:inset-x-3 sm:bottom-3">
-          <div className="rounded-sm border border-white/15 bg-black/90 px-3 py-2 shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-sm sm:px-4 sm:py-3">
-            <p className="text-xs font-light leading-snug text-white sm:text-sm">
+        <div className="pointer-events-none absolute inset-x-1.5 bottom-1.5 z-10 translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 sm:inset-x-2 sm:bottom-2">
+          <div className="rounded-sm border border-white/15 bg-black/90 px-2 py-1.5 shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-sm sm:px-3 sm:py-2">
+            <p className="text-[10px] font-light leading-snug text-white sm:text-xs">
               {guest.name}
             </p>
-            <p className="mt-0.5 text-[10px] font-extralight text-white/55 sm:mt-1 sm:text-xs">
-              {guest.company}
-            </p>
             {hasEpisode && (
-              <div className="mt-2 flex items-center justify-between gap-2 border-t border-white/10 pt-2 text-[10px] font-extralight tracking-[0.12em] text-white/70 sm:mt-3 sm:pt-3 sm:text-xs">
-                <span>Episode</span>
-                <span aria-hidden>→</span>
-              </div>
+              <p className="mt-1 text-[9px] font-extralight tracking-[0.1em] text-white/60">
+                Episode →
+              </p>
             )}
           </div>
         </div>
@@ -89,19 +85,16 @@ function RollingRows({ guests }: { guests: GuestWithEpisode[] }) {
   const rows = useMemo(() => splitIntoRows(guests, ROW_COUNT), [guests]);
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col justify-center gap-2 overflow-hidden px-1 py-3 md:gap-2.5 md:px-1.5">
+    <div className="flex flex-col gap-1.5 overflow-hidden p-2 sm:gap-2 sm:p-3">
       {rows.map((rowGuests, rowIndex) => {
         const loopGuests = [...rowGuests, ...rowGuests];
         const direction =
           rowIndex % 2 === 0 ? "marquee-track-left" : "marquee-track-right";
 
         return (
-          <div
-            key={rowIndex}
-            className="marquee-row shrink-0 overflow-hidden"
-          >
+          <div key={rowIndex} className="marquee-row shrink-0 overflow-hidden">
             <div
-              className={`marquee-track flex w-max items-center gap-1 md:gap-1.5 ${direction}`}
+              className={`marquee-track flex w-max items-center gap-1 sm:gap-1.5 ${direction}`}
               style={{ animationDuration: ROW_DURATIONS[rowIndex] }}
             >
               {loopGuests.map((guest, index) => (
@@ -115,6 +108,21 @@ function RollingRows({ guests }: { guests: GuestWithEpisode[] }) {
           </div>
         );
       })}
+    </div>
+  );
+}
+
+function SearchGrid({ guests }: { guests: GuestWithEpisode[] }) {
+  return (
+    <div className="grid max-h-[calc(3*6.5rem+1rem)] grid-cols-4 gap-1 overflow-y-auto p-2 sm:max-h-[calc(3*7.5rem+1.25rem)] sm:grid-cols-5 sm:gap-1.5 sm:p-3 md:grid-cols-6">
+      {guests.map((guest) => (
+        <MosaicTile key={guest.slug} guest={guest} layout="grid" />
+      ))}
+      {guests.length === 0 && (
+        <div className="col-span-full flex items-center justify-center py-8 text-sm font-extralight text-white/40">
+          No guests match your search.
+        </div>
+      )}
     </div>
   );
 }
@@ -143,36 +151,40 @@ export function GuestMosaic({ episodes }: GuestMosaicProps) {
   const isSearching = query.trim().length > 0;
 
   return (
-    <section className="flex min-h-screen flex-col bg-[#0a0a0a]">
+    <section className="flex flex-col bg-[#0a0a0a] pb-10 pt-0">
       <MosaicNav />
 
-      {isSearching ? (
-        <div className="grid flex-1 grid-cols-3 gap-1 p-1 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 md:gap-1.5 md:p-1.5">
-          {filteredGuests.map((guest) => (
-            <MosaicTile key={guest.slug} guest={guest} layout="grid" />
-          ))}
-          {filteredGuests.length === 0 && (
-            <div className="col-span-full flex items-center justify-center text-sm font-extralight text-white/40">
-              No guests match your search.
-            </div>
+      <div className="mx-auto w-full max-w-3xl px-4 pt-6 sm:max-w-4xl sm:pt-8">
+        <div className="overflow-hidden border border-white/10 bg-black">
+          {isSearching ? (
+            <SearchGrid guests={filteredGuests} />
+          ) : (
+            <RollingRows guests={guests} />
           )}
-        </div>
-      ) : (
-        <RollingRows guests={guests} />
-      )}
 
-      <div className="shrink-0 flex flex-col items-center gap-4 px-6 py-8">
-        <GuestSearch
-          value={query}
-          onChange={setQuery}
-          className="w-full max-w-md"
-        />
-        <a
-          href="#explore"
-          className="rounded-full border border-white/30 px-6 py-2.5 text-xs font-extralight tracking-[0.2em] text-white transition-colors hover:bg-white hover:text-black"
-        >
-          EXPLORE THE EXCHANGE ↓
-        </a>
+          <div className="border-t border-white/10 px-3 py-3 sm:px-4 sm:py-4">
+            <label
+              htmlFor="guest-search"
+              className="mb-2 block text-xs font-extralight tracking-[0.12em] text-white/50"
+            >
+              Search guests:
+            </label>
+            <GuestSearch
+              id="guest-search"
+              value={query}
+              onChange={setQuery}
+            />
+          </div>
+        </div>
+
+        <div className="mt-6 flex justify-center">
+          <a
+            href="#explore"
+            className="rounded-full border border-white/30 px-6 py-2.5 text-xs font-extralight tracking-[0.2em] text-white transition-colors hover:bg-white hover:text-black"
+          >
+            EXPLORE THE EXCHANGE ↓
+          </a>
+        </div>
       </div>
     </section>
   );
