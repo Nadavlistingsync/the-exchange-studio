@@ -1,19 +1,13 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { SITE } from "@/lib/site";
 
 const STORAGE_KEY = "exchange-newsletter-dismissed";
 
-function subscribeUrl(email: string) {
-  const base = SITE.newsletter.replace(/\/$/, "");
-  return `${base}?email=${encodeURIComponent(email)}`;
-}
-
 export function NewsletterPopup() {
   const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
-  const [email, setEmail] = useState("");
 
   useEffect(() => {
     setMounted(true);
@@ -48,15 +42,6 @@ export function NewsletterPopup() {
     setOpen(false);
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const trimmed = email.trim();
-    if (!trimmed) return;
-
-    window.open(subscribeUrl(trimmed), "_blank", "noopener,noreferrer");
-    dismiss();
-  }
-
   if (!mounted || !open) return null;
 
   return (
@@ -86,24 +71,16 @@ export function NewsletterPopup() {
           Episode updates from The Exchange.
         </h2>
 
-        <form onSubmit={handleSubmit} className="mt-4 flex gap-2">
-          <input
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            placeholder="Email address"
-            required
-            autoComplete="email"
-            className="min-w-0 flex-1 rounded-full border border-white/10 bg-transparent px-4 py-2 text-sm font-extralight text-white placeholder:text-white/30 outline-none transition-colors focus:border-white/20"
-          />
-          <button
-            type="submit"
-            aria-label="Subscribe on Substack"
-            className="flex shrink-0 items-center justify-center rounded-full border border-white/10 px-4 py-2 text-sm font-extralight tracking-wide text-white/50 transition-colors hover:border-white hover:bg-white hover:text-black focus-visible:border-white/30 focus-visible:text-white/80"
-          >
-            <span aria-hidden>→</span>
-          </button>
-        </form>
+        <a
+          href={SITE.newsletter}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={dismiss}
+          className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/10 px-5 py-2 text-sm font-extralight tracking-wide text-white/70 transition-colors hover:border-white hover:bg-white hover:text-black"
+        >
+          Subscribe on Substack
+          <span aria-hidden>→</span>
+        </a>
       </div>
     </div>
   );

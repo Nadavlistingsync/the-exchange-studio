@@ -48,14 +48,13 @@ function MosaicTile({
   const sizeClass =
     layout === "rolling" ? ROLLING_TILE_CLASS : "aspect-[3/4] w-full";
 
-  const listenUrl = guest.listenUrl;
-
   return (
     <div
       className={`group relative bg-[#0a0a0a] p-0.5 ${sizeClass}`}
     >
       <Link
         href={`/guests/${guest.slug}`}
+        title={guest.name}
         className="relative block h-full w-full overflow-hidden rounded-xl border border-white/10 bg-[#0a0a0a] transition-colors hover:border-white/20 focus:outline-none focus-visible:border-white/20 focus-visible:ring-1 focus-visible:ring-white/40"
         aria-label={`${guest.name}, ${guest.role} at ${guest.company}`}
       >
@@ -68,7 +67,9 @@ function MosaicTile({
 
         <div className="pointer-events-none absolute inset-0 rounded-xl bg-black/0 transition-colors duration-200 group-hover:bg-black/15 group-focus-visible:bg-black/15" />
 
-        <span className="pointer-events-none absolute right-1.5 top-1.5 z-10 rounded-sm bg-[#e8e4dc] px-1.5 py-0.5 text-[9px] font-normal leading-none tracking-[0.08em] text-black sm:right-2 sm:top-2 sm:px-2 sm:py-1 sm:text-[10px]">
+        <span
+          className="pointer-events-none absolute right-1.5 top-1.5 z-10 rounded-sm bg-[#e8e4dc] px-1.5 py-0.5 text-[9px] font-normal leading-none tracking-[0.08em] text-black sm:right-2 sm:top-2 sm:px-2 sm:py-1 sm:text-[10px]"
+        >
           {guest.shortLabel}
         </span>
 
@@ -76,29 +77,14 @@ function MosaicTile({
           <span className="min-w-0 flex-1 truncate text-[10px] font-extralight leading-snug tracking-wide text-white/90 sm:text-xs">
             {getGuestCompactLabel(guest)}
           </span>
-          {!listenUrl && (
-            <span
-              aria-hidden
-              className="flex shrink-0 items-center justify-center rounded-full border border-white/30 px-2 py-0.5 text-[10px] font-extralight leading-none text-white/90 sm:px-2.5 sm:py-1 sm:text-[11px]"
-            >
-              →
-            </span>
-          )}
+          <span
+            aria-hidden
+            className="flex shrink-0 items-center justify-center rounded-full border border-white/30 px-2 py-0.5 text-[10px] font-extralight leading-none text-white/90 sm:px-2.5 sm:py-1 sm:text-[11px]"
+          >
+            →
+          </span>
         </div>
       </Link>
-
-      {listenUrl && (
-        <a
-          href={listenUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`Listen to ${guest.name}'s episode`}
-          onClick={(event) => event.stopPropagation()}
-          className="absolute bottom-2 right-2 z-20 flex items-center justify-center rounded-full border border-white/30 bg-black/40 px-2 py-0.5 text-[10px] font-extralight leading-none text-white/90 backdrop-blur-sm transition-colors hover:bg-white hover:text-black sm:bottom-2.5 sm:right-2.5 sm:px-2.5 sm:py-1 sm:text-[11px]"
-        >
-          →
-        </a>
-      )}
     </div>
   );
 }
