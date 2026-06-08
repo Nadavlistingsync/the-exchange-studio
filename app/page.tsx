@@ -2,7 +2,7 @@ import { GuestMosaic } from "@/components/GuestMosaic";
 import { NetworkIntro } from "@/components/NetworkIntro";
 import { EpisodeCarousel } from "@/components/EpisodeCarousel";
 import { Press } from "@/components/Press";
-import { NewsletterCTA } from "@/components/NewsletterCTA";
+import { NewsletterPopup } from "@/components/NewsletterPopup";
 import { ListenLinks } from "@/components/ListenLinks";
 import { getEpisodes } from "@/lib/rss";
 
@@ -17,8 +17,8 @@ export default async function HomePage() {
       <NetworkIntro />
       <EpisodeCarousel episodes={episodes} />
       <Press />
-      <NewsletterCTA />
       <ListenLinks />
+      <NewsletterPopup />
     </>
   );
 }
