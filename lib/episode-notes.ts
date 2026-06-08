@@ -10,14 +10,26 @@ export const EPISODE_SHOW_NOTES: Record<string, string> = {
     "Jeff Gural on owning the Flatiron Building, building GFP Real Estate, and decades of dealmaking across New York commercial real estate.",
   "she-left-personal-training-and-sold-1-billion-in-real-estate-beth-benalloul-hb1rvpzbvpy":
     "Beth Benalloul on leaving personal training to sell $1B in real estate — building a sales machine at The Corcoran Group and what it takes to break through in NYC.",
-  "how-rena-kliot-went-from-a-divorce-to-2-billion-in-sales":
+  "how-rena-kliot-went-from-a-divorce-to-2-billion-in-sales-f_ao0wbsh6m":
     "Rena Kliot on rebuilding after divorce to $2B in sales — resilience, client relationships, and building a top-producing career in New York real estate.",
-  "how-michael-iuculano-built-a-2-2b-real-estate-lending-company-episode-16":
+  "how-michael-iuculano-built-a-2-2b-real-estate-lending-company-episode-16-1pu3svzskju":
     "Michael Iuculano on building MJI Capital into a $2.2B real estate lending platform — debt, discipline, and financing the deals that shape the city.",
-  "from-the-nfl-to-40-million-dollar-real-estate-deals-nate-weiland":
+  "from-the-nfl-to-40-million-dollar-real-estate-deals-nate-weiland-un6osprgumy":
     "Nate Weiland on going from the NFL to $40M real estate deals — athletic discipline applied to brokerage, capital, and building a second career in CRE.",
-  "from-opera-singer-to-1-at-brown-harris-stevens-ari-harkov":
+  "from-opera-singer-to-1-at-brown-harris-stevens-ari-harkov-gk5bdvhcaaw":
     "Ari Harkov on going from opera singer to #1 at Brown Harris Stevens — craft, consistency, and standing out in Manhattan's most competitive residential market.",
+  "how-bob-knakal-sold-2-391-buildings-tewn-ep-14-ghvy21vxx3s":
+    "Bob Knakal on selling 2,391 buildings — building a brokerage career at the center of New York investment sales and what separates the best operators in the market.",
+  "why-camber-creek-is-backing-serhant-jeffery-berman-ep-13-prslsjkzvlw":
+    "Jeffrey Berman on why Camber Creek is backing SERHANT — venture capital, proptech, and how institutional capital is reshaping residential brokerage.",
+  "how-an-israeli-immigrant-built-a-real-estate-empire-from-scratch-eyal-mehaber-ep-13-lo5ip3jmcoi":
+    "Eyal Mehaber on building a real estate empire from scratch as an Israeli immigrant — development, discipline, and scaling in New York.",
+  "how-he-came-back-from-15m-in-real-estate-eric-brody-_8nfmsplkna":
+    "Eric Brody on coming back from -$15M in real estate — risk, recovery, and the operator mindset behind ANAX Real Estate Partners.",
+  "how-an-immigrant-doctor-started-a-120m-real-estate-fund-in-her-free-time-nkem-ezemama-ep-8-ckyjba3fu4m":
+    "Nkem Ezeamama on starting a $120M real estate fund while practicing emergency medicine — passive investing, multifamily, and building wealth alongside a medical career.",
+  "from-flipping-houses-in-his-free-time-to-90m-in-aum-michael-wagman-ngdr-ep-7-wtefh9pc_zs":
+    "Michael Wagman on going from flipping houses in his spare time to $90M in AUM — Nimble Capital Group and building a portfolio operator mindset.",
 };
 
 export function getEpisodeShowNotes(slug: string): string | undefined {

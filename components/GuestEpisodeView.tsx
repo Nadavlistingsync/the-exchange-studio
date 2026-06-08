@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import { formatEpisodeDate, type Episode } from "@/lib/episodes";
 import type { Guest } from "@/lib/guests";
 import { getGuestListenUrl } from "@/lib/guests";
+import { getEpisodeHref } from "@/lib/episode-links";
 import { EpisodePlayer } from "./EpisodePlayer";
 import { GuestImage } from "./GuestImage";
 import { SITE } from "@/lib/site";
@@ -84,14 +85,6 @@ export function GuestEpisodeView({
                 Play here →
               </button>
             )}
-            {episode && (
-              <Link
-                href={`/episodes/${episode.slug}`}
-                className="link-quiet"
-              >
-                Episode page →
-              </Link>
-            )}
           </div>
 
           {!episode && (
@@ -134,7 +127,7 @@ export function GuestEpisodeView({
                 {relatedEpisodes.map((related) => (
                   <li key={related.slug}>
                     <Link
-                      href={`/episodes/${related.slug}`}
+                      href={getEpisodeHref(related)}
                       className="link-quiet block"
                     >
                       {related.title}

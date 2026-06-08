@@ -3,6 +3,7 @@ import Link from "next/link";
 import { formatEpisodeDate } from "@/lib/episodes";
 import type { Episode } from "@/lib/episodes";
 import { getGuestCompactLabel, getGuestForEpisode } from "@/lib/guests";
+import { getEpisodeHref } from "@/lib/episode-links";
 
 type FeaturedEpisodeProps = {
   episode: Episode;
@@ -17,7 +18,7 @@ export function FeaturedEpisode({ episode }: FeaturedEpisodeProps) {
       <div className="grid gap-8 md:grid-cols-[minmax(0,240px)_1fr] md:items-start md:gap-10">
         {imageSrc && (
           <Link
-            href={`/episodes/${episode.slug}`}
+            href={getEpisodeHref(episode)}
             className="group relative mx-auto aspect-[3/4] w-full max-w-[240px] overflow-hidden rounded-xl border border-white/10 bg-[#0a0a0a] transition-colors hover:border-white/20 md:mx-0"
           >
             <Image
@@ -56,7 +57,7 @@ export function FeaturedEpisode({ episode }: FeaturedEpisodeProps) {
           ) : (
             <h3 className="mt-2 text-2xl font-extralight leading-snug tracking-tight text-white md:text-3xl">
               <Link
-                href={`/episodes/${episode.slug}`}
+                href={getEpisodeHref(episode)}
                 className="transition-opacity hover:opacity-70"
               >
                 {episode.title}
@@ -69,7 +70,7 @@ export function FeaturedEpisode({ episode }: FeaturedEpisodeProps) {
           </p>
 
           <Link
-            href={`/episodes/${episode.slug}`}
+            href={getEpisodeHref(episode)}
             className="link-quiet mt-6 inline-block"
           >
             Listen →

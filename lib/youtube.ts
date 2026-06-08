@@ -1,9 +1,14 @@
 export const YOUTUBE_CHANNEL_ID = "UCTrA61Wc5aZtorudu_2JRaw";
 
+export const YOUTUBE_PLAYLIST_ID = "PLw44OCKOLKLQpbntYLrJHl8zEf3TA13Tv";
+
 export const YOUTUBE_CHANNEL_URL =
   process.env.YOUTUBE_URL || "https://www.youtube.com/@TheExchange.Studio";
 
-export const YOUTUBE_RSS_FEED_URL = `https://www.youtube.com/feeds/videos.xml?channel_id=${YOUTUBE_CHANNEL_ID}`;
+export const YOUTUBE_PLAYLIST_URL = `https://www.youtube.com/playlist?list=${YOUTUBE_PLAYLIST_ID}`;
+
+/** Curated full episodes — avoids shorts/clips from the channel upload feed. */
+export const YOUTUBE_RSS_FEED_URL = `https://www.youtube.com/feeds/videos.xml?playlist_id=${YOUTUBE_PLAYLIST_ID}`;
 
 export function getYouTubeFeedUrl(): string {
   return process.env.RSS_FEED_URL || YOUTUBE_RSS_FEED_URL;

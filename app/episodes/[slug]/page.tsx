@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { EpisodeView } from "@/components/EpisodeView";
 import { JsonLd } from "@/components/JsonLd";
 import { SubpageNav } from "@/components/SubpageNav";
@@ -70,11 +70,15 @@ export default async function EpisodePage({ params }: PageProps) {
 
   const guest = getGuestForEpisode(episode);
 
+  if (guest) {
+    redirect(`/guests/${guest.slug}`);
+  }
+
   return (
     <>
-      <JsonLd data={getEpisodeJsonLd(episode, guest?.name)} />
+      <JsonLd data={getEpisodeJsonLd(episode)} />
       <SubpageNav />
-      <EpisodeView episode={episode} guest={guest} />
+      <EpisodeView episode={episode} />
     </>
   );
 }

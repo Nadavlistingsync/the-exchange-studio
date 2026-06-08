@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { formatEpisodeDate, type Episode } from "@/lib/episodes";
+import { getEpisodeHref } from "@/lib/episode-links";
 import { getGuestForEpisode } from "@/lib/guests";
 
 type LatestEpisodeStripProps = {
@@ -26,7 +27,7 @@ export function LatestEpisodeStrip({ episode }: LatestEpisodeStripProps) {
             {formatEpisodeDate(episode.pubDate)}
           </time>
         </p>
-        <Link href={`/episodes/${episode.slug}`} className="link-quiet shrink-0">
+        <Link href={getEpisodeHref(episode)} className="link-quiet shrink-0">
           Listen →
         </Link>
       </div>

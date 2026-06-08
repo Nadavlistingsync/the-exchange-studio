@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { SITE } from "@/lib/site";
 import { SiteTitle } from "./SiteTitle";
 
 const links = [

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { CONFIRMED_GUESTS } from "@/lib/guests";
+import { CONFIRMED_GUESTS, getGuestForEpisode } from "@/lib/guests";
 import { getEpisodes } from "@/lib/rss";
 
 const siteUrl =
@@ -23,12 +23,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: path === "" ? 1 : 0.8,
   }));
 
-  const episodeRoutes: MetadataRoute.Sitemap = episodes.map((episode) => ({
-    url: `${siteUrl}/episodes/${episode.slug}`,
-    lastModified: new Date(episode.pubDate),
-    changeFrequency: "monthly",
-    priority: 0.7,
-  }));
+  const episodeRoutes: MetadataRoute.Sitemap = episodes
+    .map((episode) => {
+      const guest = getGuestForEpisode(episode);
+      if (guest) return null;
+      return {
+        url: `${siteUrl}/episodes/${episode.slug}`,
+        lastModified: new Date(episode.pubDate),
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
+      };
+    })
+    .filter((route): route is NonNullable<typeof route> => route != null);
 
   const guestRoutes: MetadataRoute.Sitemap = CONFIRMED_GUESTS.map((guest) => ({
     url: `${siteUrl}/guests/${guest.slug}`,
