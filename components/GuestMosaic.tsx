@@ -12,59 +12,108 @@ type GuestMosaicProps = {
   episodes: Episode[];
 };
 
-function MosaicTile({ guest }: { guest: GuestWithEpisode }) {
+const ROW_COUNT = 4;
+const ROW_DURATIONS = ["38s", "44s", "50s", "56s"];
+
+function splitIntoRows(
+  guests: GuestWithEpisode[],
+  rowCount: number
+): GuestWithEpisode[][] {
+  const rows: GuestWithEpisode[][] = Array.from({ length: rowCount }, () => []);
+  guests.forEach((guest, index) => {
+    rows[index % rowCount].push(guest);
+  });
+  return rows;
+}
+
+function MosaicTile({
+  guest,
+  layout = "rolling",
+}: {
+  guest: GuestWithEpisode;
+  layout?: "rolling" | "grid";
+}) {
   const initials = guest.name
     .split(" ")
     .map((n) => n[0])
     .join("");
   const hasEpisode = Boolean(guest.episode);
 
-  const tileContent = (
-    <>
-      <GuestImage
-        src={guest.displayImage}
-        alt={guest.name}
-        initials={initials}
-      />
-
-      <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/30" />
-
-      <span className="pointer-events-none absolute right-2 top-2 text-[10px] font-extralight tracking-[0.15em] text-white/80 transition-opacity duration-300 group-hover:opacity-0 md:right-3 md:top-3 md:text-xs">
-        {guest.shortLabel}
-      </span>
-
-      <div className="pointer-events-none absolute inset-x-3 bottom-3 z-10 translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
-        <div className="rounded-sm border border-white/15 bg-black/90 px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-sm">
-          <p className="text-sm font-light leading-snug text-white">
-            {guest.name}
-          </p>
-          <p className="mt-1 text-xs font-extralight text-white/55">
-            {guest.company}
-          </p>
-          <p className="text-xs font-extralight text-white/40">{guest.role}</p>
-
-          {hasEpisode && (
-            <div className="mt-3 flex items-center justify-between gap-3 border-t border-white/10 pt-3 text-xs font-extralight tracking-[0.12em] text-white/70">
-              <span>Episode</span>
-              <span aria-hidden className="text-base leading-none">
-                →
-              </span>
-            </div>
-          )}
-        </div>
-      </div>
-    </>
-  );
+  const sizeClass =
+    layout === "rolling"
+      ? "h-full w-[calc((100vw-1.25rem)/3)] min-w-[100px] sm:w-[calc((100vw-2rem)/4)] md:w-[calc((100vw-2.5rem)/5)] lg:w-[calc((100vw-3rem)/6)]"
+      : "aspect-[3/4] w-full";
 
   return (
     <Link
       href={`/guests/${guest.slug}`}
-      className="group relative block min-h-[140px] overflow-hidden transition-transform duration-300 hover:scale-[1.01] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 sm:min-h-[180px] md:min-h-[220px]"
-      style={{ backgroundColor: guest.accentColor }}
+      className={`group relative block shrink-0 overflow-hidden bg-black transition-transform duration-300 hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 ${sizeClass}`}
       aria-label={`${guest.name}, ${guest.role} at ${guest.company}`}
     >
-      {tileContent}
+      <GuestImage
+        src={guest.displayImage}
+        alt={guest.name}
+        initials={initials}
+        variant="mosaic"
+      />
+
+      <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/30" />
+
+      <span className="pointer-events-none absolute right-1.5 top-1.5 text-[9px] font-extralight tracking-[0.12em] text-white/70 transition-opacity duration-300 group-hover:opacity-0 sm:right-2 sm:top-2 sm:text-[10px] md:text-xs">
+        {guest.shortLabel}
+      </span>
+
+      <div className="pointer-events-none absolute inset-x-2 bottom-2 z-10 translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 sm:inset-x-3 sm:bottom-3">
+        <div className="rounded-sm border border-white/15 bg-black/90 px-3 py-2 shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-sm sm:px-4 sm:py-3">
+          <p className="text-xs font-light leading-snug text-white sm:text-sm">
+            {guest.name}
+          </p>
+          <p className="mt-0.5 text-[10px] font-extralight text-white/55 sm:mt-1 sm:text-xs">
+            {guest.company}
+          </p>
+          {hasEpisode && (
+            <div className="mt-2 flex items-center justify-between gap-2 border-t border-white/10 pt-2 text-[10px] font-extralight tracking-[0.12em] text-white/70 sm:mt-3 sm:pt-3 sm:text-xs">
+              <span>Episode</span>
+              <span aria-hidden>→</span>
+            </div>
+          )}
+        </div>
+      </div>
     </Link>
+  );
+}
+
+function RollingRows({ guests }: { guests: GuestWithEpisode[] }) {
+  const rows = useMemo(() => splitIntoRows(guests, ROW_COUNT), [guests]);
+
+  return (
+    <div className="flex min-h-0 flex-1 flex-col gap-1 p-1 md:gap-1.5 md:p-1.5">
+      {rows.map((rowGuests, rowIndex) => {
+        const loopGuests = [...rowGuests, ...rowGuests];
+        const direction =
+          rowIndex % 2 === 0 ? "marquee-track-left" : "marquee-track-right";
+
+        return (
+          <div
+            key={rowIndex}
+            className="marquee-row min-h-0 flex-1 overflow-hidden"
+          >
+            <div
+              className={`marquee-track flex h-full gap-1 md:gap-1.5 ${direction}`}
+              style={{ animationDuration: ROW_DURATIONS[rowIndex] }}
+            >
+              {loopGuests.map((guest, index) => (
+                <MosaicTile
+                  key={`${guest.slug}-${index}`}
+                  guest={guest}
+                  layout="rolling"
+                />
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
   );
 }
 
@@ -89,20 +138,26 @@ export function GuestMosaic({ episodes }: GuestMosaicProps) {
     );
   }, [guests, query]);
 
+  const isSearching = query.trim().length > 0;
+
   return (
     <section className="flex min-h-screen flex-col bg-[#0a0a0a]">
       <MosaicNav />
 
-      <div className="grid flex-1 grid-cols-2 gap-1 p-1 sm:grid-cols-3 md:grid-cols-4 md:gap-1.5 md:p-1.5">
-        {filteredGuests.map((guest) => (
-          <MosaicTile key={guest.slug} guest={guest} />
-        ))}
-        {filteredGuests.length === 0 && (
-          <div className="col-span-full flex items-center justify-center text-sm font-extralight text-white/40">
-            No guests match your search.
-          </div>
-        )}
-      </div>
+      {isSearching ? (
+        <div className="grid flex-1 grid-cols-3 gap-1 p-1 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 md:gap-1.5 md:p-1.5">
+          {filteredGuests.map((guest) => (
+            <MosaicTile key={guest.slug} guest={guest} layout="grid" />
+          ))}
+          {filteredGuests.length === 0 && (
+            <div className="col-span-full flex items-center justify-center text-sm font-extralight text-white/40">
+              No guests match your search.
+            </div>
+          )}
+        </div>
+      ) : (
+        <RollingRows guests={guests} />
+      )}
 
       <div className="flex flex-col items-center gap-4 px-6 py-8">
         <GuestSearch

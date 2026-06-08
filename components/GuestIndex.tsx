@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { GuestWithEpisode } from "@/lib/guests";
+import { GuestImage } from "./GuestImage";
 import { GuestSearch } from "./GuestSearch";
 
 type GuestIndexProps = {
@@ -17,6 +17,11 @@ function GuestRow({
   guest: GuestWithEpisode;
   featured?: boolean;
 }) {
+  const initials = guest.name
+    .split(" ")
+    .map((n) => n[0])
+    .join("");
+
   return (
     <Link
       href={`/guests/${guest.slug}`}
@@ -29,12 +34,11 @@ function GuestRow({
           featured ? "min-h-[320px] lg:min-h-[480px]" : "min-h-[120px] md:min-h-[160px]"
         }`}
       >
-        <Image
+        <GuestImage
           src={guest.displayImage}
           alt={guest.name}
-          fill
-          className="object-cover object-top opacity-90 transition-all duration-500 group-hover:scale-[1.02] group-hover:opacity-100"
-          sizes={featured ? "(max-width: 1024px) 100vw, 50vw" : "160px"}
+          initials={initials}
+          variant={featured ? "featured" : "row"}
         />
       </div>
 

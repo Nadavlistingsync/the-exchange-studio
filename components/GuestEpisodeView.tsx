@@ -1,12 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import type { Episode } from "@/lib/episodes";
 import type { Guest } from "@/lib/guests";
 import { SITE } from "@/lib/site";
 import { EpisodePlayer } from "./EpisodePlayer";
+import { GuestImage } from "./GuestImage";
 
 type GuestEpisodeViewProps = {
   guest: Guest;
@@ -30,6 +30,10 @@ export function GuestEpisodeView({ guest, episode }: GuestEpisodeViewProps) {
   }
 
   const canPlay = Boolean(episode?.youtubeId || episode?.audioUrl);
+  const initials = guest.name
+    .split(" ")
+    .map((n) => n[0])
+    .join("");
 
   return (
     <div className="bg-[#0a0a0a]">
@@ -80,16 +84,14 @@ export function GuestEpisodeView({ guest, episode }: GuestEpisodeViewProps) {
           )}
         </div>
 
-        <div className="relative min-h-[55vh] lg:min-h-full">
-          <Image
+        <div className="relative min-h-[55vh] bg-black lg:min-h-full">
+          <GuestImage
             src={guest.imagePath}
             alt={guest.name}
-            fill
+            initials={initials}
             priority
-            className="object-cover object-top"
-            sizes="(max-width: 1024px) 100vw, 50vw"
+            variant="hero"
           />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent lg:bg-gradient-to-r lg:from-[#0a0a0a]/80 lg:via-transparent lg:to-transparent" />
         </div>
       </section>
 

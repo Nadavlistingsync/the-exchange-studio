@@ -58,4 +58,38 @@ body {
     opacity: 1;
     transform: none;
   }
+
+  .marquee-track {
+    animation: none !important;
+  }
+}
+
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.marquee-track-left {
+  animation: marquee-left linear infinite;
+}
+
+.marquee-track-right {
+  animation: marquee-right linear infinite;
+}
+
+.marquee-row:hover .marquee-track {
+  animation-play-state: paused;
 }
