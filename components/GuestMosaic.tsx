@@ -55,10 +55,10 @@ function MosaicTile({ guest }: { guest: GuestWithEpisode }) {
     </>
   );
 
-  if (hasEpisode && guest.episode) {
+  if (guest.episode) {
     return (
       <Link
-        href={`/episodes/${guest.episode.slug}`}
+        href={`/guests/${guest.slug}`}
         className="group relative block h-full w-full overflow-hidden transition-transform duration-300 hover:scale-[1.01] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
         style={{ backgroundColor: guest.accentColor }}
         aria-label={`${guest.name}, ${guest.role} at ${guest.company}`}
@@ -69,12 +69,14 @@ function MosaicTile({ guest }: { guest: GuestWithEpisode }) {
   }
 
   return (
-    <div
-      className="group relative h-full w-full overflow-hidden"
+    <Link
+      href={`/guests/${guest.slug}`}
+      className="group relative block h-full w-full overflow-hidden transition-transform duration-300 hover:scale-[1.01] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
       style={{ backgroundColor: guest.accentColor }}
+      aria-label={`${guest.name}, ${guest.role} at ${guest.company}`}
     >
       {tileContent}
-    </div>
+    </Link>
   );
 }
 

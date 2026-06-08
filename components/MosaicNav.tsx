@@ -5,6 +5,7 @@ import { useState } from "react";
 import { SiteBanner } from "./SiteBanner";
 
 const menuLinks = [
+  { href: "/guests", label: "Guests" },
   { href: "/network", label: "Network" },
   { href: "/episodes", label: "Episodes" },
 ];

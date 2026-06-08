@@ -1,17 +1,9 @@
 import Link from "next/link";
-import { CONFIRMED_GUESTS, matchGuestToEpisodeSlug } from "@/lib/guests";
-import type { Episode } from "@/lib/episodes";
+import { getRankedGuests } from "@/lib/guests";
 import { GuestImage } from "./GuestImage";
 
-type GuestWallProps = {
-  episodes?: Episode[];
-};
-
-export function GuestWall({ episodes = [] }: GuestWallProps) {
-  const episodeTitles = episodes.map((ep) => ({
-    title: ep.title,
-    slug: ep.slug,
-  }));
+export function GuestWall() {
+  const guests = getRankedGuests();
 
   return (
     <section className="border-t border-white/10">
@@ -29,50 +21,38 @@ export function GuestWall({ episodes = [] }: GuestWallProps) {
         </div>
 
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 lg:gap-6">
-          {CONFIRMED_GUESTS.map((guest, i) => {
+          {guests.map((guest, i) => {
             const delayClass =
               i % 3 === 1
                 ? "fade-in-delay-1"
                 : i % 3 === 2
                   ? "fade-in-delay-2"
                   : "";
-            const episodeSlug = matchGuestToEpisodeSlug(
-              guest.name,
-              episodeTitles
-            );
             const initials = guest.name
               .split(" ")
               .map((n) => n[0])
               .join("");
 
-            const card = (
-              <div className="group relative aspect-[3/4] overflow-hidden border border-white/10 bg-white/5">
-                <GuestImage
-                  src={guest.imagePath}
-                  alt={guest.name}
-                  initials={initials}
-                />
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent p-4">
-                  <p className="text-sm font-light text-white">{guest.name}</p>
-                  <p className="mt-1 text-xs font-extralight text-white/50">
-                    {guest.role}, {guest.company}
-                  </p>
-                </div>
-              </div>
-            );
-
-            return episodeSlug ? (
+            return (
               <Link
                 key={guest.slug}
-                href={`/episodes/${episodeSlug}`}
+                href={`/guests/${guest.slug}`}
                 className={`fade-in ${delayClass}`}
               >
-                {card}
+                <div className="group relative aspect-[3/4] overflow-hidden border border-white/10 bg-white/5">
+                  <GuestImage
+                    src={guest.imagePath}
+                    alt={guest.name}
+                    initials={initials}
+                  />
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent p-4">
+                    <p className="text-sm font-light text-white">{guest.name}</p>
+                    <p className="mt-1 text-xs font-extralight text-white/50">
+                      {guest.role}, {guest.company}
+                    </p>
+                  </div>
+                </div>
               </Link>
-            ) : (
-              <div key={guest.slug} className={`fade-in ${delayClass}`}>
-                {card}
-              </div>
             );
           })}
         </div>
