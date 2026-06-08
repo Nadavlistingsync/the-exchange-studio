@@ -7,10 +7,19 @@ type GuestImageProps = {
   src: string;
   alt: string;
   initials: string;
+  priority?: boolean;
 };
 
-export function GuestImage({ src, alt, initials }: GuestImageProps) {
+export function GuestImage({
+  src,
+  alt,
+  initials,
+  priority = false,
+}: GuestImageProps) {
   const [failed, setFailed] = useState(false);
+  const [activeSrc, setActiveSrc] = useState(src);
+
+  const isRemote = activeSrc.startsWith("http");
 
   if (failed) {
     return (
@@ -26,12 +35,20 @@ export function GuestImage({ src, alt, initials }: GuestImageProps) {
         <span className="text-4xl font-extralight text-white/20">{initials}</span>
       </div>
       <Image
-        src={src}
+        src={activeSrc}
         alt={alt}
         fill
-        className="object-cover object-top opacity-80 transition-opacity duration-500 group-hover:opacity-100"
+        unoptimized={isRemote}
+        priority={priority}
+        className="object-cover object-top opacity-90 transition-all duration-500 group-hover:scale-105 group-hover:opacity-100"
         sizes="(max-width: 768px) 50vw, 25vw"
-        onError={() => setFailed(true)}
+        onError={() => {
+          if (isRemote && activeSrc.includes("maxresdefault")) {
+            setActiveSrc(activeSrc.replace("maxresdefault", "hqdefault"));
+            return;
+          }
+          setFailed(true);
+        }}
       />
     </>
   );

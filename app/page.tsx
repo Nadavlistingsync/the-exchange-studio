@@ -11,14 +11,10 @@ export const revalidate = 3600;
 
 export default async function HomePage() {
   const episodes = await getEpisodes();
-  const episodeTitles = episodes.map((ep) => ({
-    title: ep.title,
-    slug: ep.slug,
-  }));
 
   return (
     <>
-      <GuestMosaic episodeTitles={episodeTitles} />
+      <GuestMosaic episodes={episodes} />
       <NetworkIntro />
       <EpisodeCarousel episodes={episodes} />
       <Press />
