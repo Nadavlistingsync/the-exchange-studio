@@ -12,14 +12,14 @@ export function SiteBanner({ className = "", priority = false }: SiteBannerProps
       href="/"
       className={`inline-block transition-opacity hover:opacity-80 ${className}`}
     >
-      <span className="relative block h-9 w-40 md:h-10 md:w-48">
+      <span className="relative block h-7 w-36 md:h-8 md:w-40">
         <Image
           src="/the-exchange-banner.png"
           alt="The Exchange"
           fill
           priority={priority}
-          sizes="192px"
-          className="object-cover object-center"
+          sizes="160px"
+          className="object-contain object-center"
         />
       </span>
     </Link>

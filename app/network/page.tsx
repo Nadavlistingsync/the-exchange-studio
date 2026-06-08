@@ -15,7 +15,7 @@ export default function NetworkPage() {
   return (
     <>
       <SubpageNav />
-      <section className="mx-auto flex min-h-[70vh] max-w-6xl flex-col justify-center px-6 pb-24 pt-40 md:pt-48">
+      <section className="mx-auto flex min-h-[70vh] max-w-6xl flex-col justify-center px-6 pb-24 pt-28 md:px-12 md:pt-32">
         <div className="fade-in max-w-2xl">
           <p className="section-eyebrow mb-4">The network</p>
           <h1 className="text-4xl font-extralight leading-[1.1] tracking-tight text-white md:text-5xl">

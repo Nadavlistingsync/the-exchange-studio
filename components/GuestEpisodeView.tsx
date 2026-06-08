@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRef, useState } from "react";
-import type { Episode } from "@/lib/episodes";
+import { formatEpisodeDate, type Episode } from "@/lib/episodes";
 import type { Guest } from "@/lib/guests";
 import { getGuestListenUrl } from "@/lib/guests";
 import { EpisodePlayer } from "./EpisodePlayer";
@@ -12,6 +12,7 @@ import { SITE } from "@/lib/site";
 type GuestEpisodeViewProps = {
   guest: Guest;
   episode?: Episode;
+  relatedEpisodes?: Episode[];
 };
 
 const showLinks = [
@@ -20,7 +21,11 @@ const showLinks = [
   { label: "Apple Podcasts", href: SITE.listen.apple },
 ];
 
-export function GuestEpisodeView({ guest, episode }: GuestEpisodeViewProps) {
+export function GuestEpisodeView({
+  guest,
+  episode,
+  relatedEpisodes = [],
+}: GuestEpisodeViewProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const playerRef = useRef<HTMLDivElement>(null);
 
@@ -42,8 +47,8 @@ export function GuestEpisodeView({ guest, episode }: GuestEpisodeViewProps) {
 
   return (
     <div className="bg-[#0a0a0a]">
-      <section className="grid min-h-[calc(100vh-5rem)] lg:grid-cols-2">
-        <div className="flex flex-col justify-center px-6 py-16 md:px-12 lg:px-16 lg:py-24">
+      <section className="grid min-h-[calc(100vh-4.5rem)] lg:grid-cols-2">
+        <div className="flex flex-col justify-center px-6 pb-16 pt-28 md:px-12 md:pb-20 md:pt-32 lg:px-16 lg:py-20">
           <Link href="/" className="link-subtle mb-10 inline-block md:mb-14">
             ← Back
           </Link>
@@ -116,10 +121,31 @@ export function GuestEpisodeView({ guest, episode }: GuestEpisodeViewProps) {
             </div>
           )}
 
-          {episode && (
+          {episode && relatedEpisodes.length <= 1 && (
             <p className="mt-8 text-sm font-extralight leading-relaxed text-white/40">
               {episode.title}
             </p>
+          )}
+
+          {relatedEpisodes.length > 1 && (
+            <div className="mt-10 border-t border-white/10 pt-8">
+              <p className="section-eyebrow mb-3">Episodes</p>
+              <ul className="flex flex-col gap-2.5">
+                {relatedEpisodes.map((related) => (
+                  <li key={related.slug}>
+                    <Link
+                      href={`/episodes/${related.slug}`}
+                      className="link-quiet block"
+                    >
+                      {related.title}
+                      <span className="mt-0.5 block text-xs text-white/35">
+                        {formatEpisodeDate(related.pubDate)}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           )}
         </div>
 

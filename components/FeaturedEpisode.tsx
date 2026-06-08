@@ -13,7 +13,7 @@ export function FeaturedEpisode({ episode }: FeaturedEpisodeProps) {
   const imageSrc = guest?.imagePath ?? episode.imageUrl;
 
   return (
-    <div className="fade-in border-t border-white/10 pt-10">
+    <div className="fade-in">
       <div className="grid gap-8 md:grid-cols-[minmax(0,240px)_1fr] md:items-start md:gap-10">
         {imageSrc && (
           <Link
@@ -72,7 +72,7 @@ export function FeaturedEpisode({ episode }: FeaturedEpisodeProps) {
             href={`/episodes/${episode.slug}`}
             className="link-quiet mt-6 inline-block"
           >
-            Watch episode →
+            Listen →
           </Link>
         </div>
       </div>

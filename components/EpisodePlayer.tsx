@@ -8,7 +8,7 @@ type EpisodePlayerProps = {
 export function EpisodePlayer({ episode }: EpisodePlayerProps) {
   if (episode.youtubeId) {
     return (
-      <div className="relative aspect-video w-full overflow-hidden border border-white/10 bg-black">
+      <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-black">
         <iframe
           src={`https://www.youtube.com/embed/${episode.youtubeId}`}
           title={episode.title}

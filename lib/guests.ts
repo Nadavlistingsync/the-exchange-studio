@@ -514,6 +514,27 @@ export function findBestEpisodeForGuest(
   return getSyntheticEpisodeForGuest(guest);
 }
 
+export function findEpisodesForGuest(
+  guest: Guest,
+  episodes: Episode[]
+): Episode[] {
+  const matches = episodes.filter(
+    (ep) =>
+      episodeMatchesGuest(ep, guest) ||
+      (guest.episodeSlug != null && ep.slug === guest.episodeSlug)
+  );
+  return matches.sort(
+    (a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime()
+  );
+}
+
+export function guestHasPublishedEpisode(
+  guest: Guest,
+  episodes: Episode[]
+): boolean {
+  return findEpisodesForGuest(guest, episodes).length > 0;
+}
+
 export function getGuestBySlug(slug: string): Guest | undefined {
   return CONFIRMED_GUESTS.find((guest) => guest.slug === slug);
 }

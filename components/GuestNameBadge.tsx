@@ -11,18 +11,12 @@ export function GuestNameBadge({
 }: GuestNameBadgeProps) {
   return (
     <span
-      className={`inline-grid grid-cols-1 grid-rows-1 rounded-sm bg-[#e8e4dc] px-2 py-1 text-[10px] font-normal leading-none tracking-[0.06em] text-black ${className}`}
+      className={`inline-block rounded-sm bg-[#e8e4dc] px-2 py-1 text-[10px] font-normal leading-none tracking-[0.06em] text-black ${className}`}
     >
-      <span
-        className="invisible col-start-1 row-start-1 whitespace-nowrap uppercase"
-        aria-hidden
-      >
-        {name}
-      </span>
-      <span className="col-start-1 row-start-1 whitespace-nowrap uppercase transition-opacity duration-200 group-hover:opacity-0 group-has-[:focus-visible]:opacity-0">
+      <span className="whitespace-nowrap uppercase group-hover:hidden group-has-[:focus-visible]:hidden">
         {firstName}
       </span>
-      <span className="col-start-1 row-start-1 whitespace-nowrap uppercase opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-has-[:focus-visible]:opacity-100">
+      <span className="hidden whitespace-nowrap uppercase group-hover:inline group-has-[:focus-visible]:inline">
         {name}
       </span>
     </span>

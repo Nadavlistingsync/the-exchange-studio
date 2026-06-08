@@ -16,8 +16,8 @@ export function EpisodeCarousel({ episodes }: EpisodeCarouselProps) {
 
   return (
     <section className="border-t border-white/10 bg-[#0a0a0a]">
-      <div className="mx-auto max-w-6xl px-6 py-16 md:px-12 md:py-24">
-        <div className="fade-in mb-12 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+      <div className="mx-auto max-w-6xl px-6 pb-16 pt-10 md:px-12 md:pb-20 md:pt-12">
+        <div className="fade-in mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="section-eyebrow mb-3">Podcast</p>
             <h2 className="text-3xl font-extralight tracking-tight text-white md:text-4xl">

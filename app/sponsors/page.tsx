@@ -43,7 +43,7 @@ export default function SponsorsPage() {
   return (
     <>
       <SubpageNav />
-      <section className="mx-auto max-w-6xl px-6 pb-24 pt-40 md:pt-48">
+      <section className="mx-auto max-w-6xl px-6 pb-24 pt-28 md:px-12 md:pt-32">
         <div className="fade-in max-w-2xl">
           <p className="section-eyebrow mb-4">Sponsorship</p>
           <h1 className="text-4xl font-extralight leading-[1.1] tracking-tight text-white md:text-5xl">
@@ -152,17 +152,14 @@ export default function SponsorsPage() {
               Sponsorship packages are limited and tailored. Tell us about your
               brand and we will share availability, formats, and pricing.
             </p>
-            <div className="mt-12 flex flex-col gap-6 sm:flex-row sm:items-center">
+            <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
               <a
-                href={`mailto:${SITE.email}?subject=Sponsorship%20inquiry`}
-                className="inline-block border border-white px-8 py-3 text-center text-xs font-light tracking-wide transition-colors hover:bg-white hover:text-black"
+                href={`mailto:${SITE.email}?subject=${encodeURIComponent("Sponsorship inquiry")}&body=${encodeURIComponent("I'd like to learn about sponsorship opportunities with The Exchange.")}`}
+                className="link-quiet"
               >
-                {SITE.email}
+                {SITE.email} →
               </a>
-              <Link
-                href="/"
-                className="text-xs font-extralight tracking-[0.15em] uppercase text-white/50 transition-colors hover:text-white"
-              >
+              <Link href="/" className="link-subtle">
                 Back to home
               </Link>
             </div>

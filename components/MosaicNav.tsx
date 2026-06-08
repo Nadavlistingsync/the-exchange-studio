@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { SiteBanner } from "./SiteBanner";
+import { SITE } from "@/lib/site";
+import { SiteTitle } from "./SiteTitle";
 
 const menuLinks = [
+  { href: "/guests", label: "Guests" },
   { href: "/network", label: "Network" },
   { href: "/episodes", label: "Episodes" },
   { href: "/sponsors", label: "Sponsors" },
@@ -15,12 +17,10 @@ export function MosaicNav() {
 
   return (
     <header className="relative z-10 shrink-0 border-b border-white/10 bg-[#0a0a0a]">
-      <div className="relative flex items-center justify-end px-4 py-3.5 md:px-6 md:py-4">
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <SiteBanner priority className="pointer-events-auto" />
-        </div>
+      <div className="flex items-center justify-between px-4 py-4 md:px-6 md:py-5">
+        <SiteTitle />
 
-        <div className="relative z-10 flex shrink-0 items-center gap-5">
+        <div className="flex shrink-0 items-center gap-5">
           <button
             type="button"
             onClick={() => setMenuOpen(!menuOpen)}
@@ -31,6 +31,14 @@ export function MosaicNav() {
           <Link href="/#listen" className="link-subtle">
             Listen
           </Link>
+          <a
+            href={SITE.newsletter}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link-subtle hidden sm:inline"
+          >
+            Substack
+          </a>
         </div>
       </div>
 

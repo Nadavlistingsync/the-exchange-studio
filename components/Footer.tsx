@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { SITE } from "@/lib/site";
-import { SiteBanner } from "./SiteBanner";
+import { SiteTitle } from "./SiteTitle";
 
 const navLinks = [
+  { href: "/guests", label: "Guests" },
   { href: "/network", label: "Network" },
   { href: "/episodes", label: "Episodes" },
   { href: "/sponsors", label: "Sponsors" },
@@ -34,7 +35,7 @@ export function Footer() {
       <div className="mx-auto max-w-6xl px-6 py-14 md:px-12 md:py-16">
         <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
           <div className="max-w-md">
-            <SiteBanner />
+            <SiteTitle />
             <p className="mt-4 text-sm font-extralight leading-relaxed text-white/45">
               {SITE.description}
             </p>

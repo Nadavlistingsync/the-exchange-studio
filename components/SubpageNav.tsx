@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { SiteBanner } from "./SiteBanner";
+import { SITE } from "@/lib/site";
+import { SiteTitle } from "./SiteTitle";
 
 const links = [
+  { href: "/guests", label: "Guests" },
   { href: "/network", label: "Network" },
   { href: "/episodes", label: "Episodes" },
   { href: "/sponsors", label: "Sponsors" },
@@ -16,20 +18,12 @@ export function SubpageNav() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-[#0a0a0a]/90 backdrop-blur-md">
-      <nav className="relative mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-        <div className="hidden w-32 md:block" aria-hidden />
+      <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 md:py-5">
+        <SiteTitle />
 
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <SiteBanner className="pointer-events-auto" />
-        </div>
-
-        <div className="relative z-10 hidden items-center gap-10 md:flex md:ml-auto">
+        <div className="hidden items-center gap-8 md:flex">
           {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="link-quiet"
-            >
+            <Link key={link.href} href={link.href} className="link-quiet">
               {link.label}
             </Link>
           ))}
@@ -37,7 +31,7 @@ export function SubpageNav() {
 
         <button
           type="button"
-          className="relative z-10 flex flex-col gap-1.5 md:hidden"
+          className="flex flex-col gap-1.5 md:hidden"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
@@ -47,8 +41,8 @@ export function SubpageNav() {
       </nav>
 
       {open && (
-        <div className="border-t border-white/10 bg-[#0a0a0a] px-6 py-6 md:hidden">
-          <div className="flex flex-col gap-5">
+        <div className="border-t border-white/10 bg-[#0a0a0a] px-6 py-5 md:hidden">
+          <div className="flex flex-col gap-4">
             {links.map((link) => (
               <Link
                 key={link.href}

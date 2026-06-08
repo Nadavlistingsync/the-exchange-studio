@@ -25,7 +25,7 @@ export default function ApplePodcastsPage() {
   return (
     <>
       <SubpageNav />
-      <section className="mx-auto flex min-h-[70vh] max-w-6xl flex-col justify-center px-6 pb-24 pt-40 md:pt-48">
+      <section className="mx-auto flex min-h-[70vh] max-w-6xl flex-col justify-center px-6 pb-24 pt-28 md:px-12 md:pt-32">
         <div className="fade-in max-w-2xl">
           <AppleLogo className="mb-10 h-10 w-10 text-white/80" />
           <p className="section-eyebrow mb-4">Apple Podcasts</p>

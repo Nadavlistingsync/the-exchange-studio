@@ -53,7 +53,11 @@ function MosaicTile({
     <div className={`group relative bg-[#0a0a0a] p-0.5 ${sizeClass}`}>
       <Link
         href={`/guests/${guest.slug}`}
-        className="relative block h-full w-full overflow-hidden rounded-xl border border-white/10 bg-[#0a0a0a] transition-colors hover:border-white/20 focus:outline-none focus-visible:border-white/20"
+        className={`relative block h-full w-full overflow-hidden rounded-xl border bg-[#0a0a0a] transition-colors hover:border-white/20 focus:outline-none focus-visible:border-white/20 ${
+          guest.episode
+            ? "border-white/10"
+            : "border-white/10 border-dashed opacity-85"
+        }`}
         aria-label={`${guest.name}, ${guest.role} at ${guest.company}`}
       >
         <GuestImage
@@ -67,7 +71,9 @@ function MosaicTile({
 
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/70 via-black/30 to-transparent px-2 pb-2 pt-8 sm:px-2.5 sm:pb-2.5">
           <span className="block truncate text-[10px] font-extralight leading-snug text-white/85 sm:text-xs">
-            {getGuestCompactLabel(guest)}
+            {guest.episode
+              ? getGuestCompactLabel(guest)
+              : "Episode coming soon"}
           </span>
         </div>
       </Link>
@@ -146,7 +152,7 @@ export function GuestMosaic({ episodes }: GuestMosaicProps) {
   return (
     <section
       data-mosaic-section
-      className="grid h-[100svh] grid-rows-[auto_1fr_auto_auto] bg-[#0a0a0a]"
+      className="grid h-[100svh] grid-rows-[auto_1fr_auto] bg-[#0a0a0a]"
     >
       <MosaicNav />
 
@@ -158,7 +164,7 @@ export function GuestMosaic({ episodes }: GuestMosaicProps) {
         )}
       </div>
 
-      <div className="shrink-0 border-t border-white/10 px-4 py-4">
+      <div className="shrink-0 border-t border-white/10 px-4 py-3">
         <GuestSearch
           id="guest-search"
           value={query}
@@ -166,12 +172,6 @@ export function GuestMosaic({ episodes }: GuestMosaicProps) {
           resultCount={isSearching ? filteredGuests.length : undefined}
           className="mx-auto max-w-sm"
         />
-      </div>
-
-      <div className="flex shrink-0 justify-center pb-6 pt-0">
-        <a href="#explore" className="link-subtle">
-          Explore the exchange ↓
-        </a>
       </div>
     </section>
   );
