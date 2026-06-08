@@ -23,7 +23,7 @@ export default async function EpisodesPage() {
           Episodes
         </p>
         <h1 className="text-4xl font-extralight tracking-tight text-white md:text-5xl">
-          Proof of access.
+          Episodes
         </h1>
         <p className="mt-4 text-sm font-extralight leading-relaxed text-white/50">
           Conversations with the operators and principals shaping New York

@@ -23,7 +23,7 @@ export function EpisodeCarousel({ episodes }: EpisodeCarouselProps) {
               Podcast
             </p>
             <h2 className="text-3xl font-extralight tracking-tight text-white md:text-4xl">
-              Proof of access.
+              Episodes
             </h2>
             <p className="mt-4 text-sm font-extralight leading-relaxed text-white/50">
               Conversations with the operators and principals shaping New York

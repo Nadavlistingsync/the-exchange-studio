@@ -19,14 +19,12 @@ export function NetworkIntro() {
             portfolios, and setting the pace of the city&apos;s commercial
             market.
           </p>
-          <div className="mt-12">
-            <Link
-              href="/#request-access"
-              className="inline-block border border-white px-8 py-3 text-xs font-light tracking-[0.2em] uppercase transition-colors hover:bg-white hover:text-black"
-            >
-              Request Access
-            </Link>
-          </div>
+          <Link
+            href="/network"
+            className="mt-12 inline-block text-xs font-extralight tracking-[0.15em] uppercase text-white/50 transition-colors hover:text-white"
+          >
+            The network is coming soon
+          </Link>
         </div>
       </div>
     </section>
