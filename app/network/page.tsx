@@ -18,19 +18,21 @@ export default function NetworkPage() {
       <section className="mx-auto flex min-h-[70vh] max-w-6xl flex-col justify-center px-6 pb-24 pt-28 md:px-12 md:pt-32">
         <div className="fade-in max-w-2xl">
           <p className="section-eyebrow mb-4">The network</p>
-          <h1 className="text-4xl font-extralight leading-[1.1] tracking-tight text-white md:text-5xl">
+          <h1 className="font-serif text-4xl font-light italic leading-[1.1] tracking-tight text-white md:text-6xl">
             Coming soon.
           </h1>
-          <p className="mt-6 text-base font-extralight leading-relaxed text-white/55">
+          <p className="mt-7 max-w-md text-base font-extralight leading-[1.8] text-white/55">
             A private room for the people who move New York commercial real
             estate. We will share more when the network opens.
           </p>
-          <a href={waitlistHref} className="link-quiet mt-8 inline-block">
-            Join the waitlist →
-          </a>
-          <Link href="/" className="link-subtle mt-6 inline-block">
-            Back to home
-          </Link>
+          <div className="mt-9 flex items-center gap-7">
+            <a href={waitlistHref} className="link-quiet">
+              Join the waitlist →
+            </a>
+            <Link href="/" className="link-subtle">
+              Back to home
+            </Link>
+          </div>
         </div>
       </section>
     </>

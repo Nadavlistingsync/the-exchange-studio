@@ -46,25 +46,38 @@ export function NewsletterPopup() {
 
   return (
     <div
-      className="fixed bottom-4 left-4 right-4 z-50 sm:bottom-6 sm:left-auto sm:right-6 sm:max-w-sm"
+      className="fade-in fixed bottom-4 left-4 right-4 z-50 sm:bottom-6 sm:left-auto sm:right-6 sm:max-w-sm"
       role="dialog"
       aria-modal="false"
       aria-labelledby="newsletter-popup-title"
     >
-      <div className="relative rounded-xl border border-white/10 bg-[#0a0a0a] px-5 py-5">
+      <div className="relative overflow-hidden rounded-xl border border-white/12 bg-[#0c0b0a]/95 px-6 py-6 shadow-2xl shadow-black/60 backdrop-blur-xl">
+        <div
+          className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#e8e4dc]/40 to-transparent"
+          aria-hidden
+        />
         <button
           type="button"
           onClick={dismiss}
           aria-label="Close"
-          className="absolute right-4 top-4 text-white/30 transition-colors hover:text-white/60"
+          className="absolute right-4 top-4 flex h-6 w-6 items-center justify-center text-white/30 transition-colors hover:text-white"
         >
-          <span className="block h-px w-3 bg-current" aria-hidden />
+          <svg
+            className="h-3 w-3"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={1.5}
+            aria-hidden
+          >
+            <path strokeLinecap="round" d="M6 18 18 6M6 6l12 12" />
+          </svg>
         </button>
 
         <p className="section-eyebrow">Newsletter</p>
         <h2
           id="newsletter-popup-title"
-          className="mt-2 pr-6 text-base font-extralight leading-snug text-white"
+          className="mt-3 pr-6 font-serif text-lg font-light leading-snug text-white"
         >
           Episode updates from The Exchange.
         </h2>
@@ -74,7 +87,7 @@ export function NewsletterPopup() {
           target="_blank"
           rel="noopener noreferrer"
           onClick={dismiss}
-          className="link-quiet mt-4 inline-block"
+          className="link-quiet mt-5 inline-block"
         >
           Subscribe on Substack →
         </a>

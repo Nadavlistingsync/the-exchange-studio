@@ -16,15 +16,15 @@ export function EpisodeCarousel({ episodes }: EpisodeCarouselProps) {
 
   return (
     <section className="border-t border-white/10 bg-[#0a0a0a]">
-      <div className="mx-auto max-w-6xl px-6 pb-16 pt-10 md:px-12 md:pb-20 md:pt-12">
-        <div className="fade-in mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+      <div className="mx-auto max-w-6xl px-6 pb-20 pt-14 md:px-12 md:pb-24 md:pt-16">
+        <div className="fade-in mb-10 flex items-end justify-between md:mb-12">
           <div>
-            <p className="section-eyebrow mb-3">Podcast</p>
-            <h2 className="text-3xl font-extralight tracking-tight text-white md:text-4xl">
+            <p className="section-eyebrow mb-3">The podcast</p>
+            <h2 className="font-serif text-3xl font-light tracking-tight text-white md:text-4xl">
               Episodes
             </h2>
           </div>
-          <Link href="/episodes" className="link-subtle">
+          <Link href="/episodes" className="link-subtle mb-1">
             View all →
           </Link>
         </div>
@@ -32,10 +32,12 @@ export function EpisodeCarousel({ episodes }: EpisodeCarouselProps) {
         <FeaturedEpisode episode={featured} />
 
         {recent.length > 0 && (
-          <div className="mt-10 grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3">
-            {recent.slice(0, 3).map((episode) => (
-              <EpisodeCard key={episode.slug} episode={episode} />
-            ))}
+          <div className="mt-12 border-t border-white/10 pt-10 md:mt-14">
+            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-4">
+              {recent.slice(0, 3).map((episode) => (
+                <EpisodeCard key={episode.slug} episode={episode} />
+              ))}
+            </div>
           </div>
         )}
       </div>

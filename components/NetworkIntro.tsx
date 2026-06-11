@@ -13,7 +13,7 @@ export function NetworkIntro() {
       id="explore"
       className="relative w-full border-t border-white/10 bg-[#0a0a0a]"
     >
-      <div className="relative aspect-[16/9] w-full md:aspect-[21/9] md:max-h-[55vh]">
+      <div className="relative aspect-[16/9] w-full md:aspect-[21/9] md:max-h-[60vh]">
         <Image
           src="/events-coming-soon.png"
           alt="Rooftop gathering overlooking the New York City skyline"
@@ -21,30 +21,27 @@ export function NetworkIntro() {
           sizes="100vw"
           className="object-cover object-center"
         />
-        <div className="absolute inset-0 bg-black/35" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/25" />
+        {/* Cinematic vignette */}
+        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-black/30 to-black/40" />
+        <div className="absolute inset-0 [background:radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,0.5)_100%)]" />
 
         <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-          <div className="flex max-w-2xl flex-col items-center rounded-sm border border-white/15 bg-black/35 px-10 py-12 backdrop-blur-sm md:px-14 md:py-14">
-            <p className="fade-in mb-5 text-[11px] font-extralight uppercase tracking-[0.28em] text-white/75">
-              Events
-            </p>
-            <h2 className="fade-in fade-in-delay-1 font-serif text-4xl font-light leading-none tracking-tight text-white shadow-[0_0_48px_rgba(255,255,255,0.12)] md:text-6xl lg:text-7xl">
-              Coming soon.
-            </h2>
-            <div
-              className="fade-in fade-in-delay-2 mt-7 h-px w-14 bg-white/35"
-              aria-hidden
-            />
-            <a
-              href={eventsHref}
-              target={SITE.eventsUrl ? "_blank" : undefined}
-              rel={SITE.eventsUrl ? "noopener noreferrer" : undefined}
-              className="fade-in fade-in-delay-2 link-quiet mt-8"
-            >
-              {eventsCta}
-            </a>
-          </div>
+          <p className="fade-in section-eyebrow eyebrow-rule">Events</p>
+          <h2 className="fade-in fade-in-delay-1 mt-6 font-serif text-5xl font-light italic leading-none tracking-tight text-white [text-shadow:0_2px_40px_rgba(0,0,0,0.6)] md:text-7xl">
+            Coming soon.
+          </h2>
+          <p className="fade-in fade-in-delay-2 mt-6 max-w-md text-sm font-extralight leading-relaxed text-white/65">
+            Private gatherings for the people who move New York real estate.
+          </p>
+          <a
+            href={eventsHref}
+            target={SITE.eventsUrl ? "_blank" : undefined}
+            rel={SITE.eventsUrl ? "noopener noreferrer" : undefined}
+            className="fade-in fade-in-delay-3 link-quiet mt-8"
+          >
+            {eventsCta}
+          </a>
         </div>
       </div>
     </section>

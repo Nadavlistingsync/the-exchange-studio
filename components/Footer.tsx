@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { SITE } from "@/lib/site";
-import { SiteTitle } from "./SiteTitle";
 
 const navLinks = [
   { href: "/guests", label: "Guests" },
@@ -32,15 +31,19 @@ function externalLinkProps(href: string) {
 export function Footer() {
   return (
     <footer className="border-t border-white/10 bg-[#0a0a0a]">
-      <div className="mx-auto max-w-6xl px-6 py-14 md:px-12 md:py-16">
-        <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-          <div className="max-w-md">
-            <SiteTitle />
-            <p className="mt-4 text-sm font-extralight leading-relaxed text-white/45">
-              {SITE.description}
-            </p>
-          </div>
+      <div className="mx-auto max-w-6xl px-6 pb-12 pt-16 md:px-12 md:pb-14 md:pt-20">
+        {/* Masthead */}
+        <Link
+          href="/"
+          className="block font-serif text-[clamp(2.75rem,8vw,6.5rem)] font-light leading-[0.95] tracking-tight text-white/90 transition-colors duration-500 hover:text-[#e8e4dc]"
+        >
+          The Exchange
+        </Link>
 
+        <div className="mt-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <p className="max-w-md text-sm font-extralight leading-relaxed text-white/40">
+            {SITE.description}
+          </p>
           <a
             href={SITE.newsletter}
             target="_blank"
@@ -51,10 +54,10 @@ export function Footer() {
           </a>
         </div>
 
-        <div className="mt-10 grid gap-8 border-t border-white/10 pt-10 sm:grid-cols-3 sm:gap-6">
+        <div className="mt-12 grid gap-10 border-t border-white/10 pt-10 sm:grid-cols-3 sm:gap-6">
           <div>
-            <p className="section-eyebrow mb-3">Navigate</p>
-            <nav className="flex flex-col gap-2">
+            <p className="section-eyebrow mb-4">Navigate</p>
+            <nav className="flex flex-col items-start gap-2.5">
               {navLinks.map((link) => (
                 <Link key={link.href} href={link.href} className="link-quiet">
                   {link.label}
@@ -64,8 +67,8 @@ export function Footer() {
           </div>
 
           <div id="listen">
-            <p className="section-eyebrow mb-3">Listen</p>
-            <div className="flex flex-col gap-2">
+            <p className="section-eyebrow mb-4">Listen</p>
+            <div className="flex flex-col items-start gap-2.5">
               {listenLinks.map((link) => (
                 <a
                   key={link.label}
@@ -80,8 +83,8 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="section-eyebrow mb-3">Follow</p>
-            <div className="flex flex-col gap-2">
+            <p className="section-eyebrow mb-4">Follow</p>
+            <div className="flex flex-col items-start gap-2.5">
               {socialLinks.map((link) => (
                 <a
                   key={link.label}
@@ -97,9 +100,9 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-2 border-t border-white/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-xs font-extralight text-white/35">
-            &copy; {new Date().getFullYear()} The Exchange · NYC
+        <div className="mt-12 flex flex-col gap-2 border-t border-white/10 pt-7 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-[11px] font-extralight tracking-[0.08em] text-white/30">
+            &copy; {new Date().getFullYear()} The Exchange · New York City
           </p>
           <a href={`mailto:${SITE.email}`} className="link-subtle">
             {SITE.email}

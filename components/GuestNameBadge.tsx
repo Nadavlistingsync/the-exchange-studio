@@ -11,7 +11,7 @@ export function GuestNameBadge({
 }: GuestNameBadgeProps) {
   return (
     <span
-      className={`inline-block rounded-sm bg-[#e8e4dc] px-2 py-1 text-[10px] font-normal leading-none tracking-[0.06em] text-black ${className}`}
+      className={`inline-block rounded-sm bg-[#e8e4dc] px-2.5 py-[5px] text-[9.5px] font-normal leading-none tracking-[0.14em] text-[#1a1815] shadow-[0_2px_14px_rgba(0,0,0,0.4)] ${className}`}
     >
       <span className="whitespace-nowrap uppercase group-hover:hidden group-has-[:focus-visible]:hidden">
         {firstName}

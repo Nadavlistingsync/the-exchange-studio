@@ -54,14 +54,14 @@ export function GuestEpisodeView({
             ← Back
           </Link>
 
-          <p className="text-sm font-extralight text-white/45">
-            {guest.role}, {guest.company}
+          <p className="text-[11px] font-light uppercase tracking-[0.24em] text-[#e8e4dc]/55">
+            {guest.role} · {guest.company}
           </p>
-          <h1 className="font-serif mt-3 text-5xl font-light leading-[1.05] tracking-tight text-white md:text-6xl lg:text-7xl">
+          <h1 className="font-serif mt-4 text-5xl font-light leading-[1.02] tracking-tight text-white md:text-6xl lg:text-7xl">
             {guest.name}
           </h1>
 
-          <p className="mt-8 max-w-lg text-sm font-extralight leading-relaxed text-white/55 md:text-base">
+          <p className="mt-8 max-w-lg text-sm font-extralight leading-[1.85] text-white/55 md:text-base">
             {guest.bio}
           </p>
 

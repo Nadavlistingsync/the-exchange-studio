@@ -25,7 +25,7 @@ export function GuestSearch({
           onChange={(e) => onChange(e.target.value)}
           placeholder="Search by name"
           aria-label="Search by name"
-          className="w-full rounded-full border border-white/10 bg-transparent py-2 pl-4 pr-9 text-sm font-extralight text-white placeholder:text-white/30 outline-none transition-colors focus:border-white/20"
+          className="w-full rounded-full border border-white/10 bg-white/[0.03] py-2 pl-4 pr-9 text-sm font-extralight tracking-wide text-white outline-none transition-all duration-300 placeholder:text-white/25 focus:border-[#e8e4dc]/30 focus:bg-white/[0.05]"
         />
         {hasQuery ? (
           <button

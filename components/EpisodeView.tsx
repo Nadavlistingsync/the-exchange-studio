@@ -27,7 +27,7 @@ export function EpisodeView({ episode, guest }: EpisodeViewProps) {
         {guest ? (
           <>
             <p className="section-eyebrow">{getGuestCompactLabel(guest)}</p>
-            <h1 className="font-serif mt-3 text-4xl font-light leading-[1.1] tracking-tight text-white md:text-5xl">
+            <h1 className="font-serif mt-4 text-4xl font-light leading-[1.08] tracking-tight text-white md:text-5xl">
               <Link
                 href={`/guests/${guest.slug}`}
                 className="transition-opacity hover:opacity-70"

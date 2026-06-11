@@ -29,10 +29,10 @@ export default function ApplePodcastsPage() {
         <div className="fade-in max-w-2xl">
           <AppleLogo className="mb-10 h-10 w-10 text-white/80" />
           <p className="section-eyebrow mb-4">Apple Podcasts</p>
-          <h1 className="text-4xl font-extralight leading-[1.1] tracking-tight text-white md:text-5xl">
+          <h1 className="font-serif text-4xl font-light italic leading-[1.1] tracking-tight text-white md:text-6xl">
             Coming soon.
           </h1>
-          <p className="mt-6 text-base font-extralight leading-relaxed text-white/55">
+          <p className="mt-7 text-base font-extralight leading-[1.8] text-white/55">
             Apple Podcasts is on the way.
           </p>
           <Link href="/" className="link-subtle mt-10 inline-block">

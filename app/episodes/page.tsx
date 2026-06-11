@@ -18,12 +18,12 @@ export default async function EpisodesPage() {
     <>
       <SubpageNav />
       <section className="mx-auto max-w-6xl px-6 pb-24 pt-28 md:px-12 md:pt-32">
-      <div className="fade-in mb-16 max-w-2xl">
-        <p className="section-eyebrow mb-4">Episodes</p>
-        <h1 className="text-4xl font-extralight tracking-tight text-white md:text-5xl">
+      <div className="fade-in mb-14 max-w-2xl">
+        <p className="section-eyebrow mb-4">The podcast</p>
+        <h1 className="font-serif text-4xl font-light tracking-tight text-white md:text-5xl">
           Episodes
         </h1>
-        <p className="mt-4 text-sm font-extralight leading-relaxed text-white/50">
+        <p className="mt-5 text-sm font-extralight leading-[1.8] text-white/50">
           Conversations with the operators and principals shaping New York
           commercial real estate.
         </p>

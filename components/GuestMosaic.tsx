@@ -69,8 +69,8 @@ function MosaicTile({
 
         <div className="pointer-events-none absolute inset-0 rounded-xl bg-black/0 transition-colors duration-200 group-hover:bg-black/10 group-has-[:focus-visible]:bg-black/10" />
 
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/70 via-black/30 to-transparent px-2 pb-2 pt-8 sm:px-2.5 sm:pb-2.5">
-          <span className="block truncate text-[10px] font-extralight leading-snug text-white/85 sm:text-xs">
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/80 via-black/30 to-transparent px-2.5 pb-2.5 pt-10 sm:px-3 sm:pb-3">
+          <span className="block truncate text-[9px] font-light uppercase leading-snug tracking-[0.14em] text-white/75 sm:text-[10px]">
             {guest.episode
               ? getGuestCompactLabel(guest)
               : "Episode coming soon"}

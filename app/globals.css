@@ -3,6 +3,7 @@
 @theme {
   --color-background: #0a0a0a;
   --color-foreground: #ffffff;
+  --color-cream: #e8e4dc;
   --color-muted: #888888;
   --color-border: rgba(255, 255, 255, 0.1);
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
@@ -21,65 +22,153 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Film grain — editorial texture over everything */
+body::after {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  z-index: 80;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.032;
+}
+
+/* Editorial micro-label */
 .section-eyebrow {
-  font-size: 12px;
-  font-weight: 200;
-  letter-spacing: 0.04em;
-  color: rgba(255, 255, 255, 0.45);
+  font-size: 10.5px;
+  font-weight: 300;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(232, 228, 220, 0.5);
+}
+
+/* Centered eyebrow with hairline rules either side */
+.eyebrow-rule {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.eyebrow-rule::before,
+.eyebrow-rule::after {
+  content: "";
+  height: 1px;
+  width: 2.75rem;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(232, 228, 220, 0.35)
+  );
+}
+
+.eyebrow-rule::after {
+  background: linear-gradient(
+    to left,
+    transparent,
+    rgba(232, 228, 220, 0.35)
+  );
+}
+
+/* Links — animated hairline underline */
+.link-quiet,
+.link-subtle {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 calc(100% - 0px);
+  background-repeat: no-repeat;
+  padding-bottom: 2px;
+  transition:
+    color 0.25s ease,
+    background-size 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .link-quiet {
   font-size: 0.875rem;
-  font-weight: 200;
-  color: rgba(255, 255, 255, 0.55);
-  transition: color 0.15s ease;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .link-quiet:hover {
   color: rgba(255, 255, 255, 1);
+  background-size: 100% 1px;
 }
 
 .link-subtle {
   font-size: 0.8125rem;
-  font-weight: 200;
+  font-weight: 300;
   color: rgba(255, 255, 255, 0.4);
-  transition: color 0.15s ease;
 }
 
 .link-subtle:hover {
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.8);
+  background-size: 100% 1px;
+}
+
+/* Nav links — letterspaced small caps */
+.nav-link {
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  transition: color 0.25s ease;
+}
+
+.nav-link:hover {
+  color: rgba(232, 228, 220, 1);
 }
 
 ::selection {
-  background-color: rgba(255, 255, 255, 0.15);
-  color: #ffffff;
+  background-color: rgba(232, 228, 220, 0.9);
+  color: #0a0a0a;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  border: 3px solid #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
 }
 
 .fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
+  animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   opacity: 0;
 }
 
 .fade-in-delay-1 {
-  animation-delay: 0.1s;
+  animation-delay: 0.12s;
 }
 
 .fade-in-delay-2 {
-  animation-delay: 0.2s;
+  animation-delay: 0.24s;
 }
 
 .fade-in-delay-3 {
-  animation-delay: 0.3s;
+  animation-delay: 0.36s;
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(14px);
+    filter: blur(3px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+    filter: blur(0);
   }
 }
 
@@ -88,6 +177,7 @@ body {
     animation: none;
     opacity: 1;
     transform: none;
+    filter: none;
   }
 
   .marquee-track {
