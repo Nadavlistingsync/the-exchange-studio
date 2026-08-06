@@ -50,6 +50,9 @@ export const metadata: Metadata = {
     description: SITE.description,
     images: ["/the-exchange-banner.png"],
   },
+  verification: {
+    google: "ShfDkF_vMYAeauJL_0EckVcyGXdefFTEjOrxyN44iG8",
+  },
 };
 
 export default function RootLayout({
