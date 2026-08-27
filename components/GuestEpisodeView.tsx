@@ -1,10 +1,7 @@
-"use client";
-
 import Link from "next/link";
-import { useRef, useState } from "react";
 import { formatEpisodeDate, type Episode } from "@/lib/episodes";
 import type { Guest } from "@/lib/guests";
-import { getGuestListenUrl } from "@/lib/guests";
+import { getGuestSpotifyUrl } from "@/lib/guests";
 import { getEpisodeHref } from "@/lib/episode-links";
 import { EpisodePlayer } from "./EpisodePlayer";
 import { GuestImage } from "./GuestImage";
@@ -27,19 +24,8 @@ export function GuestEpisodeView({
   episode,
   relatedEpisodes = [],
 }: GuestEpisodeViewProps) {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const playerRef = useRef<HTMLDivElement>(null);
-
-  const listenHref = getGuestListenUrl(guest, episode);
-
-  function handlePlay() {
-    if (!episode?.youtubeId && !episode?.audioUrl) return;
-    setIsPlaying(true);
-    requestAnimationFrame(() => {
-      playerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-  }
-
+  const spotifyHref = getGuestSpotifyUrl(guest, episode) || SITE.listen.spotify;
+  const youtubeHref = episode?.videoUrl;
   const canPlay = Boolean(episode?.youtubeId || episode?.audioUrl);
   const initials = guest.name
     .split(" ")
@@ -66,24 +52,23 @@ export function GuestEpisodeView({
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
-            {listenHref && (
+            <a
+              href={spotifyHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-quiet"
+            >
+              Listen on Spotify →
+            </a>
+            {youtubeHref && (
               <a
-                href={listenHref}
+                href={youtubeHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="link-quiet"
               >
-                Listen on Spotify →
+                Watch on YouTube →
               </a>
-            )}
-            {canPlay && (
-              <button
-                type="button"
-                onClick={handlePlay}
-                className="link-quiet"
-              >
-                Play here →
-              </button>
             )}
           </div>
 
@@ -153,14 +138,34 @@ export function GuestEpisodeView({
         </div>
       </section>
 
-      {isPlaying && episode && (
-        <section
-          ref={playerRef}
-          className="border-t border-white/10 px-6 py-16 md:px-12 lg:px-16"
-        >
+      {episode && canPlay && (
+        <section className="border-t border-white/10 px-6 py-16 md:px-12 lg:px-16">
           <div className="mx-auto max-w-5xl">
-            <p className="section-eyebrow mb-6">Now playing</p>
+            <p className="section-eyebrow mb-3">Watch the conversation</p>
+            <h2 className="font-serif mb-8 max-w-3xl text-3xl font-light leading-tight text-white md:text-4xl">
+              {episode.title}
+            </h2>
             <EpisodePlayer episode={episode} />
+            <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
+              <a
+                href={spotifyHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-quiet"
+              >
+                Listen on Spotify →
+              </a>
+              {youtubeHref && (
+                <a
+                  href={youtubeHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-quiet"
+                >
+                  Open on YouTube →
+                </a>
+              )}
+            </div>
           </div>
         </section>
       )}

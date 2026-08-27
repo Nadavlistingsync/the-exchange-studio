@@ -12,6 +12,7 @@ export function EpisodePlayer({ episode }: EpisodePlayerProps) {
         <iframe
           src={`https://www.youtube.com/embed/${episode.youtubeId}`}
           title={episode.title}
+          loading="lazy"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
           className="absolute inset-0 h-full w-full"

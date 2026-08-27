@@ -21,6 +21,12 @@ export type Guest = {
   episodeSlug?: string;
   /** Manual Spotify episode override when RSS title matching fails */
   spotifyEpisodeId?: string;
+  /** Manual YouTube override for full episodes outside the curated RSS playlist. */
+  youtubeVideoId?: string;
+  /** Display title for a manually linked episode. */
+  episodeTitle?: string;
+  /** ISO publication date for a manually linked episode. */
+  episodePublishedAt?: string;
 };
 
 export type GuestWithEpisode = Guest & {
@@ -111,6 +117,17 @@ export function getGuestListenUrl(
 ): string | undefined {
   const episodeUrl = getEpisodeListenUrl(episode);
   if (episodeUrl) return episodeUrl;
+  if (guest.spotifyEpisodeId) {
+    return getSpotifyEpisodeUrl(guest.spotifyEpisodeId);
+  }
+  return undefined;
+}
+
+export function getGuestSpotifyUrl(
+  guest: Guest,
+  episode?: Episode
+): string | undefined {
+  if (episode?.spotifyUrl) return episode.spotifyUrl;
   if (guest.spotifyEpisodeId) {
     return getSpotifyEpisodeUrl(guest.spotifyEpisodeId);
   }
@@ -248,6 +265,9 @@ export const CONFIRMED_GUESTS: Guest[] = [
     imagePath: "/guests/eric-brody.png",
     accentColor: "#282828",
     matchTerms: ["eric brody", "brody", "anax"],
+    youtubeVideoId: "_8NFmsPlKnA",
+    episodeTitle: "How he came back from -$15M in real estate | Eric Brody",
+    episodePublishedAt: "2026-02-26T00:00:00.000Z",
   },
   {
     name: "Howard Fiddle",
@@ -481,17 +501,24 @@ function episodeMatchesGuest(episode: Episode, guest: Guest): boolean {
 }
 
 function getSyntheticEpisodeForGuest(guest: Guest): Episode | undefined {
-  if (!guest.spotifyEpisodeId) return undefined;
-
-  const entry = getCatalogEntryById(guest.spotifyEpisodeId);
-  if (!entry) return undefined;
+  const entry = guest.spotifyEpisodeId
+    ? getCatalogEntryById(guest.spotifyEpisodeId)
+    : undefined;
+  const title = guest.episodeTitle || entry?.title;
+  if (!title) return undefined;
 
   return {
-    title: entry.title,
-    slug: slugify(entry.title),
+    title,
+    slug: slugify(title),
     description: "",
-    pubDate: new Date(0).toISOString(),
-    spotifyUrl: getSpotifyEpisodeUrl(entry.id),
+    pubDate: guest.episodePublishedAt || new Date(0).toISOString(),
+    youtubeId: guest.youtubeVideoId,
+    videoUrl: guest.youtubeVideoId
+      ? `https://www.youtube.com/watch?v=${guest.youtubeVideoId}`
+      : undefined,
+    spotifyUrl: guest.spotifyEpisodeId
+      ? getSpotifyEpisodeUrl(guest.spotifyEpisodeId)
+      : undefined,
   };
 }
 
@@ -523,9 +550,14 @@ export function findEpisodesForGuest(
       episodeMatchesGuest(ep, guest) ||
       (guest.episodeSlug != null && ep.slug === guest.episodeSlug)
   );
-  return matches.sort(
+  const sortedMatches = matches.sort(
     (a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime()
   );
+
+  if (sortedMatches.length > 0) return sortedMatches;
+
+  const syntheticEpisode = getSyntheticEpisodeForGuest(guest);
+  return syntheticEpisode ? [syntheticEpisode] : [];
 }
 
 export function guestHasPublishedEpisode(
