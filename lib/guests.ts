@@ -5,6 +5,7 @@ import {
   getEpisodeListenUrl,
   getSpotifyEpisodeUrl,
 } from "./spotify";
+import { getYouTubeEpisodeForGuest } from "./youtube";
 
 export type Guest = {
   name: string;
@@ -21,12 +22,6 @@ export type Guest = {
   episodeSlug?: string;
   /** Manual Spotify episode override when RSS title matching fails */
   spotifyEpisodeId?: string;
-  /** Manual YouTube override for full episodes outside the curated RSS playlist. */
-  youtubeVideoId?: string;
-  /** Display title for a manually linked episode. */
-  episodeTitle?: string;
-  /** ISO publication date for a manually linked episode. */
-  episodePublishedAt?: string;
 };
 
 export type GuestWithEpisode = Guest & {
@@ -253,6 +248,7 @@ export const CONFIRMED_GUESTS: Guest[] = [
     imagePath: "/guests/jay-neveloff.png",
     accentColor: "#2a2420",
     matchTerms: ["jay neveloff", "neveloff", "kramer levin"],
+    spotifyEpisodeId: "0nfuL2rFJswrb1zHLcLE4C",
   },
   {
     name: "Eric Brody",
@@ -265,9 +261,6 @@ export const CONFIRMED_GUESTS: Guest[] = [
     imagePath: "/guests/eric-brody.png",
     accentColor: "#282828",
     matchTerms: ["eric brody", "brody", "anax"],
-    youtubeVideoId: "_8NFmsPlKnA",
-    episodeTitle: "How he came back from -$15M in real estate | Eric Brody",
-    episodePublishedAt: "2026-02-26T00:00:00.000Z",
   },
   {
     name: "Howard Fiddle",
@@ -280,6 +273,7 @@ export const CONFIRMED_GUESTS: Guest[] = [
     imagePath: "/guests/howard-fiddle.png",
     accentColor: "#1e2430",
     matchTerms: ["howard fiddle", "fiddle", "cbre"],
+    spotifyEpisodeId: "5CV4q87Gfqaeu7dnAe9r7a",
   },
   {
     name: "Beth Benalloul",
@@ -407,6 +401,7 @@ export const CONFIRMED_GUESTS: Guest[] = [
     imagePath: "/guests/jack-stone.png",
     accentColor: "#242628",
     matchTerms: ["jack stone", "no cap", "cre daily"],
+    spotifyEpisodeId: "2WzUC3iDPL2G1Ka3Sgkh87",
   },
   {
     name: "Rena Kliot",
@@ -501,20 +496,21 @@ function episodeMatchesGuest(episode: Episode, guest: Guest): boolean {
 }
 
 function getSyntheticEpisodeForGuest(guest: Guest): Episode | undefined {
+  const youtubeEpisode = getYouTubeEpisodeForGuest(guest.slug);
   const entry = guest.spotifyEpisodeId
     ? getCatalogEntryById(guest.spotifyEpisodeId)
     : undefined;
-  const title = guest.episodeTitle || entry?.title;
+  const title = youtubeEpisode?.title || entry?.title;
   if (!title) return undefined;
 
   return {
     title,
     slug: slugify(title),
     description: "",
-    pubDate: guest.episodePublishedAt || new Date(0).toISOString(),
-    youtubeId: guest.youtubeVideoId,
-    videoUrl: guest.youtubeVideoId
-      ? `https://www.youtube.com/watch?v=${guest.youtubeVideoId}`
+    pubDate: youtubeEpisode?.publishedAt || new Date(0).toISOString(),
+    youtubeId: youtubeEpisode?.id,
+    videoUrl: youtubeEpisode
+      ? `https://www.youtube.com/watch?v=${youtubeEpisode.id}`
       : undefined,
     spotifyUrl: guest.spotifyEpisodeId
       ? getSpotifyEpisodeUrl(guest.spotifyEpisodeId)
