@@ -12,6 +12,30 @@ const SPOTIFY_EPISODE_URL_PATTERN =
 /** Fallback catalog when Spotify show HTML is client-rendered (The Exchange Pod). */
 const SPOTIFY_EPISODE_CATALOG: { title: string; id: string }[] = [
   {
+    title: "How Bernard Raskin built the largest brokerage in Israel | The Exchange",
+    id: "2HLg6wwo6Fl9kUY1vw61CI",
+  },
+  {
+    title: "How Jonathan Steinberg Built Israel's Largest CRE brokerage | Podcast",
+    id: "38iKJItDTput1jlFpMf63H",
+  },
+  {
+    title: "Special episode with: Rahel Benguigui.",
+    id: "6fNZK55tbJFWIKKQoR7Nlz",
+  },
+  {
+    title: "NYC's number one leasing broker | Howard Fiddle",
+    id: "5CV4q87Gfqaeu7dnAe9r7a",
+  },
+  {
+    title: "The Lawyer Behind $100B in NYC Real Estate Deals | Jay Neveloff",
+    id: "0nfuL2rFJswrb1zHLcLE4C",
+  },
+  {
+    title: "How Jack Stone Built One Of Real Estate’s Top Podcasts",
+    id: "2WzUC3iDPL2G1Ka3Sgkh87",
+  },
+  {
     title: "How he became the CEO of Cushman & Wakefield at 37 | Stephen Siegel",
     id: "5RWYTWfFyBOSBHTvHTkxKy",
   },
@@ -48,6 +72,62 @@ const SPOTIFY_EPISODE_CATALOG: { title: string; id: string }[] = [
   {
     title: "From Opera Singer to #1 at Brown Harris Stevens | Ari Harkov",
     id: "4j74jlxTICaUHB65cUNV8s",
+  },
+  {
+    title: "How Bob Knakal sold 2,391 buildings | TEWN EP #14",
+    id: "0gzI4wNiPeyVsZQ7wHm5VO",
+  },
+  {
+    title: "Why Camber Creek is backing SERHANT | Jeffery Berman Ep 12",
+    id: "56NK5HhGo7HVcWdzN2Suwv",
+  },
+  {
+    title:
+      "How an Israeli immigrant built a real estate empire from scratch | Eyal Mehaber Ep.13",
+    id: "3UFIMwaFy8Za8ZOq6lgUCv",
+  },
+  {
+    title: "How he came back from -$15M in real estate | Eric Brody | Ep. 9",
+    id: "6BmuhV83wxLxZkHrexuhMI",
+  },
+  {
+    title:
+      "How a immigrant doctor started a $120M AUM Fund in her free time | Nkem Ezeamama Ep #8",
+    id: "0t0apUraNSJI5p5ODRmZgj",
+  },
+  {
+    title:
+      "From Flipping houses in his free time to $90M in AUM | Michael Wagman NGDR Ep #7",
+    id: "6dVv7YkPvFN9h2EWpofj19",
+  },
+  {
+    title:
+      "From High School Dropout to $10B+ in Real Estate Deals | Eric Benaim, NGDR Ep. 6",
+    id: "1ZOIBNCqryES0ssj45cohm",
+  },
+  {
+    title:
+      "From broke with 3 kids to 1 Billion+ in real estate sales, Daniella Schlisser | NGDR Ep #5",
+    id: "6npqyXHweZus7GQGI3aH2G",
+  },
+  {
+    title:
+      "How Jake Sisk built a 10 Million Dollar Real Estate Empire at 23 | NGDR #4",
+    id: "3HGuO8ZiyJYrdowdnzoTry",
+  },
+  {
+    title:
+      '"Believe in yourself" How Anne Lusk Sold over 1 Billion Dollars as a agent NGDR Episode #3',
+    id: "5jqNMFuYA7EP0lH0dIuQ4w",
+  },
+  {
+    title:
+      '"invest, invest, invest." Matthew Teifke from 0-120 Million at 34 | NGDR Ep #2',
+    id: "65vsDd6GzBKMyBY9mIkkLu",
+  },
+  {
+    title: "How Patti Williams Closed $500M in Real Estate | NGDR Ep. 1",
+    id: "2aDeeF9tNk2hoD3m7yefdm",
   },
 ];
 

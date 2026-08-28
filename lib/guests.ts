@@ -148,6 +148,7 @@ export const CONFIRMED_GUESTS: Guest[] = [
       "bkrea",
       "massey knakal",
     ],
+    spotifyEpisodeId: "0gzI4wNiPeyVsZQ7wHm5VO",
   },
   {
     name: "Jeff Gural",
@@ -236,6 +237,7 @@ export const CONFIRMED_GUESTS: Guest[] = [
     imagePath: "/guests/eric-benaim.png",
     accentColor: "#242430",
     matchTerms: ["eric benaim", "benaim", "modern spaces", "lic"],
+    spotifyEpisodeId: "1ZOIBNCqryES0ssj45cohm",
   },
   {
     name: "Jay Neveloff",
@@ -261,6 +263,7 @@ export const CONFIRMED_GUESTS: Guest[] = [
     imagePath: "/guests/eric-brody.png",
     accentColor: "#282828",
     matchTerms: ["eric brody", "brody", "anax"],
+    spotifyEpisodeId: "6BmuhV83wxLxZkHrexuhMI",
   },
   {
     name: "Howard Fiddle",
@@ -340,6 +343,7 @@ export const CONFIRMED_GUESTS: Guest[] = [
     imagePath: "/guests/daniella-schlisser.png",
     accentColor: "#241f2a",
     matchTerms: ["daniella", "daniela", "schlisser"],
+    spotifyEpisodeId: "6npqyXHweZus7GQGI3aH2G",
   },
   {
     name: "Nate Wieland",
@@ -365,6 +369,7 @@ export const CONFIRMED_GUESTS: Guest[] = [
     imagePath: "/guests/jeffery-berman.png",
     accentColor: "#232830",
     matchTerms: ["jeffery berman", "jeffrey berman", "berman", "camber creek"],
+    spotifyEpisodeId: "56NK5HhGo7HVcWdzN2Suwv",
   },
   {
     name: "Eyal Mehaber",
@@ -377,6 +382,7 @@ export const CONFIRMED_GUESTS: Guest[] = [
     imagePath: "/guests/eyal-mehaber.png",
     accentColor: "#2b2828",
     matchTerms: ["eyal mehaber", "mehaber", "eyal", "em equity"],
+    spotifyEpisodeId: "3UFIMwaFy8Za8ZOq6lgUCv",
   },
   {
     name: "Jake Sisk",
@@ -389,6 +395,7 @@ export const CONFIRMED_GUESTS: Guest[] = [
     imagePath: "/guests/jake-sisk.png",
     accentColor: "#252528",
     matchTerms: ["jake sisk", "sisk", "oasisk", "bring your deal"],
+    spotifyEpisodeId: "3HGuO8ZiyJYrdowdnzoTry",
   },
   {
     name: "Jack Stone",
@@ -434,6 +441,7 @@ export const CONFIRMED_GUESTS: Guest[] = [
     imagePath: "/guests/michael-wagman.png",
     accentColor: "#1f2428",
     matchTerms: ["michael wagman", "wagman", "nimble capital"],
+    spotifyEpisodeId: "6dVv7YkPvFN9h2EWpofj19",
   },
   {
     name: "Anne Lusk",
@@ -446,6 +454,7 @@ export const CONFIRMED_GUESTS: Guest[] = [
     imagePath: "/guests/anne-lusk.png",
     accentColor: "#2a2a24",
     matchTerms: ["anne lusk", "lusk"],
+    spotifyEpisodeId: "5jqNMFuYA7EP0lH0dIuQ4w",
   },
   {
     name: "Matthew Teifke",
@@ -458,6 +467,7 @@ export const CONFIRMED_GUESTS: Guest[] = [
     imagePath: "/guests/matthew-teifke.png",
     accentColor: "#242820",
     matchTerms: ["matthew teifke", "teifke", "teifke real estate"],
+    spotifyEpisodeId: "65vsDd6GzBKMyBY9mIkkLu",
   },
   {
     name: "Patti Maurer Williams",
@@ -475,6 +485,7 @@ export const CONFIRMED_GUESTS: Guest[] = [
       "patti m williams",
       "patti maurer",
     ],
+    spotifyEpisodeId: "2aDeeF9tNk2hoD3m7yefdm",
   },
   {
     name: "Nkem Ezeamama",
@@ -487,6 +498,7 @@ export const CONFIRMED_GUESTS: Guest[] = [
     imagePath: "/guests/nkem-ezeamama.png",
     accentColor: "#28242a",
     matchTerms: ["nkem ezeamama", "nkem ezemama", "ezeamama", "pheenyx"],
+    spotifyEpisodeId: "0t0apUraNSJI5p5ODRmZgj",
   },
 ];
 
