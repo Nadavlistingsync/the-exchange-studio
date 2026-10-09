@@ -7,7 +7,6 @@ import { SiteTitle } from "./SiteTitle";
 
 const menuLinks = [
   { href: "/guests", label: "Guests" },
-  { href: "/network", label: "Network" },
   { href: "/episodes", label: "Episodes" },
   { href: "/sponsors", label: "Sponsors" },
 ];
