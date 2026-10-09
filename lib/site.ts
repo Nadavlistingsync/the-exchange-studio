@@ -4,11 +4,9 @@ import { YOUTUBE_CHANNEL_URL, YOUTUBE_RSS_FEED_URL } from "./youtube";
 export const SITE = {
   name: "The Exchange",
   description:
-    "An invitation-only network for principals and operators who move New York commercial real estate.",
+    "Conversations with the principals and operators shaping New York commercial real estate.",
   email: "nadav@theexchange.studio",
   newsletter: "https://substack.com/@theexchangestudio",
-  /** Luma events page — set when events are live. */
-  eventsUrl: process.env.NEXT_PUBLIC_LUMA_EVENTS_URL || "",
   social: {
     youtube: process.env.YOUTUBE_URL || YOUTUBE_CHANNEL_URL,
     instagram:

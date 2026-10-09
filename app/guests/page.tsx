@@ -24,7 +24,7 @@ export default async function GuestsPage() {
       <SubpageNav />
       <section className="mx-auto max-w-6xl px-6 pb-24 pt-28 md:px-12 md:pt-32">
         <div className="fade-in mb-12 max-w-2xl">
-          <p className="section-eyebrow mb-4">Network</p>
+          <p className="section-eyebrow mb-4">On the podcast</p>
           <h1 className="font-serif text-4xl font-light tracking-tight text-white md:text-5xl">
             Guests
           </h1>

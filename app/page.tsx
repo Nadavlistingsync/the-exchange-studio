@@ -1,6 +1,5 @@
 import { GuestMosaic } from "@/components/GuestMosaic";
 import { LatestEpisodeStrip } from "@/components/LatestEpisodeStrip";
-import { NetworkIntro } from "@/components/NetworkIntro";
 import { EpisodeCarousel } from "@/components/EpisodeCarousel";
 import { NewsletterPopup } from "@/components/NewsletterPopup";
 import { getEpisodes, getFeaturedEpisode } from "@/lib/rss";
@@ -15,7 +14,6 @@ export default async function HomePage() {
     <>
       <GuestMosaic episodes={episodes} />
       {featured && <LatestEpisodeStrip episode={featured} />}
-      <NetworkIntro />
       <EpisodeCarousel episodes={episodes} />
       <NewsletterPopup />
     </>

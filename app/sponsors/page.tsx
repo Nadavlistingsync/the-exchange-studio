@@ -21,11 +21,6 @@ const benefits = [
       "Placement in The Exchange newsletter, where subscribers follow new episodes, operator insights, and interviews from the New York CRE community.",
   },
   {
-    title: "Network visibility",
-    description:
-      "Association with an invitation-only network of principals, developers, brokers, and operators — the decision-makers shaping commercial real estate in the city.",
-  },
-  {
     title: "Digital footprint",
     description:
       "Logo and link on theexchange.studio, plus distribution across YouTube, Instagram, TikTok, and LinkedIn where episodes and clips reach the industry.",
@@ -50,8 +45,8 @@ export default function SponsorsPage() {
             Reach the people who move New York commercial real estate.
           </h1>
           <p className="mt-8 text-base font-extralight leading-[1.8] text-white/60">
-            The Exchange is a podcast and private network for principals and
-            operators — not a mass-market show. Sponsorship puts your brand in
+            The Exchange is a podcast for principals and
+            operators. Sponsorship puts your brand in
             front of a focused audience of dealmakers, portfolio builders, and
             industry leaders across the city.
           </p>
@@ -85,7 +80,7 @@ export default function SponsorsPage() {
             </h2>
           </div>
 
-          <div className="fade-in grid grid-cols-1 gap-px border border-white/10 bg-white/10 md:grid-cols-2">
+          <div className="fade-in grid grid-cols-1 gap-px border border-white/10 bg-white/10 md:grid-cols-3">
             {benefits.map((benefit) => (
               <div
                 key={benefit.title}
