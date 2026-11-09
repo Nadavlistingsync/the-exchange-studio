@@ -10,124 +10,179 @@ const SPOTIFY_EPISODE_URL_PATTERN =
   /https?:\/\/open\.spotify\.com\/episode\/[A-Za-z0-9]+/i;
 
 /** Fallback catalog when Spotify show HTML is client-rendered (The Exchange Pod). */
-const SPOTIFY_EPISODE_CATALOG: { title: string; id: string }[] = [
+const SPOTIFY_EPISODE_CATALOG: {
+  title: string;
+  id: string;
+  publishedAt?: string;
+}[] = [
+  {
+    title:
+      "Inside Madison Realty Capital: Real Estate Lending and Private Credit | Marc Zegen",
+    id: "6qXsxNOrDFcX7E8QwCxH5U",
+    publishedAt: "2026-11-03T17:00:00.000Z",
+  },
+  {
+    title:
+      "Inside Compass: Building a Brokerage and Selling Luxury Real Estate | Leonard Steinberg",
+    id: "00yCFKaMPXa5W4OIRBC5pB",
+    publishedAt: "2026-10-22T21:15:00.000Z",
+  },
+  {
+    title:
+      "Inside New York Real Estate: Selling Buildings and Building a Business | James Nelson",
+    id: "1vBOP0ky4rl9c6NJJOKTUL",
+    publishedAt: "2026-10-08T13:00:00.000Z",
+  },
+  {
+    title:
+      "Inside Dalfen Industrial: Buying, Building and Investing in Warehouses | Sean Dalfen",
+    id: "5WY6pSu7DnXemP5rmMPZfC",
+    publishedAt: "2026-09-24T13:00:00.000Z",
+  },
   {
     title: "How Bernard Raskin built the largest brokerage in Israel | The Exchange",
     id: "2HLg6wwo6Fl9kUY1vw61CI",
+    publishedAt: "2026-07-16T13:00:00.000Z",
   },
   {
     title: "How Jonathan Steinberg Built Israel's Largest CRE brokerage | Podcast",
     id: "38iKJItDTput1jlFpMf63H",
+    publishedAt: "2026-07-02T13:00:00.000Z",
   },
   {
     title: "Special episode with: Rahel Benguigui.",
     id: "6fNZK55tbJFWIKKQoR7Nlz",
+    publishedAt: "2026-06-20T13:00:00.000Z",
   },
   {
     title: "NYC's number one leasing broker | Howard Fiddle",
     id: "5CV4q87Gfqaeu7dnAe9r7a",
+    publishedAt: "2026-06-25T13:00:00.000Z",
   },
   {
     title: "The Lawyer Behind $100B in NYC Real Estate Deals | Jay Neveloff",
     id: "0nfuL2rFJswrb1zHLcLE4C",
+    publishedAt: "2026-06-18T13:00:00.000Z",
   },
   {
     title: "How Jack Stone Built One Of Real Estate’s Top Podcasts",
     id: "2WzUC3iDPL2G1Ka3Sgkh87",
+    publishedAt: "2026-06-11T13:00:00.000Z",
   },
   {
     title: "How he became the CEO of Cushman & Wakefield at 37 | Stephen Siegel",
     id: "5RWYTWfFyBOSBHTvHTkxKy",
+    publishedAt: "2026-06-04T13:00:00.000Z",
   },
   {
     title: "Inside Brown Harris Stevens with Bess Freedman",
     id: "5joLlf8YOuFtxbVRp8chhj",
+    publishedAt: "2026-05-28T13:00:00.000Z",
   },
   {
     title: "How Michael Shah Paid Off $1B in Debt With Zero Foreclosures",
     id: "1LeLDwZkXilJQUmRCOPdjn",
+    publishedAt: "2026-05-21T13:00:00.000Z",
   },
   {
     title: "The Man Who Owns The Flatiron Building | Jeff Gural",
     id: "7e52GydC9m9Uy6TVvYyprh",
+    publishedAt: "2026-05-14T13:00:00.000Z",
   },
   {
     title:
       "She left personal training to sell $1 billion in real estate | Beth Benalloul",
     id: "1uvun2vZyW9HeV9LZdmpHv",
+    publishedAt: "2026-05-07T13:00:00.000Z",
   },
   {
     title: "How Rena Kliot went from a divorce to 2 Billion in sales",
     id: "5fEUouNLTZRQiDCu9QQrQN",
+    publishedAt: "2026-04-30T13:00:00.000Z",
   },
   {
     title:
       "How Michael Iuculano built a $2.2B real estate lending company. | Episode 16",
     id: "3BKfu0K1EPRe2CPflHBGYV",
+    publishedAt: "2026-04-23T13:00:00.000Z",
   },
   {
     title: "From the NFL to 40 Million dollar real estate Deals | Nate Weiland",
     id: "6HEwfaoQGoDkON6w9AA55X",
+    publishedAt: "2026-04-09T13:00:00.000Z",
   },
   {
     title: "From Opera Singer to #1 at Brown Harris Stevens | Ari Harkov",
     id: "4j74jlxTICaUHB65cUNV8s",
+    publishedAt: "2026-04-02T13:00:00.000Z",
   },
   {
     title: "How Bob Knakal sold 2,391 buildings | TEWN EP #14",
     id: "0gzI4wNiPeyVsZQ7wHm5VO",
+    publishedAt: "2026-03-19T13:00:00.000Z",
   },
   {
     title: "Why Camber Creek is backing SERHANT | Jeffery Berman Ep 12",
     id: "56NK5HhGo7HVcWdzN2Suwv",
+    publishedAt: "2026-03-12T13:00:00.000Z",
   },
   {
     title:
       "How an Israeli immigrant built a real estate empire from scratch | Eyal Mehaber Ep.13",
     id: "3UFIMwaFy8Za8ZOq6lgUCv",
+    publishedAt: "2026-03-05T13:00:00.000Z",
   },
   {
     title: "How he came back from -$15M in real estate | Eric Brody | Ep. 9",
     id: "6BmuhV83wxLxZkHrexuhMI",
+    publishedAt: "2026-02-26T13:00:00.000Z",
   },
   {
     title:
       "How a immigrant doctor started a $120M AUM Fund in her free time | Nkem Ezeamama Ep #8",
     id: "0t0apUraNSJI5p5ODRmZgj",
+    publishedAt: "2026-02-19T13:00:00.000Z",
   },
   {
     title:
       "From Flipping houses in his free time to $90M in AUM | Michael Wagman NGDR Ep #7",
     id: "6dVv7YkPvFN9h2EWpofj19",
+    publishedAt: "2026-02-12T13:00:00.000Z",
   },
   {
     title:
       "From High School Dropout to $10B+ in Real Estate Deals | Eric Benaim, NGDR Ep. 6",
     id: "1ZOIBNCqryES0ssj45cohm",
+    publishedAt: "2026-02-05T13:00:00.000Z",
   },
   {
     title:
       "From broke with 3 kids to 1 Billion+ in real estate sales, Daniella Schlisser | NGDR Ep #5",
     id: "6npqyXHweZus7GQGI3aH2G",
+    publishedAt: "2026-01-29T13:00:00.000Z",
   },
   {
     title:
       "How Jake Sisk built a 10 Million Dollar Real Estate Empire at 23 | NGDR #4",
     id: "3HGuO8ZiyJYrdowdnzoTry",
+    publishedAt: "2026-01-22T13:00:00.000Z",
   },
   {
     title:
       '"Believe in yourself" How Anne Lusk Sold over 1 Billion Dollars as a agent NGDR Episode #3',
     id: "5jqNMFuYA7EP0lH0dIuQ4w",
+    publishedAt: "2026-01-16T13:00:00.000Z",
   },
   {
     title:
       '"invest, invest, invest." Matthew Teifke from 0-120 Million at 34 | NGDR Ep #2',
     id: "65vsDd6GzBKMyBY9mIkkLu",
+    publishedAt: "2026-01-08T13:00:00.000Z",
   },
   {
     title: "How Patti Williams Closed $500M in Real Estate | NGDR Ep. 1",
     id: "2aDeeF9tNk2hoD3m7yefdm",
+    publishedAt: "2025-12-18T13:00:00.000Z",
   },
 ];
 
@@ -196,13 +251,15 @@ export function getCatalogEntryById(
 
 /** Spotify catalog entries not yet in the YouTube RSS feed. */
 export function getSupplementalEpisodes(): Episode[] {
-  return SPOTIFY_EPISODE_CATALOG.map((entry, index) => ({
-    title: entry.title,
-    slug: slugify(entry.title),
-    description: "",
-    pubDate: new Date(Date.UTC(2024, 0, 20 - index)).toISOString(),
-    spotifyUrl: getSpotifyEpisodeUrl(entry.id),
-  }));
+  return SPOTIFY_EPISODE_CATALOG.filter((entry) => Boolean(entry.publishedAt)).map(
+    (entry) => ({
+      title: entry.title,
+      slug: slugify(entry.title),
+      description: "",
+      pubDate: entry.publishedAt as string,
+      spotifyUrl: getSpotifyEpisodeUrl(entry.id),
+    })
+  );
 }
 
 export function episodeTitlesMatch(a: string, b: string): boolean {

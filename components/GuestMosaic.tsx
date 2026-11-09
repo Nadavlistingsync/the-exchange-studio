@@ -87,8 +87,20 @@ function MosaicTile({
   );
 }
 
+function sortGuestsForMosaic(guests: GuestWithEpisode[]): GuestWithEpisode[] {
+  return [...guests].sort((a, b) => {
+    const aTime = a.episode ? new Date(a.episode.pubDate).getTime() : 0;
+    const bTime = b.episode ? new Date(b.episode.pubDate).getTime() : 0;
+    if (aTime !== bTime) return bTime - aTime;
+    return a.rank - b.rank;
+  });
+}
+
 function RollingRows({ guests }: { guests: GuestWithEpisode[] }) {
-  const rows = useMemo(() => splitIntoRows(guests, ROW_COUNT), [guests]);
+  const rows = useMemo(
+    () => splitIntoRows(sortGuestsForMosaic(guests), ROW_COUNT),
+    [guests]
+  );
 
   return (
     <div className="flex h-full min-h-0 flex-col gap-0.5 p-0.5 md:gap-1 md:p-1">

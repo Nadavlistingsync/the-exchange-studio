@@ -8,6 +8,7 @@ import {
 } from "./spotify";
 import {
   extractYouTubeId,
+  getYouTubeEpisodeCatalog,
   getYouTubeFeedUrl,
   isFullYouTubeVideo,
 } from "./youtube";
@@ -159,15 +160,41 @@ export async function getEpisodes(): Promise<Episode[]> {
   }
 }
 
+function getYouTubeCatalogEpisodes(): Episode[] {
+  return Object.values(getYouTubeEpisodeCatalog())
+    .filter((entry) => Boolean(entry.publishedAt))
+    .map((entry) => ({
+      title: entry.title,
+      slug: buildSlug(entry.title, entry.id),
+      description: "",
+      pubDate: entry.publishedAt as string,
+      youtubeId: entry.id,
+      videoUrl: `https://www.youtube.com/watch?v=${entry.id}`,
+      imageUrl: `https://i.ytimg.com/vi/${entry.id}/hqdefault.jpg`,
+    }));
+}
+
+function episodeAlreadyListed(
+  episodes: Episode[],
+  candidate: Episode
+): boolean {
+  return episodes.some(
+    (ep) =>
+      (candidate.youtubeId && ep.youtubeId === candidate.youtubeId) ||
+      episodeTitlesMatch(ep.title, candidate.title)
+  );
+}
+
 function mergeSupplementalEpisodes(episodes: Episode[]): Episode[] {
-  const supplemental = getSupplementalEpisodes();
   const merged = [...episodes];
 
-  for (const candidate of supplemental) {
-    const exists = merged.some((ep) =>
-      episodeTitlesMatch(ep.title, candidate.title)
-    );
-    if (!exists) merged.push(candidate);
+  for (const candidate of [
+    ...getYouTubeCatalogEpisodes(),
+    ...getSupplementalEpisodes(),
+  ]) {
+    if (!episodeAlreadyListed(merged, candidate)) {
+      merged.push(candidate);
+    }
   }
 
   return merged.sort(
