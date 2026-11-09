@@ -49,6 +49,7 @@ const COMPANY_ABBREVIATIONS: Record<string, string> = {
   "Madison Realty Capital": "MRC",
   "Dalfen Industrial": "Dalfen",
   "Avison Young": "AY",
+  "Newmark Natam": "Newmark Natam",
 };
 
 function getRoleAbbreviation(role: string): string {
@@ -206,13 +207,13 @@ export const CONFIRMED_GUESTS: Guest[] = [
     name: "Jonathan Steinberg",
     slug: "jonathan-steinberg",
     shortLabel: "JONATHAN",
-    role: "Founder",
-    company: "Anglo-Saxon",
+    role: "Chairman & CEO",
+    company: "Newmark Natam",
     rank: 6,
-    bio: "Jonathan Steinberg founded Anglo-Saxon, one of Israel's largest commercial real estate brokerages. He talks about building a CRE firm from the ground up and what operators in other markets can learn from Israel's deal culture.",
+    bio: "Jonathan Steinberg is Chairman and CEO of Newmark Natam, Israel's largest commercial real estate firm. He founded NATAM in 1985 and has built it into a national platform across tenant, landlord, and investor representation.",
     imagePath: "/guests/jonathan-steinberg.png",
     accentColor: "#1f2620",
-    matchTerms: ["jonathan steinberg", "anglo-saxon", "anglo saxon"],
+    matchTerms: ["jonathan steinberg", "newmark natam", "natam"],
     spotifyEpisodeId: "38iKJItDTput1jlFpMf63H",
   },
   {
@@ -285,8 +286,8 @@ export const CONFIRMED_GUESTS: Guest[] = [
     matchTerms: [
       "bess freedman",
       "freedman",
-      "brown harris",
       "inside brown harris stevens",
+      "ceo bess",
     ],
     spotifyEpisodeId: "5joLlf8YOuFtxbVRp8chhj",
   },
