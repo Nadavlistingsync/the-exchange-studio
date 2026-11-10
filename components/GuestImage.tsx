@@ -20,7 +20,7 @@ const variantClasses: Record<
   mosaic: {
     frame: "absolute inset-0 overflow-hidden rounded-xl",
     image:
-      "object-cover object-top opacity-100 transition-transform duration-500 group-hover:scale-[1.04] group-focus-visible:scale-[1.04]",
+      "object-cover object-[center_18%] opacity-100 transition-transform duration-500 group-hover:scale-[1.04] group-focus-visible:scale-[1.04]",
   },
   row: {
     frame: "absolute inset-x-[12%] top-[10%] bottom-0",
@@ -33,9 +33,9 @@ const variantClasses: Record<
       "object-contain object-bottom opacity-95 transition-all duration-500 group-hover:scale-[1.03] group-hover:opacity-100 group-focus-visible:scale-[1.03] group-focus-visible:opacity-100",
   },
   hero: {
-    frame: "absolute inset-x-[16%] top-[10%] bottom-[4%] md:inset-x-[22%] md:top-[12%]",
+    frame: "absolute inset-x-[12%] top-[6%] bottom-[3%] md:inset-x-[18%] md:top-[8%]",
     image:
-      "object-contain object-bottom opacity-95 transition-all duration-500 group-hover:scale-[1.03] group-hover:opacity-100 group-focus-visible:scale-[1.03] group-focus-visible:opacity-100",
+      "object-contain object-center opacity-95 transition-all duration-500 group-hover:scale-[1.03] group-hover:opacity-100 group-focus-visible:scale-[1.03] group-focus-visible:opacity-100",
   },
 };
 

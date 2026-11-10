@@ -21,7 +21,7 @@ export function GuestCard({ guest, hasEpisode = true }: GuestCardProps) {
           src={guest.imagePath}
           alt={guest.name}
           fill
-          className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.045]"
+          className="object-cover object-[center_15%] transition-transform duration-700 ease-out group-hover:scale-[1.045]"
           sizes="(max-width: 768px) 50vw, 25vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-transparent" />
