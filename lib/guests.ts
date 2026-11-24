@@ -1,3 +1,7 @@
+import {
+  conversationToEpisode,
+  getConversationForGuest,
+} from "./conversations";
 import type { Episode } from "./episodes";
 import { slugify } from "./episodes";
 import {
@@ -146,6 +150,7 @@ export const CONFIRMED_GUESTS: Guest[] = [
     imagePath: "/guests/martin-nussbaum.png",
     accentColor: "#1a2830",
     matchTerms: ["martin nussbaum", "nussbaum", "slate property group", "slatepg"],
+    episodeSlug: "martin-nussbaum-on-the-exchange",
   },
   // Marc Zegen temporarily removed from the roster until his headshot is fixed.
   {
@@ -599,7 +604,15 @@ function episodeMatchesGuest(episode: Episode, guest: Guest): boolean {
   return guest.matchTerms.some((term) => title.includes(term));
 }
 
+function getConversationEpisodeForGuest(guest: Guest): Episode | undefined {
+  const conversation = getConversationForGuest(guest.slug);
+  return conversation ? conversationToEpisode(conversation) : undefined;
+}
+
 function getSyntheticEpisodeForGuest(guest: Guest): Episode | undefined {
+  const conversationEpisode = getConversationEpisodeForGuest(guest);
+  if (conversationEpisode) return conversationEpisode;
+
   const youtubeEpisode = getYouTubeEpisodeForGuest(guest.slug);
   const entry = guest.spotifyEpisodeId
     ? getCatalogEntryById(guest.spotifyEpisodeId)

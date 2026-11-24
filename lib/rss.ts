@@ -149,15 +149,14 @@ export async function getEpisodes(): Promise<Episode[]> {
           ep !== null && hasPlayableMedia(ep) && !ep.isShort
       );
 
-    if (episodes.length === 0) {
-      return getPlaceholderEpisodes();
-    }
-
+    // Always merge catalog + text conversations, even if the live feed is empty.
     return mergeSupplementalEpisodes(
-      await enrichEpisodesWithSpotify(episodes)
+      episodes.length > 0
+        ? await enrichEpisodesWithSpotify(episodes)
+        : getPlaceholderEpisodes()
     );
   } catch {
-    return getPlaceholderEpisodes();
+    return mergeSupplementalEpisodes(getPlaceholderEpisodes());
   }
 }
 
