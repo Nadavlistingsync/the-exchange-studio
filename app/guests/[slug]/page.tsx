@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { GuestEpisodeView } from "@/components/GuestEpisodeView";
 import { SubpageNav } from "@/components/SubpageNav";
+import { getConversationForGuest } from "@/lib/conversations";
 import { CONFIRMED_GUESTS, findBestEpisodeForGuest, findEpisodesForGuest } from "@/lib/guests";
 import { getEpisodes } from "@/lib/rss";
 import { SITE } from "@/lib/site";
@@ -60,6 +61,7 @@ export default async function GuestPage({ params }: PageProps) {
   }
 
   const episodes = await getEpisodes();
+  const conversation = getConversationForGuest(guest.slug);
   const episode = findBestEpisodeForGuest(guest, episodes);
   const relatedEpisodes = findEpisodesForGuest(guest, episodes);
 
@@ -70,6 +72,7 @@ export default async function GuestPage({ params }: PageProps) {
         guest={guest}
         episode={episode}
         relatedEpisodes={relatedEpisodes}
+        conversation={conversation}
       />
     </>
   );

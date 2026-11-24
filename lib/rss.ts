@@ -6,6 +6,7 @@ import {
   extractSpotifyEpisodeUrl,
   getSupplementalEpisodes,
 } from "./spotify";
+import { getConversationEpisodes } from "./conversations";
 import {
   extractYouTubeId,
   getYouTubeEpisodeCatalog,
@@ -191,6 +192,7 @@ function mergeSupplementalEpisodes(episodes: Episode[]): Episode[] {
   for (const candidate of [
     ...getYouTubeCatalogEpisodes(),
     ...getSupplementalEpisodes(),
+    ...getConversationEpisodes(),
   ]) {
     if (!episodeAlreadyListed(merged, candidate)) {
       merged.push(candidate);

@@ -1,8 +1,10 @@
 import Link from "next/link";
+import type { GuestConversation } from "@/lib/conversations";
 import { formatEpisodeDate, type Episode } from "@/lib/episodes";
 import type { Guest } from "@/lib/guests";
 import { getGuestSpotifyUrl } from "@/lib/guests";
 import { getEpisodeHref } from "@/lib/episode-links";
+import { ConversationTranscript } from "./ConversationTranscript";
 import { EpisodePlayer } from "./EpisodePlayer";
 import { GuestImage } from "./GuestImage";
 import { SITE } from "@/lib/site";
@@ -11,6 +13,7 @@ type GuestEpisodeViewProps = {
   guest: Guest;
   episode?: Episode;
   relatedEpisodes?: Episode[];
+  conversation?: GuestConversation;
 };
 
 const showLinks = [
@@ -23,10 +26,14 @@ export function GuestEpisodeView({
   guest,
   episode,
   relatedEpisodes = [],
+  conversation,
 }: GuestEpisodeViewProps) {
   const spotifyHref = getGuestSpotifyUrl(guest, episode) || SITE.listen.spotify;
   const youtubeHref = episode?.videoUrl;
   const canPlay = Boolean(episode?.youtubeId || episode?.audioUrl);
+  const hasListenLinks = Boolean(
+    episode && (guest.spotifyEpisodeId || youtubeHref || canPlay)
+  );
   const initials = guest.name
     .split(" ")
     .map((n) => n[0])
@@ -51,7 +58,7 @@ export function GuestEpisodeView({
             {guest.bio}
           </p>
 
-          {episode && (
+          {hasListenLinks && (
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
               <a
                 href={spotifyHref}
@@ -74,7 +81,7 @@ export function GuestEpisodeView({
             </div>
           )}
 
-          {!episode && (
+          {!episode && !conversation && (
             <div className="mt-10 border-t border-white/10 pt-8">
               <p className="section-eyebrow mb-2">Episode coming soon</p>
               <p className="max-w-md text-sm font-extralight leading-relaxed text-white/50">
@@ -101,9 +108,9 @@ export function GuestEpisodeView({
             </div>
           )}
 
-          {episode && relatedEpisodes.length <= 1 && (
+          {(episode || conversation) && relatedEpisodes.length <= 1 && (
             <p className="mt-8 text-sm font-extralight leading-relaxed text-white/40">
-              {episode.title}
+              {conversation?.title ?? episode?.title}
             </p>
           )}
 
@@ -139,6 +146,8 @@ export function GuestEpisodeView({
           />
         </div>
       </section>
+
+      {conversation && <ConversationTranscript conversation={conversation} />}
 
       {episode && canPlay && (
         <section className="border-t border-white/10 px-6 py-16 md:px-12 lg:px-16">
