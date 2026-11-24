@@ -147,19 +147,7 @@ export const CONFIRMED_GUESTS: Guest[] = [
     accentColor: "#1a2830",
     matchTerms: ["martin nussbaum", "nussbaum", "slate property group", "slatepg"],
   },
-  {
-    name: "Marc Zegen",
-    slug: "marc-zegen",
-    shortLabel: "MARC",
-    role: "Partner",
-    company: "Madison Realty Capital",
-    rank: 2,
-    bio: "Marc Zegen is a partner at Madison Realty Capital, one of New York's leading private real estate credit firms. On The Exchange he breaks down how MRC underwrites loans, where private credit fits in the capital stack, and what borrowers get wrong in today's lending market.",
-    imagePath: "/guests/marc-zegen.png",
-    accentColor: "#1c2430",
-    matchTerms: ["marc zegen", "zegen", "madison realty capital"],
-    spotifyEpisodeId: "6qXsxNOrDFcX7E8QwCxH5U",
-  },
+  // Marc Zegen temporarily removed from the roster until his headshot is fixed.
   {
     name: "Leonard Steinberg",
     slug: "leonard-steinberg",
