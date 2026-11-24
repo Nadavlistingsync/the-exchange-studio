@@ -51,26 +51,28 @@ export function GuestEpisodeView({
             {guest.bio}
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
-            <a
-              href={spotifyHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="link-quiet"
-            >
-              Listen on Spotify →
-            </a>
-            {youtubeHref && (
+          {episode && (
+            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
               <a
-                href={youtubeHref}
+                href={spotifyHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="link-quiet"
               >
-                Watch on YouTube →
+                Listen on Spotify →
               </a>
-            )}
-          </div>
+              {youtubeHref && (
+                <a
+                  href={youtubeHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-quiet"
+                >
+                  Watch on YouTube →
+                </a>
+              )}
+            </div>
+          )}
 
           {!episode && (
             <div className="mt-10 border-t border-white/10 pt-8">

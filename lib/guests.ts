@@ -50,6 +50,7 @@ const COMPANY_ABBREVIATIONS: Record<string, string> = {
   "Dalfen Industrial": "Dalfen",
   "Avison Young": "AY",
   "Newmark Natam": "Newmark Natam",
+  "Slate Property Group": "Slate",
 };
 
 function getRoleAbbreviation(role: string): string {
@@ -135,12 +136,24 @@ export function getGuestSpotifyUrl(
 
 export const CONFIRMED_GUESTS: Guest[] = [
   {
+    name: "Martin Nussbaum",
+    slug: "martin-nussbaum",
+    shortLabel: "MARTIN",
+    role: "Co-Founder & Principal",
+    company: "Slate Property Group",
+    rank: 1,
+    bio: "Martin Nussbaum is the co-founder and principal of Slate Property Group. Since 2013, Slate has completed more than $10 billion in transactions across buying, building, and financing housing. On The Exchange he talks about emigrating from Johannesburg to New Jersey, walking away from medicine, starting a business in 2008, and the monthly property visits that still shape how he runs the portfolio.",
+    imagePath: "/guests/martin-nussbaum.png",
+    accentColor: "#1a2830",
+    matchTerms: ["martin nussbaum", "nussbaum", "slate property group", "slatepg"],
+  },
+  {
     name: "Marc Zegen",
     slug: "marc-zegen",
     shortLabel: "MARC",
     role: "Partner",
     company: "Madison Realty Capital",
-    rank: 1,
+    rank: 2,
     bio: "Marc Zegen is a partner at Madison Realty Capital, one of New York's leading private real estate credit firms. On The Exchange he breaks down how MRC underwrites loans, where private credit fits in the capital stack, and what borrowers get wrong in today's lending market.",
     imagePath: "/guests/marc-zegen.png",
     accentColor: "#1c2430",

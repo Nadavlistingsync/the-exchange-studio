@@ -89,6 +89,11 @@ function MosaicTile({
 
 function sortGuestsForMosaic(guests: GuestWithEpisode[]): GuestWithEpisode[] {
   return [...guests].sort((a, b) => {
+    // Rank 1 stays pinned at the front of the mosaic (featured).
+    const aPinned = a.rank === 1 ? 0 : 1;
+    const bPinned = b.rank === 1 ? 0 : 1;
+    if (aPinned !== bPinned) return aPinned - bPinned;
+
     const aTime = a.episode ? new Date(a.episode.pubDate).getTime() : 0;
     const bTime = b.episode ? new Date(b.episode.pubDate).getTime() : 0;
     if (aTime !== bTime) return bTime - aTime;
