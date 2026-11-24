@@ -19,23 +19,25 @@ const variantClasses: Record<
 > = {
   mosaic: {
     frame: "absolute inset-0 overflow-hidden rounded-xl",
+    // Bottom-anchor so shoulders sit on the tile edge like Dalfen.
     image:
-      "object-cover object-[center_18%] opacity-100 transition-transform duration-500 group-hover:scale-[1.04] group-focus-visible:scale-[1.04]",
+      "object-cover object-bottom opacity-100 transition-transform duration-500 group-hover:scale-[1.04] group-focus-visible:scale-[1.04]",
   },
   row: {
-    frame: "absolute inset-x-[12%] top-[10%] bottom-0",
+    frame: "absolute inset-x-[8%] top-[6%] bottom-0",
     image:
       "object-contain object-bottom opacity-95 transition-all duration-500 group-hover:scale-[1.03] group-hover:opacity-100 group-focus-visible:scale-[1.03] group-focus-visible:opacity-100",
   },
   featured: {
-    frame: "absolute inset-x-[18%] top-[14%] bottom-[2%]",
+    frame: "absolute inset-x-[10%] top-[8%] bottom-0",
     image:
       "object-contain object-bottom opacity-95 transition-all duration-500 group-hover:scale-[1.03] group-hover:opacity-100 group-focus-visible:scale-[1.03] group-focus-visible:opacity-100",
   },
   hero: {
-    frame: "absolute inset-x-[12%] top-[6%] bottom-[3%] md:inset-x-[18%] md:top-[8%]",
+    // Fill the profile panel — less empty black, shoulders on the bottom edge.
+    frame: "absolute inset-x-0 top-0 bottom-0 md:inset-x-[4%]",
     image:
-      "object-contain object-center opacity-95 transition-all duration-500 group-hover:scale-[1.03] group-hover:opacity-100 group-focus-visible:scale-[1.03] group-focus-visible:opacity-100",
+      "object-cover object-bottom opacity-100 transition-all duration-500 group-hover:scale-[1.02] group-hover:opacity-100 group-focus-visible:scale-[1.02] group-focus-visible:opacity-100",
   },
 };
 
