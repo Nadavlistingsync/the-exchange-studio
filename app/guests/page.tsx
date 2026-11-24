@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
 import { GuestCard } from "@/components/GuestCard";
 import { SubpageNav } from "@/components/SubpageNav";
-import {
-  getRankedGuests,
-  guestHasPublishedEpisode,
-} from "@/lib/guests";
-import { getEpisodes } from "@/lib/rss";
+import { getRankedGuests } from "@/lib/guests";
 
 export const metadata: Metadata = {
   title: "Guests",
@@ -16,7 +12,6 @@ export const metadata: Metadata = {
 export const revalidate = 3600;
 
 export default async function GuestsPage() {
-  const episodes = await getEpisodes();
   const guests = getRankedGuests();
 
   return (
@@ -36,11 +31,7 @@ export default async function GuestsPage() {
 
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 lg:grid-cols-4">
           {guests.map((guest) => (
-            <GuestCard
-              key={guest.slug}
-              guest={guest}
-              hasEpisode={guestHasPublishedEpisode(guest, episodes)}
-            />
+            <GuestCard key={guest.slug} guest={guest} />
           ))}
         </div>
       </section>

@@ -4,7 +4,7 @@ import { EpisodeCarousel } from "@/components/EpisodeCarousel";
 import { NewsletterPopup } from "@/components/NewsletterPopup";
 import { getEpisodes, getFeaturedEpisode } from "@/lib/rss";
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 export default async function HomePage() {
   const episodes = await getEpisodes();

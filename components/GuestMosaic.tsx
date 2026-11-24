@@ -53,11 +53,7 @@ function MosaicTile({
     <div className={`group relative bg-[#0a0a0a] p-0.5 ${sizeClass}`}>
       <Link
         href={`/guests/${guest.slug}`}
-        className={`relative block h-full w-full overflow-hidden rounded-xl border bg-[#0a0a0a] transition-colors hover:border-white/20 focus:outline-none focus-visible:border-white/20 ${
-          guest.episode
-            ? "border-white/10"
-            : "border-white/10 border-dashed opacity-85"
-        }`}
+        className="relative block h-full w-full overflow-hidden rounded-xl border border-white/10 bg-[#0a0a0a] transition-colors hover:border-white/20 focus:outline-none focus-visible:border-white/20"
         aria-label={`${guest.name}, ${guest.role} at ${guest.company}`}
       >
         <GuestImage
@@ -71,9 +67,7 @@ function MosaicTile({
 
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/80 via-black/30 to-transparent px-2.5 pb-2.5 pt-10 sm:px-3 sm:pb-3">
           <span className="block truncate text-[9px] font-light uppercase leading-snug tracking-[0.14em] text-white/75 sm:text-[10px]">
-            {guest.episode
-              ? getGuestCompactLabel(guest)
-              : "Episode coming soon"}
+            {getGuestCompactLabel(guest)}
           </span>
         </div>
       </Link>

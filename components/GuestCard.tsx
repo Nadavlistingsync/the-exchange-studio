@@ -4,19 +4,12 @@ import { getGuestCompactLabel, getGuestFirstName, type Guest } from "@/lib/guest
 
 type GuestCardProps = {
   guest: Guest;
-  hasEpisode?: boolean;
 };
 
-export function GuestCard({ guest, hasEpisode = true }: GuestCardProps) {
+export function GuestCard({ guest }: GuestCardProps) {
   return (
     <Link href={`/guests/${guest.slug}`} className="group block">
-      <div
-        className={`relative aspect-[3/4] overflow-hidden rounded-xl border bg-[#0a0a0a] transition-colors duration-300 ${
-          hasEpisode
-            ? "border-white/10 group-hover:border-[#e8e4dc]/25"
-            : "border-white/10 border-dashed opacity-80 group-hover:border-white/20"
-        }`}
-      >
+      <div className="relative aspect-[3/4] overflow-hidden rounded-xl border border-white/10 bg-[#0a0a0a] transition-colors duration-300 group-hover:border-[#e8e4dc]/25">
         <Image
           src={guest.imagePath}
           alt={guest.name}
@@ -33,7 +26,7 @@ export function GuestCard({ guest, hasEpisode = true }: GuestCardProps) {
             {guest.name}
           </p>
           <p className="mt-0.5 truncate text-[9px] font-light uppercase tracking-[0.14em] text-white/50 sm:text-[10px]">
-            {hasEpisode ? getGuestCompactLabel(guest) : "Episode coming soon"}
+            {getGuestCompactLabel(guest)}
           </p>
         </div>
       </div>

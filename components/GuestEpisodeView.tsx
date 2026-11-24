@@ -16,12 +16,6 @@ type GuestEpisodeViewProps = {
   conversation?: GuestConversation;
 };
 
-const showLinks = [
-  { label: "Spotify", href: SITE.listen.spotify },
-  { label: "YouTube", href: SITE.listen.youtube },
-  { label: "Apple Podcasts", href: SITE.listen.apple },
-];
-
 export function GuestEpisodeView({
   guest,
   episode,
@@ -78,33 +72,6 @@ export function GuestEpisodeView({
                   Watch on YouTube →
                 </a>
               )}
-            </div>
-          )}
-
-          {!episode && !conversation && (
-            <div className="mt-10 border-t border-white/10 pt-8">
-              <p className="section-eyebrow mb-2">Episode coming soon</p>
-              <p className="max-w-md text-sm font-extralight leading-relaxed text-white/50">
-                This conversation is on the way. Listen to the show in the
-                meantime.
-              </p>
-              <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
-                {showLinks.map((link) => (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    target={link.href.startsWith("http") ? "_blank" : undefined}
-                    rel={
-                      link.href.startsWith("http")
-                        ? "noopener noreferrer"
-                        : undefined
-                    }
-                    className="link-subtle"
-                  >
-                    {link.label}
-                  </a>
-                ))}
-              </div>
             </div>
           )}
 
